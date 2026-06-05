@@ -24,9 +24,17 @@ if( !isset($_GET['ajax']) ) {
 		if( empty( $hide__theme_seo ) ) (new ThemeSeo)->Title();
 
 		do_action('BeforeWPHead');
+		// KAYAN hotfix: force Font Awesome Free solid icons to render on frontend.
+		echo '<style id="kayan-fa-free-hotfix">';
+			echo '.fa:not(.fa-brands):not(.fab),.fas,.fa-solid,.fa-regular,.far,i[class^="fa-"]:not(.fa-brands):not(.fab),i[class*=" fa-"]:not(.fa-brands):not(.fab),span[class^="fa-"]:not(.fa-brands):not(.fab),span[class*=" fa-"]:not(.fa-brands):not(.fab){font-family:"Font Awesome 6 Free" !important;font-weight:900 !important;}';
+			echo '.fa:not(.fa-brands):not(.fab)::before,.fas::before,.fa-solid::before,.fa-regular::before,.far::before,i[class^="fa-"]:not(.fa-brands):not(.fab)::before,i[class*=" fa-"]:not(.fa-brands):not(.fab)::before,span[class^="fa-"]:not(.fa-brands):not(.fab)::before,span[class*=" fa-"]:not(.fa-brands):not(.fab)::before{font-family:"Font Awesome 6 Free" !important;font-weight:900 !important;}';
+			echo '.fa-brands,.fab,.fa-brands::before,.fab::before{font-family:"Font Awesome 6 Brands" !important;font-weight:400 !important;}';
+			echo '[class*="fa-"]:not(.fa-brands):not(.fab)::before,[class*="fa-"]:not(.fa-brands):not(.fab)::after{font-weight:900;}';
+		echo '</style>';
 
-		// 1. استخدام رابط FontAwesome المجاني
-		echo ( ( IsSpeed() == false ) ) ? '<link rel="stylesheet" media="all" type="text/css" data-loader-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />' : '';
+
+		// 1. استخدام رابط Font Awesome 6 Free المجاني
+		echo ( ( IsSpeed() == false ) ) ? '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">' : '';
 		echo ( ( IsSpeed() == false && ( is_single() || is_page() || ( isset( $Widgets__list ) && in_array( 'works_v1',$Widgets__list ) ) ) ) ) ? '<link rel="stylesheet" data-loader-href="https://unpkg.com/photoswipe@5.2.2/dist/photoswipe.css">' : '';
 
 		if( isset( $HeadCode ) && !empty( $HeadCode ) ){
@@ -199,8 +207,8 @@ echo '<root>';
 							echo '<span>روابط المشاركة</span>';	
 							echo '<ul class="-company-contact-minibox">';
 								$SocialIcons = array(
-									'phonenumber'=>'<i class="fa-solid fa-mobile-screen-button"></i>',
-									'company__adress'=>'<i class="fa-solid fa-map-location-dot"></i>',
+									'phonenumber'=>'<i class="fa-solid fa-phone"></i>',
+									'company__adress'=>'<i class="fa-solid fa-location-dot"></i>',
 									'whatsapp'=>'<i class="fa-brands fa-whatsapp"></i>',
 									'company__mail'=>'<i class="fa-solid fa-envelope"></i>',
 								);
@@ -454,7 +462,7 @@ else init();
 										$iconss = yc_get_option('city_name');
 										echo'<div class="-taxonimes-">';
 											echo'<a href="tel:'.$r['number_city'].'" class="tax-in-here">';
-												echo'<i class="fa-solid fa-mobile-screen-button"></i>';
+												echo'<i class="fa-solid fa-phone"></i>';
 												echo'<div class="-cits-taxonimes-">';
 													echo'<span class="-city-name-">' .$r['city_name']. '</span>';
 													echo'<span class="-city-number-">' .$r['number_city']. '</span>';
@@ -483,8 +491,8 @@ else init();
 												);
 												echo '<div class="--socialheader">';
 													$SocialIcons = array(
-														'phonenumber'=>'<i class="fa-solid fa-mobile-screen-button"></i>',
-														'company__adress'=>'<i class="fa-solid fa-map-location-dot"></i>',
+														'phonenumber'=>'<i class="fa-solid fa-phone"></i>',
+														'company__adress'=>'<i class="fa-solid fa-location-dot"></i>',
 														'whatsapp'=>'<i class="fa-brands fa-whatsapp"></i>',
 														'company__mail'=>'<i class="fa-solid fa-envelope"></i>',
 													);

@@ -149,8 +149,8 @@
 
 										echo '<div class="-company-contact-minibox">';
 											$SocialIcon = array(
-												'phonenumber'=>'<i class="fa-solid fa-mobile-screen-button"></i>',
-												'company__adress'=>'<i class="fa-solid fa-map-location-dot"></i>',
+												'phonenumber'=>'<i class="fa-solid fa-phone"></i>',
+												'company__adress'=>'<i class="fa-solid fa-location-dot"></i>',
 												'whatsapp'=>'<i class="fa-brands fa-whatsapp"></i>',
 												'company__mail'=>'<i class="fa-solid fa-envelope"></i>',
 											);
@@ -514,7 +514,7 @@ if( isset($_GET['ajax']) ) {
 	}
 
 	wp_footer();
-	echo '<div class="GotoTop"><i class="fa-light fa-arrow-up"></i></div>';
+	echo '<div class="GotoTop"><i class="fa-solid fa-arrow-up"></i></div>';
 	
 	echo '</body>';
 	echo '</html>';

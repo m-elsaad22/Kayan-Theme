@@ -260,10 +260,10 @@ echo ( ( $AjaxPart != true ) ) ? '</div>': '';
 
 if( !empty( $custom___more__btn ) ){
     if( !isset( $custom___more__btn['title'] ) ) $custom___more__btn['title'] = 'مشاهدة المزيد';
-    echo ( ( $AjaxPart != true ) ) ? '<LoadMore--InpuArea><PostsScrollLoader class="PostsScrollLoader">'.( ( isset( $custom___more__btn['URL'] ) ) ? '<a href="'.$custom___more__btn['URL'].'">' : '' ).'<i class="fa-solid fa-grid-2-plus"></i><span>'.$custom___more__btn['title'].'</span>'.( ( isset( $custom___more__btn['URL'] ) ) ? '</a>' : '' ).'</PostsScrollLoader></LoadMore--InpuArea>' : '';
+    echo ( ( $AjaxPart != true ) ) ? '<LoadMore--InpuArea><PostsScrollLoader class="PostsScrollLoader">'.( ( isset( $custom___more__btn['URL'] ) ) ? '<a href="'.$custom___more__btn['URL'].'">' : '' ).'<i class="fa-solid fa-layer-group"></i><span>'.$custom___more__btn['title'].'</span>'.( ( isset( $custom___more__btn['URL'] ) ) ? '</a>' : '' ).'</PostsScrollLoader></LoadMore--InpuArea>' : '';
 
 }else if( $ScrollLoader == true && $LoadMoreAction == true ){
-    echo ( ( $AjaxPart != true ) ) ? '<LoadMore--InpuArea><PostsScrollLoader data-more-click="'.$UniqId.'" data-aciton-type="posts" class="PostsScrollLoader LoadMorePostsBTN" '.( ( $AutoLoadmore != false) ? 'style="display:none"' : '').'><i class="fa-solid fa-grid-2-plus"></i><span>تحميل المزيد</span></PostsScrollLoader></LoadMore--InpuArea>' : '';
+    echo ( ( $AjaxPart != true ) ) ? '<LoadMore--InpuArea><PostsScrollLoader data-more-click="'.$UniqId.'" data-aciton-type="posts" class="PostsScrollLoader LoadMorePostsBTN" '.( ( $AutoLoadmore != false) ? 'style="display:none"' : '').'><i class="fa-solid fa-layer-group"></i><span>تحميل المزيد</span></PostsScrollLoader></LoadMore--InpuArea>' : '';
     
 }
 

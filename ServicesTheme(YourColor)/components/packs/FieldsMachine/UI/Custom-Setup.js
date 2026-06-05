@@ -21,7 +21,7 @@ jQuery(function($){
 				'wp-admin-bar-wp-logo':'<span class="YouColor-reader-text">YourColor</span>',
 				'wp-admin-bar-site-name':'<i class="fa-regular fa-house"></i>',
 				'wp-admin-bar-updates':'<i class="fa-solid fa-arrows-rotate"></i>',
-				'wp-admin-bar-comments':'<i class="fa-regular fa-comment-lines"></i>',
+				'wp-admin-bar-comments':'<i class="fa-regular fa-comment-dots"></i>',
 				'wp-admin-bar-new-content':'<i class="fa-solid fa-plus"></i>',
 			};
 
@@ -45,9 +45,9 @@ jQuery(function($){
 					var CLass_Text = $(elem).attr('class')+'';
 					var Icon = '';
 					if( CLass_Text.indexOf( 'misc-pub-post-status' ) > 0 ){
-						Icon = '<i class="fa-solid fa-keynote"></i>';
+						Icon = '<i class="fa-solid fa-file-lines"></i>';
 					}else if( CLass_Text.indexOf( 'misc-pub-visibility' ) > 0 ){
-						Icon = '<i class="fa-sharp fa-solid fa-eye-slash"></i>';		
+						Icon = '<i class="fa-solid fa-eye-slash"></i>';		
 					}else if( CLass_Text.indexOf( 'misc-pub-revisions' ) > 0 ){
 						Icon = '<i class="fa-regular fa-clock-rotate-left"></i>';		
 					}else if( CLass_Text.indexOf( 'misc-pub-curtime' ) > 0 ){
@@ -97,7 +97,7 @@ jQuery(function($){
 				if( $(y__elem).data('loaded-done') == undefined ){
 					$(y__elem).data('loaded-done',true);
 					// # 
-					$(y__elem).prepend('<i class="fa-light fa-circle-xmark"></i>');
+					$(y__elem).prepend('<i class="fa-solid fa-circle-xmark"></i>');
 				}
 			});
 		$('.YourColorEdits-Class-Style ul.add-menu-item-tabs li, .YourColorEdits-Class-Style ul.category-tabs li, .YourColorEdits-Class-Style ul.wp-tab-bar li').addClass('hoverable activable');
@@ -1004,7 +1004,7 @@ jQuery(function($){
 								}
 							output += '</div>';
 
-							output += '<LoadMore--InpuArea><PostsScrollLoader data-more-click="'+uni+'" class="PostsScrollLoader LoadMorePostsBTN" '+( ( argument.LoadMoreAjax != false ) ? '' : 'style="display:none"')+'><i class="fa-solid fa-grid-2-plus"></i><span>تحميل المزيد</span></PostsScrollLoader></LoadMore--InpuArea>';
+							output += '<LoadMore--InpuArea><PostsScrollLoader data-more-click="'+uni+'" class="PostsScrollLoader LoadMorePostsBTN" '+( ( argument.LoadMoreAjax != false ) ? '' : 'style="display:none"')+'><i class="fa-solid fa-layer-group"></i><span>تحميل المزيد</span></PostsScrollLoader></LoadMore--InpuArea>';
 						}
 
 
@@ -1169,7 +1169,7 @@ jQuery(function($){
 								});
 							output += '</div>';
 
-							output += '<LoadMore--InpuArea><PostsScrollLoader data-more-click="'+uni+'" class="PostsScrollLoader LoadMorePostsBTN" '+( ( argument.LoadMoreAjax != false ) ? '' : 'style="display:none"')+'><i class="fa-solid fa-grid-2-plus"></i><span>تحميل المزيد</span></PostsScrollLoader></LoadMore--InpuArea>';
+							output += '<LoadMore--InpuArea><PostsScrollLoader data-more-click="'+uni+'" class="PostsScrollLoader LoadMorePostsBTN" '+( ( argument.LoadMoreAjax != false ) ? '' : 'style="display:none"')+'><i class="fa-solid fa-layer-group"></i><span>تحميل المزيد</span></PostsScrollLoader></LoadMore--InpuArea>';
 						}
 					output += '</div>';
 					output += ( ( argument.disc != undefined ) ) ? '<descor>'+argument.disc+'</descor>' : '';
@@ -1225,7 +1225,7 @@ jQuery(function($){
 										});
 									output += '</ul>';
 
-									output += '<LoadMore--InpuArea><PostsScrollLoader data-more-click="'+uni+'" class="PostsScrollLoader LoadMorePostsBTN" '+( ( argument.LoadMoreAjax != false ) ? '' : 'style="display:none"')+'><i class="fa-solid fa-grid-2-plus"></i><span>تحميل المزيد</span></PostsScrollLoader></LoadMore--InpuArea>';
+									output += '<LoadMore--InpuArea><PostsScrollLoader data-more-click="'+uni+'" class="PostsScrollLoader LoadMorePostsBTN" '+( ( argument.LoadMoreAjax != false ) ? '' : 'style="display:none"')+'><i class="fa-solid fa-layer-group"></i><span>تحميل المزيد</span></PostsScrollLoader></LoadMore--InpuArea>';
 							output += '</div>';
 						}
 					output += '</div>';
@@ -1235,7 +1235,7 @@ jQuery(function($){
 				if( argument.create_hide_fields != undefined ){
 					$.each(argument.create_hide_fields,function(ek,evalue) {
 						output += '<div class="-Hide-Boxes-Shows Select-Hide-Insert"  data-uniqid="'+uni+'" data-meta-key="'+argument.id+'" data-show-type="'+ek+'" '+( ( value ==  ek) ? '' : 'style="display:none"' )+'>';
-							output += '<div class="Title-MoreForms"><i class="fa-solid fa-sliders-up"></i><h2>'+argument.options[ek]+'</h2></div>';
+							output += '<div class="Title-MoreForms"><i class="fa-solid fa-sliders"></i><h2>'+argument.options[ek]+'</h2></div>';
 							if( evalue['fields'] != undefined ){
 								$.each( evalue['fields'],function(rk,refield) {
 									if( argument.parent_id != undefined ){
@@ -1459,7 +1459,7 @@ jQuery(function($){
 									});
 
 								output +='</div>';
-								output +='<div class="-row-create-button"><div class="-Insert-Form-Item" data-item-id="'+UniqItems+'" data-keys-argums="'+EmptyKeysValues+'"><i class="fa-solid fa-plus-large"></i><span>إنشاء عنصر جديد </span></div></div>';
+								output +='<div class="-row-create-button"><div class="-Insert-Form-Item" data-item-id="'+UniqItems+'" data-keys-argums="'+EmptyKeysValues+'"><i class="fa-solid fa-plus"></i><span>إنشاء عنصر جديد </span></div></div>';
 
 								output +='<div class="-Fields-Insert-Area"></div>';
 							output +='</div>';
@@ -1498,13 +1498,13 @@ jQuery(function($){
 					output += '<div class="Title-MoreForms-Dublicate" '+( ( argument.value.length > 1 ) ? '' : 'style="display:none;"' )+'>';
 						output += '<i class="fa-solid fa-sitemap"></i>';
 						output += '<h2>لقد قُمت بتحديد <count-items>'+argument.value.length+'</count-items> عنصر حتي الأن </em></h2>';
-						output += '<div class="Remove-Dublicate-GroupField" data-remove-itemsgroup="group-item" data-tooltip="حذف كل العناصر "><i class="fa-solid fa-trash-can-list"></i></div>';
+						output += '<div class="Remove-Dublicate-GroupField" data-remove-itemsgroup="group-item" data-tooltip="حذف كل العناصر "><i class="fa-solid fa-trash"></i></div>';
 					output += '</div>';
 
 					var UniqIs = UniqID();
 					output += '<div class="-Fields-Insert-DuplicateGroup">';
 						output += '<div class="-Revilotion-Fields-Dublicate" data-dublicate-group-item="'+UniqIs+'">';
-							output += '<div class="Title-MoreForms-Dublicate"><i class="fa-solid fa-pen-field"></i><h2>الشريحة  <em>['+UniqIs+']</em></h2></div>';
+							output += '<div class="Title-MoreForms-Dublicate"><i class="fa-solid fa-pen-to-square"></i><h2>الشريحة  <em>['+UniqIs+']</em></h2></div>';
 
 							$.each( argument.fields,function(k,v) {
 								v['parent_id'] = InputName+'['+UniqIs+']';
@@ -1514,7 +1514,7 @@ jQuery(function($){
 						output += '</div>';
 					output += '</div>';
 
-					output += '<div class="-Dublicate-create-button"><div class="-Insert-Dublicate-Item" data-dublicateitem-id="'+UniqItems+'" data-keys-argums="'+EmptyKeysValues+'"><i class="fa-solid fa-plus-large"></i><span>إنشاء عنصر جديد </span></div></div>';
+					output += '<div class="-Dublicate-create-button"><div class="-Insert-Dublicate-Item" data-dublicateitem-id="'+UniqItems+'" data-keys-argums="'+EmptyKeysValues+'"><i class="fa-solid fa-plus"></i><span>إنشاء عنصر جديد </span></div></div>';
 
 				output += '</div>';
 
@@ -2459,14 +2459,14 @@ jQuery(function($){
 							TitleOutput +='<div class="Title-MoreForms">';
 								TitleOutput +='<i class="fa-solid fa-sitemap"></i>';
 								TitleOutput +='<h2>'+LbAsmar[0]+'<count-items>'+GroupItemsCount+'</count-items>'+LbAsmar[1]+' '+( ( FieldsMaster.data('inner-taps') != undefined && FieldsMaster.data('inner-taps') != false ) ? '<em data-find-tag="'+CurrentKey+'">['+BTN.closest('.-Insert-Fields-Tool').data('my-key')+']' : '' )+'</em></h2>';
-								TitleOutput +='<div class="Remove-GroupField" data-remove-itemsgroup="group-item" data-tooltip="حذف كل العناصر "><i class="fa-solid fa-trash-can-list"></i></div>';
+								TitleOutput +='<div class="Remove-GroupField" data-remove-itemsgroup="group-item" data-tooltip="حذف كل العناصر "><i class="fa-solid fa-trash"></i></div>';
 							TitleOutput +='</div>';
 							AppendCenter.append(TitleOutput);
 						}
 
 						var output = '';
 							output += '<div class="-Revilotion-Inputs-Fields" data-group-item="'+CurrentKey+'">';
-								output += '<div class="Title-MoreForms"><i class="fa-solid fa-pen-field"></i><h2>العنصر  <em>['+CurrentKey+']</em></h2><div class="Remove-GroupField" data-remove-singlegroup="'+CurrentKey+'" data-tooltip="حذف العنصر '+CurrentKey+'"><i class="fa-solid fa-trash-can-list"></i></div></div>';
+								output += '<div class="Title-MoreForms"><i class="fa-solid fa-pen-to-square"></i><h2>العنصر  <em>['+CurrentKey+']</em></h2><div class="Remove-GroupField" data-remove-singlegroup="'+CurrentKey+'" data-tooltip="حذف العنصر '+CurrentKey+'"><i class="fa-solid fa-trash"></i></div></div>';
 								$.each( NewBoxes ,function(el,fvlue) {
 									if( fvlue != undefined ){
 										output += fvlue;						
@@ -2533,7 +2533,7 @@ jQuery(function($){
 						InputName = FieldArguments.id;
 					}
 					outout += '<div class="-Revilotion-Fields-Dublicate" data-dublicate-group-item="'+CurrentKey+'">';
-						outout += '<div class="Title-MoreForms-Dublicate"><i class="fa-solid fa-pen-field"></i><h2>الشريحة <em>['+CurrentKey+']</em></h2><div class="Remove-Dublicate-GroupField" data-remove-dublicate-singlegroup="'+CurrentKey+'" data-tooltip="حذف العنصر '+CurrentKey+'"><i class="fa-solid fa-trash-can-list"></i></div></div>';
+						outout += '<div class="Title-MoreForms-Dublicate"><i class="fa-solid fa-pen-to-square"></i><h2>الشريحة <em>['+CurrentKey+']</em></h2><div class="Remove-Dublicate-GroupField" data-remove-dublicate-singlegroup="'+CurrentKey+'" data-tooltip="حذف العنصر '+CurrentKey+'"><i class="fa-solid fa-trash"></i></div></div>';
 						// #
 						$.each( FieldArguments['fields'] ,function(k,v) {
 							v['parent_id'] = InputName+'['+CurrentKey+']';
@@ -3026,7 +3026,7 @@ jQuery(function($){
 						}
 
 						outout +='<div class="-Hide-Boxes-Shows Group-Hide-Insert" data-uniqid="'+data__uniqid+'" data-meta-key="'+argums.select_field.id+'" data-show-type="'+argums['choose_fields'][ShowsType]['id']+'" data-create-fields="true">';
-							outout +='<div class="Title-MoreForms"><i class="fa-solid fa-sliders-up"></i><h2>'+argums['choose_fields'][ShowsType]['title']+'</h2></div>';
+							outout +='<div class="Title-MoreForms"><i class="fa-solid fa-sliders"></i><h2>'+argums['choose_fields'][ShowsType]['title']+'</h2></div>';
 
 							$.each( argums['choose_fields'][ShowsType]['fields'] ,function(k,single_field) {
 								single_field['parent_id'] = InputName;

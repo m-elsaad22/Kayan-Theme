@@ -46,7 +46,7 @@ foreach ($choose_fields as $shape => $data) {
 		$InputName = $id.'['.$data['id'].']';
 
 		echo '<div class="-Hide-Boxes-Shows Group-Hide-Insert" data-uniqid="'.$UniqID.'" data-meta-key="'.$select_field['id'].'" data-show-type="'.$data['id'].'" '.( ( isset( $create_fields ) ) ? 'data-create-fields="true"' : 'data-create-fields="false"' ).' '.( ( $shape == $value[ $select_field['id'] ] ) ? '' : 'style="display:none"' ).'>';
-			echo '<div class="Title-MoreForms"><i class="fa-solid fa-sliders-up"></i><h2>'.$data['title'].'</h2></div>';
+			echo '<div class="Title-MoreForms"><i class="fa-solid fa-sliders"></i><h2>'.$data['title'].'</h2></div>';
 			foreach ($data['fields'] as $k => $single_field) {
 				$single_field['parent_id'] = $InputName;
 				#

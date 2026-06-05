@@ -25,7 +25,7 @@ if( empty( $hide__post_card ) ) {
 
 		        	if( !isset( $post__card__data['hide__card__callbutton'] ) || isset( $post__card__data['hide__card__callbutton'] ) && empty( $post__card__data['hide__card__callbutton'] ) ){
 		                echo '<a class="post-card-buttons -callbutton--post-card -BTN--hoverable" href="tel:'.$phonenumber.'" rel="nofollow">';
-		                    echo '<i class="fa-thin fa-phone-volume"></i>';
+		                    echo '<i class="fa-solid fa-phone"></i>';
 		                    echo '<strong>اتصل بنا</strong>';
 		                echo '</a>';
 		        	}

@@ -63,7 +63,7 @@ echo '<div class="-primary-body">';
 					            'per'=>9,
 					            'show___empty__part'=>'object--empty',
 					            'data___empty__part'=>array(
-					                '__empty_icon'=>'<i class="fa-solid fa-empty-set"></i>',
+					                '__empty_icon'=>'<i class="fa-solid fa-ban"></i>',
 					                '__empty_title'=>'لن يتم العثور على المقالات ',
 					                '__empty_description'=>'<a href="'.home_url().'">الرئيسية </a>',
 					                '__Ajax_empty_title'=>'لقد شاهدت جميع الالمقالات',

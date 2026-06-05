@@ -29,7 +29,7 @@ $ActionOptions = array(
 );
 
 if(!isset($ExclodedMeta)) $ExclodedMeta = array();
-/*echo '<link rel="stylesheet" media="all" type="text/css" data-loader-href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css" />';
+/*echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">';
 if(isset($Styles)){
 	foreach ($Styles as $skey => $meky) {
 		echo '<link rel="stylesheet" type="text/css" href="'.$meky.'?v='.rand().'" />';
@@ -179,7 +179,7 @@ echo '<Inseder--Appender>';
 						$i = 0;
 						foreach ($TempForms as $key => $formdata) {$i++;
 							echo '<div class="InputsAppender--Fields-BoxArea">';
-								echo '<div class="Title-MoreForms" data-elem-finded="'.$key.'"><i class="fa-solid fa-file-circle-plus"></i><h2>نموذج <em>['.$key.']</em> </h2><div class="Remove-GroupField" data-remove-setp="step-item" data-tooltip="حذف كل العناصر "><i class="fa-solid fa-trash-can-list"></i></div></div>';							
+								echo '<div class="Title-MoreForms" data-elem-finded="'.$key.'"><i class="fa-solid fa-file-circle-plus"></i><h2>نموذج <em>['.$key.']</em> </h2><div class="Remove-GroupField" data-remove-setp="step-item" data-tooltip="حذف كل العناصر "><i class="fa-solid fa-trash"></i></div></div>';							
 
 								$ArgsTitle = array(
 									'type'=>'Text',
@@ -327,7 +327,7 @@ echo '<Inseder--Appender>';
 					echo '</div>';
 				echo '</div>';
 			echo '</div>';
-			echo '<div class="-row-create-button"><button type="submit"><i class="fa-solid fa-diagram-previous"></i><span>'.(($action == 'new') ? 'نشر النموذج ' : 'تحديث النموذج ').'</span></button></div>';
+			echo '<div class="-row-create-button"><button type="submit"><i class="fa-solid fa-diagram-project"></i><span>'.(($action == 'new') ? 'نشر النموذج ' : 'تحديث النموذج ').'</span></button></div>';
 		echo '</form>';
 	echo '</div>';
 

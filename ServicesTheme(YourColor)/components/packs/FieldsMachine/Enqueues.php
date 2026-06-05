@@ -59,7 +59,15 @@ class YC__CFM_Enqueues {
 	public function YC__CFM_Admin_Enqueue(){
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$this->Style__URL.'codemirror.css" />';
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$this->Style__URL.'richtext.min.css" />';
-		echo '<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">';
+		echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">';
+		# KAYAN hotfix: keep admin pseudo icons on Font Awesome Free.
+		echo '<style id="kayan-admin-fa-free-hotfix">';
+			echo '.fa:not(.fa-brands):not(.fab),.fas,.fa-solid,.fa-regular,.far,i[class^="fa-"]:not(.fa-brands):not(.fab),i[class*=" fa-"]:not(.fa-brands):not(.fab),span[class^="fa-"]:not(.fa-brands):not(.fab),span[class*=" fa-"]:not(.fa-brands):not(.fab){font-family:"Font Awesome 6 Free" !important;font-weight:900 !important;}';
+			echo '.fa:not(.fa-brands):not(.fab)::before,.fas::before,.fa-solid::before,.fa-regular::before,.far::before,i[class^="fa-"]:not(.fa-brands):not(.fab)::before,i[class*=" fa-"]:not(.fa-brands):not(.fab)::before,span[class^="fa-"]:not(.fa-brands):not(.fab)::before,span[class*=" fa-"]:not(.fa-brands):not(.fab)::before{font-family:"Font Awesome 6 Free" !important;font-weight:900 !important;}';
+			echo '.fa-brands,.fab,.fa-brands::before,.fab::before{font-family:"Font Awesome 6 Brands" !important;font-weight:400 !important;}';
+			echo '[class*="fa-"]:not(.fa-brands):not(.fab)::before,[class*="fa-"]:not(.fa-brands):not(.fab)::after{font-family:"Font Awesome 6 Free" !important;font-weight:900 !important;}';
+		echo '</style>';
+
 		echo '<link href="'.$this->Style__URL.'bootstrap-colorpicker.css" rel="stylesheet">';
 		
 

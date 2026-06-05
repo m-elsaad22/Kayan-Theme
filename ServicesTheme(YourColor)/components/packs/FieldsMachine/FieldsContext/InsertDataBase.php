@@ -11,7 +11,7 @@ if( isset( $InsertElements ) ){
 	$InputName = $id;
 }
 if( !isset( $insert_button_text ) ) $insert_button_text = 'اضافة عنصر جديد ';
-if( !isset( $insert_button_icon ) ) $insert_button_icon = '<i class="fa-solid fa-plus-large"></i>';
+if( !isset( $insert_button_icon ) ) $insert_button_icon = '<i class="fa-solid fa-plus"></i>';
 if( !isset( $SaveDB__field ) ) $SaveDB__field = 'id';
 if( !isset( $fields__parent ) ) $fields__parent = 'db__metakey__values_update_';
 

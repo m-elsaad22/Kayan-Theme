@@ -13,7 +13,7 @@ if( isset( $AjaxPart ) && $AjaxPart != false ) {
 
 echo '<div class="--empty-attchment-area">';
 	echo '<div class="--empty-attchment-svg-v1">';
-		echo ( ( $ModeVariable['icon'] != '' ) ) ? $__empty_icon : '<i class="fa-solid fa-empty-set"></i>';
+		echo ( ( $ModeVariable['icon'] != '' ) ) ? $__empty_icon : '<i class="fa-solid fa-ban"></i>';
 	echo '</div>';
 
 	echo '<h1>'.$ModeVariable['title'].'</h1>';

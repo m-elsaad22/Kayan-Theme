@@ -74,8 +74,8 @@ class contact__form extends YC__WidgetsMachine{
 					if(!empty($contact_footer_list)){
 						echo '<div class="YC-wigdht-contact-minibox animation-hidden" data-animation-id="fadeInUpBig">';
 							$SocialIcon = array(
-								'phonenumber'=>'<i class="fa-solid fa-mobile-screen-button"></i>',
-								'company__adress'=>'<i class="fa-solid fa-map-location-dot"></i>',
+								'phonenumber'=>'<i class="fa-solid fa-phone"></i>',
+								'company__adress'=>'<i class="fa-solid fa-location-dot"></i>',
 								'whatsapp'=>'<i class="fa-brands fa-whatsapp"></i>',
 								'company__mail'=>'<i class="fa-solid fa-envelope"></i>',
 							);

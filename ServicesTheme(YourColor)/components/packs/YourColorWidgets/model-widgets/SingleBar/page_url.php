@@ -51,7 +51,7 @@ class page_url extends YC__WidgetsMachine{
 					    if( isset( $single__page_item['button_page'] ) && !empty( $single__page_item['button_page'] ) ) {
 					    	$button_page_title = ( ( isset( $single__page_item['button_Text'] ) && !empty( $single__page_item['button_Text'] ) ) ) ? $single__page_item['button_Text'] : get_the_title( $single__page_item['button_page'] );
 					    	echo '<a href="'.get_the_permalink($single__page_item['button_page']).'" title="'.$button_page_title.'">';
-					    		echo '<i class="fa-light fa-chevrons-left"></i>';
+					    		echo '<i class="fa-solid fa-angles-left"></i>';
 					    		echo '<span>'.$button_page_title.'</span>';
 				    		echo '</a>';
 					    }

@@ -131,7 +131,7 @@ $currency__shows = ( ( is_array( $currency__shows ) ) ) ? $currency__shows : arr
 				echo '<div class="-Price-Items-List">';
 					echo '<ul>';
 						foreach ( $plan_features as $items) {
-							echo '<li class="'.( ( isset( $items['available'] ) && $items['available'] == 'on' ) ? '-Disabled-Features' : '' ).'"><div class="icon_price">'.( ( isset( $items['available'] ) && $items['available'] == 'on' ) ? '<i class="fa-light fa-xmark"></i>' : '<i class="fa-regular fa-check"></i>' ).'</div><span>'.$items['service_info'].'</span>'.( ( isset( $items['description'] ) && !empty( $items['description'] ) ) ? '<div class="-Planes-Info-sowh-In" data-tooltip-base="true" data-tooltip="'.base64_encode($items['description']  ).'"><i class="fa-regular fa-circle-info"></i></div>' : '' ).'</li>';
+							echo '<li class="'.( ( isset( $items['available'] ) && $items['available'] == 'on' ) ? '-Disabled-Features' : '' ).'"><div class="icon_price">'.( ( isset( $items['available'] ) && $items['available'] == 'on' ) ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-regular fa-check"></i>' ).'</div><span>'.$items['service_info'].'</span>'.( ( isset( $items['description'] ) && !empty( $items['description'] ) ) ? '<div class="-Planes-Info-sowh-In" data-tooltip-base="true" data-tooltip="'.base64_encode($items['description']  ).'"><i class="fa-regular fa-circle-info"></i></div>' : '' ).'</li>';
 						}
 					echo '</ul>';
 				echo '</div>';

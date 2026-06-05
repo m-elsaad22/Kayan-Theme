@@ -6,7 +6,7 @@ foreach( wp_get_nav_menus() as $t ) {
 $metaboxes = array(
 	'title'    =>'إعدادات الفوتر ',
 	'en_title'  => 'Footer Options',
-	'icon'    => '<i class="fa-light fa-down-from-dotted-line"></i>',
+	'icon'    => '<i class="fa-solid fa-arrow-down"></i>',
 	'number'=>3,
 	'fields'  => array(
 

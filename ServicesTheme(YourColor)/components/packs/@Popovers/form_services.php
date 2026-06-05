@@ -360,7 +360,7 @@ if( $ThankYou == false ){
 								echo '<button class="YC-BTN-Forms-Plugin SubmitButton activable" type="submit"><span>'.$current__form['button_title'].'</span>'.( ( $current__form['button_icon'] ) ? $current__form['button_icon'] : '' ).'</button>';
 
 								/*if( $NextStep != false && $ShowNextStep == true ){
-									echo '<div class="YC-BTN-Forms-Plugin Next-Step-Action activable" data-form-navs="'.$NextStep['id'].'"><span>التالى </span><i class="fa-sharp fa-solid fa-chevron-left"></i></div>';
+									echo '<div class="YC-BTN-Forms-Plugin Next-Step-Action activable" data-form-navs="'.$NextStep['id'].'"><span>التالى </span><i class="fa-solid fa-chevron-left"></i></div>';
 								}*/
 
 							echo '</div>';

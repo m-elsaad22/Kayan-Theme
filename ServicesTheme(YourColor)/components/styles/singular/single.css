@@ -3185,7 +3185,7 @@ span.is-sale-product {
 .links--sitemap-items-lists > a:before {
   margin-inline-end: 5px;
   content: var(--chevron);
-  font-family: "Font Awesome 6 Pro";
+  font-family: "Font Awesome 6 Free";
   font-weight: 600;
   color: var(--secondarytext);
   font-size: 13px;

@@ -3,7 +3,7 @@
 $metaboxes = array(
     'title'    => 'إعدادات SITEMAP',
     'en_title' => 'SITEMAP Options',
-    'icon'     => '<i class="fa-light fa-list-tree"></i>',
+    'icon'     => '<i class="fa-solid fa-sitemap"></i>',
     'number'   => 20,
     'fields'   => array(
     	# CATEGORY #

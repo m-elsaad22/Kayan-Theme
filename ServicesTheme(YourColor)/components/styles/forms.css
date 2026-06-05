@@ -368,7 +368,7 @@ necessary {
 .-CheckBox-Box-Item span::after {
     content: var(--check-icon);
     position: absolute;
-    font-family: "Font Awesome 6 Duotone";
+    font-family: "Font Awesome 6 Free";
     color: #fff;
     font-size: 18px;
     right: -1px;
@@ -558,7 +558,7 @@ necessary {
 
 .Select-Options-Items .Lists-Select-Items>li::before {
     content: var(--plus-icon);
-    font-family: "Font Awesome 6 Pro";
+    font-family: "Font Awesome 6 Free";
     font-size: 14px;
     color: var(--secondarytext);
     position: relative;
@@ -1028,7 +1028,7 @@ switchfield>input[type=checkbox] {
     position: relative;
     display: block;
     font-size: 25px;
-    font-family: "Font Awesome 6 Pro";
+    font-family: "Font Awesome 6 Free";
     font-weight: 300;
     margin-left: 4px
 }

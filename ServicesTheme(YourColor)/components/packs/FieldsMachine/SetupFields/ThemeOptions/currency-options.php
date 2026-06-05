@@ -4,7 +4,7 @@ $currency__ids = get__currency__items();
 $metaboxes = array(
     'title'    => 'إعدادات العملات ',
     'en_title'  => 'currency options',
-    'icon'    => '<i class="fa-sharp fa-regular fa-coins"></i>',
+    'icon'    => '<i class="fa-solid fa-coins"></i>',
     'number'=>13,
     'fields'  => array(
 

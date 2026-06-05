@@ -2,7 +2,7 @@
 $metaboxes = array(
 	'title'    => 'إعدادات العنوان',
 	'en_title'  => 'SEO OPTIONS',
-	'icon'    => '<i class="fa-solid fa-h1"></i>',
+	'icon'    => '<i class="fa-solid fa-heading"></i>',
 	'number'=>15,
 	'fields'  => array(
 		array(

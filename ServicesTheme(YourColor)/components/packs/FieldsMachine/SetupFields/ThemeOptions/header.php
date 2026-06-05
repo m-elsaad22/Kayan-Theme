@@ -6,7 +6,7 @@ foreach( wp_get_nav_menus() as $t ) {
 $metaboxes = array(
     'title'    => 'إعدادات الهيدر',
     'en_title' => 'Header Options',
-    'icon'     => '<i class="fa-solid fa-up-to-dotted-line"></i>',
+    'icon'     => '<i class="fa-solid fa-arrow-up"></i>',
     'number'   => 2,
     'fields'   => array(
     	#

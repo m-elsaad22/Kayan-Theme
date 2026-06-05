@@ -208,7 +208,7 @@ $ShareHastags = array();
 					if( ( !isset( $post__service_request__data['contentservices'] ) || ( isset( $post__service_request__data['contentservices'] ) && empty( $post__service_request__data['contentservices'] ) ) ) && !isset( $defualt__content ) ) $post__service_request__data['contentservices'] = 'خدمة علي مدار 24 ساعه';
 
 					if( !isset( $post__service_request__data['icon'] ) && isset( $defualt__icon ) ) $post__service_request__data['icon'] = $defualt__icon;
-					if( !isset( $post__service_request__data['icon'] ) && !isset( $defualt__icon ) ) $post__service_request__data['icon'] = '<i class="fa-light fa-phone-volume"></i>';
+					if( !isset( $post__service_request__data['icon'] ) && !isset( $defualt__icon ) ) $post__service_request__data['icon'] = '<i class="fa-solid fa-phone"></i>';
 
 					$phonenumber = get_post_meta( $post->ID,'phone_number',true );
 					if( empty( $phonenumber ) ) $phonenumber = get_option('phonenumber');
@@ -236,7 +236,7 @@ $ShareHastags = array();
 
 							        	if( !isset( $post__service_request__data['hide__service__callbutton'] ) || isset( $post__service_request__data['hide__service__callbutton'] ) && empty( $post__service_request__data['hide__service__callbutton'] ) ){
 							                echo '<a class="post-card-buttons -callbutton--post-card -BTN--hoverable" href="tel:'.$phonenumber.'" rel="nofollow">';
-							                    echo '<i class="fa-thin fa-phone-volume"></i>';
+							                    echo '<i class="fa-solid fa-phone"></i>';
 							                    echo '<strong>اتصل بنا</strong>';
 							                echo '</a>';
 							        	}
@@ -288,7 +288,7 @@ $ShareHastags = array();
 
 												if( isset( $category__sorted['parent'][0] ) && empty( $hide__post__category ) ){
 													echo '<li class="-single-bottom-list-category-terms" style="--categoryuicolor:'.( ( isset( $category__sorted['parent'][0]->uicolor ) ) ? $category__sorted['parent'][0]->uicolor : 'var(--uicolor2)').';">';
-														echo '<a href="'.$category__sorted['parent'][0]->term_link.'"><i class="fa-regular fa-list-radio"></i><span>'.$category__sorted['parent'][0]->name.'</span></a>';
+														echo '<a href="'.$category__sorted['parent'][0]->term_link.'"><i class="fa-regular fa-list-ul"></i><span>'.$category__sorted['parent'][0]->name.'</span></a>';
 													echo '</li>';
 												}
 

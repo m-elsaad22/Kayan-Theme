@@ -111,7 +111,7 @@ class slider_intro_v1 extends YC__WidgetsMachine{
 			                       if( isset( $intro_list['title'] ) ) echo '<h4 class="feature-title">'.$intro_list['title'].'</h4>';
 			                    echo'</div>';
 			                    if(!empty($intro_list['url'])){
-			                    if( isset( $intro_list['url'] ) ) echo'<a href="'.$intro_list['url'].'" title="'.$intro_list['title'].'" class="item-arrow">';echo'<i class="fa-light fa-arrow-right"></i>';
+			                    if( isset( $intro_list['url'] ) ) echo'<a href="'.$intro_list['url'].'" title="'.$intro_list['title'].'" class="item-arrow">';echo'<i class="fa-solid fa-arrow-right"></i>';
 			                    }
 			                    echo'</a>';
 			                echo'</li>';

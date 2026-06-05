@@ -50,7 +50,7 @@ if( isset( $create_hide_fields ) ){
 	foreach ( $create_hide_fields as $ek => $evalue) {
 		if( isset( $parent_id ) ){
 			echo '<div class="-Hide-Boxes-Shows Select-Hide-Insert Group-Hide-Insert" data-meta-key="'.$id.'" data-show-type="'.$ek.'" '.( ( $value ==  $ek ) ? '' : 'style="display:none"' ).' data-uniqid="'.$UniqID.'">';
-				echo '<div class="Title-MoreForms"><i class="fa-solid fa-sliders-up"></i><h2>'.(( isset( $options[$ek] ) ) ? $options[$ek] : '').'</h2></div>';
+				echo '<div class="Title-MoreForms"><i class="fa-solid fa-sliders"></i><h2>'.(( isset( $options[$ek] ) ) ? $options[$ek] : '').'</h2></div>';
 				if( isset( $evalue['fields'] ) && !empty( $evalue['fields'] ) ){
 					foreach ( $evalue['fields'] as $kyess => $newfeid) {
 						$newfeid['parent_id'] = $parent_id;

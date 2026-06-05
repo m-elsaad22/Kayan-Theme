@@ -61,7 +61,7 @@ echo '<div class="-primary-body">';
 					            'per'=>20,
 					            'show___empty__part'=>'object--empty',
 					            'data___empty__part'=>array(
-					                '__empty_icon'=>'<i class="fa-solid fa-empty-set"></i>',
+					                '__empty_icon'=>'<i class="fa-solid fa-ban"></i>',
 					                '__empty_title'=>'لم يتم العثور  علي  "'.$search_query.'"',
 					                '__empty_description'=>'<a href="'.home_url().'">الرئيسية </a>',
 					                '__Ajax_empty_title'=>'لم يتم العثور  علي  "'.$search_query.'"',
@@ -78,7 +78,7 @@ echo '<div class="-primary-body">';
 				print(1);
 		        echo '<div class="--remove-insert--post">';
 		            $this->Blade( 'empty__objects', array(
-			                '__empty_icon'=>'<i class="fa-solid fa-empty-set"></i>',
+			                '__empty_icon'=>'<i class="fa-solid fa-ban"></i>',
 			                '__empty_title'=>'لم يتم العثور  علي  "'.$search_query.'"',
 			                '__empty_description'=>'<a href="'.home_url().'">الرئيسية </a>',
 			                '__Ajax_empty_title'=>'لم يتم العثور  علي  "'.$search_query.'"',

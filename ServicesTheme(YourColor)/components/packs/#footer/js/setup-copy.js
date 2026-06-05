@@ -1293,7 +1293,7 @@ function SubMenusIcons() {
 
                                 if( DecodeArgums.phonenumber != undefined ){
                                     output += '<a class="order-services-button order-services-phonenumber -BTN--hoverable" href="tel:'+DecodeArgums.phonenumber+'" rel="nofollow">';
-                                        output += '<i class="fa-thin fa-phone-volume"></i>';
+                                        output += '<i class="fa-solid fa-phone"></i>';
                                         output += '<span>اتصل بنا</span>';
                                     output += '</a>';
                                 }

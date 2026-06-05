@@ -131,7 +131,7 @@ echo '<yourcolorapi--conatiner>';
 					if( isset( $setup__fields ) ){
 						foreach ( $setup__fields as $wid__id => $wid__data ) {
 							echo '<div class="-widgets-before-inser-post">';
-								echo '<div class="Title-MoreForms">'.( ( isset( $wid__data['icon'] ) ) ? $wid__data['icon'] : '<i class="fa-sharp fa-light fa-memo-circle-info"></i>' ).'<h2>'.$wid__data['title'].'</h2></div>';
+								echo '<div class="Title-MoreForms">'.( ( isset( $wid__data['icon'] ) ) ? $wid__data['icon'] : '<i class="fa-solid fa-circle-info"></i>' ).'<h2>'.$wid__data['title'].'</h2></div>';
 
 								echo '<div class="-widgets-before-insert-fields">';
 
@@ -149,7 +149,7 @@ echo '<yourcolorapi--conatiner>';
 					if( isset( $setup__taxonomy ) ){
 						foreach ( $setup__taxonomy as $taxonomy_name => $taxonomy__data ) {
 							echo '<div class="-widgets-before-inser-post">';
-								echo '<div class="Title-MoreForms"><i class="fa-sharp fa-light fa-memo-circle-info"></i><h2>'.$taxonomy__data['title'].'</h2></div>';
+								echo '<div class="Title-MoreForms"><i class="fa-solid fa-circle-info"></i><h2>'.$taxonomy__data['title'].'</h2></div>';
 
 								echo '<div class="-widgets-before-insert-fields">';
 									$select_category = array(

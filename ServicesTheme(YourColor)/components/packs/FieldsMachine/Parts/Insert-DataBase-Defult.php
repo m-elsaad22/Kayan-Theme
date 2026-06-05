@@ -11,7 +11,7 @@ echo '<div class="--single--DB-item --Js-nocss-important-db-item-class" data-db-
 	echo '</div>';
 
 	echo '<div class="--RemoveThisDBItem">';
-		echo '<div class="-YC-Current-DB-action-button activable disable Remove--Current-DB-item-id" data-remove-db-insert-item="'.$object->$SaveDB__field.'" data-uniq="'.$UniqId.'"><span>حذف</span><i class="fa-sharp fa-solid fa-xmark"></i></div>';
+		echo '<div class="-YC-Current-DB-action-button activable disable Remove--Current-DB-item-id" data-remove-db-insert-item="'.$object->$SaveDB__field.'" data-uniq="'.$UniqId.'"><span>حذف</span><i class="fa-solid fa-xmark"></i></div>';
 		echo '<div class="-YC-Current-DB-action-button activable disable Save--Current-DB-item-id" data-edit-db-insert-item="'.$object->$SaveDB__field.'" data-uniq="'.$UniqId.'"><span>حفظ</span><i class="fa-regular fa-arrow-left"></i></div>';
 	echo '</div>';
 echo '</div>';

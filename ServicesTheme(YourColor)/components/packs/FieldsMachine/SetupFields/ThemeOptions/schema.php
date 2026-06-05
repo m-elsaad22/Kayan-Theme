@@ -2,7 +2,7 @@
 $metaboxes = array(
 	'title'    => 'schema ',
 	'en_title'  => 'schema',
-	'icon'    => '<i class="fa-solid fa-bagel"></i>',
+	'icon'    => '<i class="fa-solid fa-circle"></i>',
 	'hide__border'=>true,
 	'number'=>11,
 	'disc'=>'اعدادات شكل الصفحة الرئيسية ',

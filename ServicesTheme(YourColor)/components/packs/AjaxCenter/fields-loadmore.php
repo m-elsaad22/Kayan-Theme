@@ -159,7 +159,7 @@ if( $old__school == true ){
 							echo '<h2><a href="'.$AdminUrl.'" target="_blank">'.wp_trim_words($post->post_title,10,'..').'</a></h2>';
 							echo '<div class="-mini-Actions">';
 								echo '<a href="'.$AdminUrl.'" target="_blank"><i class="fa-solid fa-pen-to-square"></i><span>تعديل النموذج </span></a>';
-								echo '<div class="RemovePost" data-remove-post-id="'.$post->ID.'"><i class="fa-solid fa-trash-list"></i><span>حذف النموذج </span></div>';
+								echo '<div class="RemovePost" data-remove-post-id="'.$post->ID.'"><i class="fa-solid fa-trash"></i><span>حذف النموذج </span></div>';
 							echo '</div>';
 						echo '</div>';
 					echo '</div>';
@@ -177,15 +177,15 @@ if(empty($html)){
 	$html = '<div class="NothingFoundFilter">';
 		if( isset( $arguments['post_type'] ) ){
 			if( $arguments['post_type'] == 'videos' ){
-				$html .= '<i class="fa-solid fa-display-slash"></i>';
+				$html .= '<i class="fa-solid fa-display"></i>';
 				$html .= '<p>لم يتم العثور على فيديوهات اخري </p>';
 				$html .= '<p>لقد شاهدت كل الفيديوهات التي تُعرض فى هذه الصفحة</p>';				
 			}else if( $arguments['post_type'] == 'attachment' ){
-				$html .= '<i class="fa-solid fa-image-slash"></i>';
+				$html .= '<i class="fa-solid fa-image"></i>';
 				$html .= '<p>لم يتم العثور على صور اخري </p>';
 				$html .= '<p>لقد شاهدت كل الصور التي تُعرض فى هذه الصفحة</p>';				
 			}else if( $arguments['post_type'] == 'quotes' ){
-				$html .= '<i class="fa-solid fa-pen-nib-slash"></i>';
+				$html .= '<i class="fa-solid fa-pen-nib"></i>';
 				$html .= '<p>لم يتم العثور على مقتطفات اخري </p>';
 				$html .= '<p>لقد شاهدت كل المقتطفات التي تُعرض فى هذه الصفحة</p>';				
 			}else if( $arguments['post_type'] == 'post' ){
@@ -194,12 +194,12 @@ if(empty($html)){
 				$html .= '<p>لقد شاهدت كل الشخصيات التي تُعرض فى هذه الصفحة</p>';				
 
 			}else if( $arguments['post_type'] == 'yc-froms' ){
-				$html .= '<i class="fa-solid fa-table-layout"></i>';
+				$html .= '<i class="fa-solid fa-table"></i>';
 				$html .= '<p>لم يتم العثور على نماذج اخري</p>';
 				$html .= '<p>لقد شاهدت كل النماذج التي تُعرض فى هذه الصفحة</p>';
 			}
 		}else if( isset( $arguments['YC_Current_Users'] ) ){
-				$html .= '<i class="fa-solid fa-table-layout"></i>';
+				$html .= '<i class="fa-solid fa-table"></i>';
 				$html .= '<p>لم يتم العثور على اعضاء اخري</p>';
 				$html .= '<p>لقد شاهدت كل الاعضاء التي تُعرض فى هذه الصفحة</p>';
 		}else if( isset( $arguments['taxonomy'] ) ){

@@ -87,7 +87,7 @@ echo '<div class="-primary-body">';
 					                	    	if( !empty( $icon ) ){
 						                        	echo ''.$icon.'';
 						                        }else{
-					                    			echo '<i class="fa-solid fa-vacuum"></i>';
+					                    			echo '<i class="fa-solid fa-broom"></i>';
 						                        }
 					                        echo '</div>';
 				                        echo '</div>';

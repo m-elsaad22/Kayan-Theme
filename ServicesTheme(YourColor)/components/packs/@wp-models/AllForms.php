@@ -5,7 +5,7 @@ foreach ($TaxonomyesObject as $s => $v) {
 	$TaxonomyList[$s] = $v->name;		
 }
 
-/*echo '<link rel="stylesheet" media="all" type="text/css" data-loader-href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css" />';
+/*echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">';
 if(isset($Styles)){
 	foreach ($Styles as $skey => $meky) {
 		echo '<link rel="stylesheet" type="text/css" href="'.$meky.'?v='.rand().'" />';
@@ -51,9 +51,9 @@ echo '<Inseder--Appender>';
 
 		echo '<div class="-Page-Actions-Roots">';
 			echo '<ul class="-Navs-Actions">';
-				echo '<li data-navs-actions="SelectAll" data-uniqid="'.$UniqId.'"><i class="far fa-plus-octagon"></i><span>تحديد الكل </span></li>';
-				echo '<li data-navs-actions="RemoveSelectAll" data-uniqid="'.$UniqId.'" style="pointer-events: none; opacity: 0.5;"><i class="fal fa-times-hexagon"></i><span>ألغاء التحديد</span></li>';
-				echo '<li data-navs-actions="RemoveAllSelected" data-uniqid="'.$UniqId.'" style="pointer-events: none; opacity: 0.5;"><i class="fas fa-minus-hexagon"></i><span>حذف المحدد</span></li></li>';
+				echo '<li data-navs-actions="SelectAll" data-uniqid="'.$UniqId.'"><i class="far fa-circle-plus"></i><span>تحديد الكل </span></li>';
+				echo '<li data-navs-actions="RemoveSelectAll" data-uniqid="'.$UniqId.'" style="pointer-events: none; opacity: 0.5;"><i class="fal fa-xmark"></i><span>ألغاء التحديد</span></li>';
+				echo '<li data-navs-actions="RemoveAllSelected" data-uniqid="'.$UniqId.'" style="pointer-events: none; opacity: 0.5;"><i class="fas fa-minus"></i><span>حذف المحدد</span></li></li>';
 			echo '</ul>';
 
 			echo '<searchingform>';
@@ -82,7 +82,7 @@ echo '<Inseder--Appender>';
 
 				echo '<PagnationsNavs id="PagnationsNavs" data-counter="'.$CountQuery.'" data-pagedcounter="'.$CounterAll.'" data-permalink="'.$PagenateURL.'">';
 					echo '<ul>';
-						echo '<li '.(($Paged > 1) ? '' : 'style="pointer-events:none;opacity:0.5"').'><a href="'.$PagenateURL.'"><i class="fas fa-chevron-double-right"></i><span>الصفحة الاولى </span></a></li>';
+						echo '<li '.(($Paged > 1) ? '' : 'style="pointer-events:none;opacity:0.5"').'><a href="'.$PagenateURL.'"><i class="fas fa-angles-right"></i><span>الصفحة الاولى </span></a></li>';
 						echo '<li '.(($Paged > 1) ? '' : 'style="pointer-events:none;opacity:0.5"').'><a href="'.$PagenateURL.'&paged='.$BackPaged.'"><i class="fas fa-chevron-right"></i><span>الصفحة السابقة</span></a></li>';
 					echo '</ul>';
 					echo '<PagnationControll>';
@@ -96,7 +96,7 @@ echo '<Inseder--Appender>';
 					echo '</PagnationControll>';
 					echo '<ul>';
 						echo '<li '.(($Paged >= $CounterAll) ? 'style="pointer-events:none;opacity:0.5"' : '').'><a href="'.$PagenateURL.'&paged='.$NextPaged.'"><i class="fas fa-chevron-left"></i><span>الصفحة التالية</span></a></li>';				
-						echo '<li '.(($Paged >= $CounterAll) ? 'style="pointer-events:none;opacity:0.5"' : '').'><a href="'.$PagenateURL.'&paged='.$CounterAll.'"><coun-tt>'.$CounterAll.'</coun-tt> <i class="fas fa-chevron-double-left"></i><span>الصفحة الاخيرة</span></a></li>';
+						echo '<li '.(($Paged >= $CounterAll) ? 'style="pointer-events:none;opacity:0.5"' : '').'><a href="'.$PagenateURL.'&paged='.$CounterAll.'"><coun-tt>'.$CounterAll.'</coun-tt> <i class="fas fa-angles-left"></i><span>الصفحة الاخيرة</span></a></li>';
 					echo '</ul>';
 				echo '</PagnationsNavs>';			
 			echo '</PagnationsCustom>';
@@ -113,14 +113,14 @@ echo '<Inseder--Appender>';
 						echo '<h2><a href="'.$AdminUrl.'" target="_blank">'.wp_trim_words($post->post_title,10,'..').'</a></h2>';
 						echo '<div class="-mini-Actions">';
 							echo '<a href="'.$AdminUrl.'" target="_blank"><i class="fa-solid fa-pen-to-square"></i><span>تعديل النموذج </span></a>';
-							echo '<div class="RemovePost" data-remove-post-id="'.$post->ID.'"><i class="fa-solid fa-trash-list"></i><span>حذف النموذج </span></div>';
+							echo '<div class="RemovePost" data-remove-post-id="'.$post->ID.'"><i class="fa-solid fa-trash"></i><span>حذف النموذج </span></div>';
 						echo '</div>';
 					echo '</div>';
 
 				echo '</div>';
 			}
 		echo '</div>';
-		echo '<LoadMore--InpuArea><PostsScrollLoader data-more-click="'.$UniqId.'" class="PostsScrollLoader LoadMorePostsBTN" '.(($LoadMoreAjax != false) ? '' : 'style="display:none"').'><i class="fa-solid fa-grid-2-plus"></i><span>تحميل المزيد</span></PostsScrollLoader></LoadMore--InpuArea>';
+		echo '<LoadMore--InpuArea><PostsScrollLoader data-more-click="'.$UniqId.'" class="PostsScrollLoader LoadMorePostsBTN" '.(($LoadMoreAjax != false) ? '' : 'style="display:none"').'><i class="fa-solid fa-layer-group"></i><span>تحميل المزيد</span></PostsScrollLoader></LoadMore--InpuArea>';
 
 
 	echo '</div>';

@@ -3,7 +3,7 @@
 $metaboxes = array(
 	'title'    => 'صفحة المقالة ',
 	'en_title'  => 'single settings',
-	'icon'    => '<i class="fa-solid fa-memo-circle-check"></i>',
+	'icon'    => '<i class="fa-solid fa-circle-check"></i>',
 	'number'=>5,
 	'fields'  => array(
 		array(

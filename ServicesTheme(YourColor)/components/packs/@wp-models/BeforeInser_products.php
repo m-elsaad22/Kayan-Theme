@@ -61,7 +61,7 @@ if( !empty( $_POST ) ){
 }
 
 
-/*echo '<link rel="stylesheet" media="all" type="text/css" data-loader-href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css" />';
+/*echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">';
 if(isset($Styles)){
 	foreach ($Styles as $skey => $meky) {
 		echo '<link rel="stylesheet" type="text/css" href="'.$meky.'?v='.rand().'" />';

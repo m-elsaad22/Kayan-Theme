@@ -52,7 +52,7 @@ class post_call_short_code{
 
 						if( !empty( $call_section_phone ) ){
 					        echo '<a class="--contact--button-call-link --button-call-link-phone -BTN--hoverable" href="tel:'.$call_section_phone.'" aria-label="phone" role="link">';
-					            echo '<i class="fa-thin fa-phone-volume"></i>';
+					            echo '<i class="fa-solid fa-phone"></i>';
 					            echo '<strong>اتصل بنا</strong>';
 					        echo '</a>';
 						}

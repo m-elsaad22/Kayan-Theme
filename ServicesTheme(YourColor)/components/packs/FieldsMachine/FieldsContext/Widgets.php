@@ -31,7 +31,7 @@ if( isset( $yc__widgets__center[$ModelCenter] ) && isset( $yc__widgets__center[$
 	$widget_UniqKey = uniqid();
 	echo '<div class="Master-Widgets_selected">';
 		echo '<div class="Title-MoreForms">';
-			echo '<i class="fa-solid fa-grid-2-plus"></i>';
+			echo '<i class="fa-solid fa-layer-group"></i>';
 			echo '<h2>'.$title.'</h2>';
 			echo '<div class="-show-models-selected">';
 				echo '<lord-icon src="https://cdn.lordicon.com/jvucoldz.json" trigger="loop" delay="5000" stroke="60" scale="64" colors="secondary:#1269eb,primary:#041c36"></lord-icon>';
@@ -58,7 +58,7 @@ if( isset( $yc__widgets__center[$ModelCenter] ) && isset( $yc__widgets__center[$
 								echo ( ( isset( $f['description'] ) ) ) ? '<p>'.$f['description'].'</p>' : '';
 							echo '</div>';
 
-							echo ( ( isset( $f['screen-shoot'] ) ) ) ? '<div class="Info-show-Screen-Shoot"><i class="fa-solid fa-camera-viewfinder"></i></div>' : '';
+							echo ( ( isset( $f['screen-shoot'] ) ) ) ? '<div class="Info-show-Screen-Shoot"><i class="fa-solid fa-camera"></i></div>' : '';
 
 						echo '</li>';
 					}

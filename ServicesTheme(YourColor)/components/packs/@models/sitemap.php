@@ -188,7 +188,7 @@ $ShareHastags = array();
 
 						        	if( !isset( $post__service_request__data['hide__service__callbuttony'] ) || isset( $post__service_request__data['hide__service__callbuttony'] ) && empty( $post__service_request__data['hide__service__callbuttony'] ) ){
 						                echo '<a class="post-card-buttons -callbutton--post-card -BTN--hoverable" href="tel:'.$phonenumber.'" rel="nofollow">';
-						                    echo '<i class="fa-thin fa-phone-volume"></i>';
+						                    echo '<i class="fa-solid fa-phone"></i>';
 						                    echo '<strong>اتصل بنا</strong>';
 						                echo '</a>';
 						        	}
