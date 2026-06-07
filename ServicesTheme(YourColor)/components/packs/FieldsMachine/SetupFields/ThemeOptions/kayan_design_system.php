@@ -14,5 +14,13 @@ $metaboxes = array(
 			'important_value' => true,
 			'disc' => 'قم بتخصيص تدرجات الألوان العالمية للموقع مع معاينة مباشرة.',
 		),
+		array(
+			'title' => 'Global Shadows',
+			'en_title' => 'Global Shadows',
+			'type' => 'Global-Shadows',
+			'id' => 'kayan_global_shadows',
+			'important_value' => true,
+			'disc' => 'تحكم في ظلال العناصر (Depth Shadows) مع مستويات عمق جاهزة ومعاينة مباشرة.',
+		),
 	),
 );

@@ -16,6 +16,9 @@ function CustomPin__Query(){
 			if (typeof initKayanGradientBuilder === "function") {
 				initKayanGradientBuilder(document);
 			}
+			if (typeof initKayanGlobalShadows === "function") {
+				initKayanGlobalShadows(document);
+			}
 
 			var CodesNumb = 0;	
 			$(".CodePreview").each(function(els, el){

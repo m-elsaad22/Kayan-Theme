@@ -53,6 +53,7 @@ class YC__CFM_Enqueues {
 
 		# CUSTOM JS
 			echo '<script src="'.$this->JS__URL.'kayan-gradient-builder.js?'.rand().'" type="text/javascript"></script>';
+			echo '<script src="'.$this->JS__URL.'kayan-global-shadows.js?'.rand().'" type="text/javascript"></script>';
 			echo '<script src="'.$this->UI__URL.'Custom-Setup.js?'.rand().'" type="text/javascript"></script>';
 
 	}
@@ -71,6 +72,7 @@ class YC__CFM_Enqueues {
 
 		echo '<link href="'.$this->Style__URL.'bootstrap-colorpicker.css" rel="stylesheet">';
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$this->Style__URL.'kayan-gradient-builder.css?'.rand().'" />';
+		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$this->Style__URL.'kayan-global-shadows.css?'.rand().'" />';
 
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$this->UI__URL.'Custom-Style.css?'.rand().'" />';
 		echo '<link href="'.$this->Style__URL.'flatpickr.min.css" rel="stylesheet">';

@@ -1473,6 +1473,58 @@ jQuery(function($){
 				return output;
 			}
 
+			function ContextField_GlobalShadows(argument,key=false,value) {
+				value = ( value && typeof value === 'object' ) ? value : {};
+				var defaults = {
+					enabled: '',
+					depth_preset: 'medium',
+					color: '#0f172a',
+					opacity: '16',
+					intensity: '100',
+					apply_target: 'cards',
+					layers: {
+						0: { x: '0', y: '4', blur: '12', spread: '0' },
+						1: { x: '0', y: '2', blur: '4', spread: '-1' }
+					}
+				};
+				value = $.extend(true, {}, defaults, value);
+
+				var InputName;
+				if( argument.InsertElements != undefined && argument.InsertElements != false){
+					argument.InsertElements = false;
+					InputName = 'Insert_'+argument.id;
+				}else if( key == false && argument.parent_id != undefined){
+					InputName = argument.parent_id+'['+argument.id+']';
+				}else if( argument.parent_id != undefined ){
+					InputName = argument.parent_id+'['+key+']['+argument.id+']';
+				}else{
+					InputName = argument.id;
+				}
+
+				var output = '';
+				var S_argums = JSON.stringify(argument);
+				output += '<div class="-fix-inputs-area kayan-global-shadows-field" '+( ( argument.parent_id != undefined ) ? 'data-field-argums="'+$.base64.btoa( S_argums )+'" ' : 'data-vars="'+$.base64.btoa( S_argums )+'"' )+'>';
+					output += '<div class="-fix-forms-field-title"><h3>'+argument.title+'</h3></div>';
+					output += '<div class="kayan-global-shadows" data-input-name="'+InputName+'">';
+						output += '<label class="kayan-shadow-toggle"><input type="checkbox" name="'+InputName+'[enabled]" value="1"'+( value.enabled ? ' checked' : '' )+' /><span>Enable shadows</span></label>';
+						output += '<select name="'+InputName+'[depth_preset]" class="kayan-shadow-preset-select"><option value="medium">Medium</option></select>';
+						output += '<input type="text" class="ColorViewer kayan-shadow-color" name="'+InputName+'[color]" value="'+value.color+'" />';
+						output += '<input type="number" class="kayan-shadow-opacity" name="'+InputName+'[opacity]" value="'+value.opacity+'" />';
+						output += '<input type="number" class="kayan-shadow-intensity-input" name="'+InputName+'[intensity]" value="'+value.intensity+'" />';
+						output += '<div class="kayan-shadow-preview-wrap"><div class="kayan-shadow-preview-card"></div><code class="kayan-shadow-css-output"></code></div>';
+					output += '</div>';
+					output += ( ( argument.disc != undefined ) ) ? '<descor>'+argument.disc+'</descor>' : '';
+				output += '</div>';
+
+				setTimeout(function(){
+					if (typeof initKayanGlobalShadows === 'function') {
+						initKayanGlobalShadows(document);
+					}
+				}, 20);
+
+				return output;
+			}
+
 			function ContextField_GroupsField(argument,key=false,value){
 				var output = '';
 				argument.value = value;
@@ -2157,6 +2209,11 @@ jQuery(function($){
 				CurrentValue = field.value;
 
 				return ContextField_GradientBuilder(field,curkeys,CurrentValue);
+			}else if( field.type == 'Global-Shadows' ){
+				if( field.value == undefined ) field.value = {};
+				CurrentValue = field.value;
+
+				return ContextField_GlobalShadows(field,curkeys,CurrentValue);
 			}else if( field.type == 'TextArea_Code' ){
 
 				// # VALUE CHECK. 
