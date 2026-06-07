@@ -38,7 +38,7 @@ class YC__CFM {
 
 
 			# VALUE IMPORTANT ARRAY .				
-				$this->ImportantArray = array('CheckBox','File','GroupsField','Users-CheckBox','Posts-CheckBox','Taxonomy-CheckBox');
+				$this->ImportantArray = array('CheckBox','File','GroupsField','Users-CheckBox','Posts-CheckBox','Taxonomy-CheckBox','kayan_gradient_builder');
 
 			# METHODS 
 				$this->GET = $_GET;

@@ -6,6 +6,7 @@ if( !isset( $bodyClass ) ) $bodyClass = '';
 
 $site_color = yc_get_option('site_color'); 
 $text_Color = yc_get_option('text_Color');
+$kayan_global_gradient = function_exists( 'kayan_get_global_gradient_css' ) ? kayan_get_global_gradient_css() : '';
 
 if( !isset($_GET['ajax']) ) {
 	echo '<!DOCTYPE html>';
@@ -98,6 +99,7 @@ if( !isset($_GET['ajax']) ) {
 			echo 'body { ';
 				echo ( ( !empty( $site_color ) ) ) ? '--uicolor:'.$site_color.';' : '';
 				echo ( ( !empty( $text_Color ) ) ) ? '--primary-text:'.$text_Color.';' : '';
+				echo ( ( !empty( $kayan_global_gradient ) ) ) ? '--kayan-global-gradient:'.$kayan_global_gradient.';' : '';
 			echo '}';
 		echo '</style>';
 	echo '</head>';

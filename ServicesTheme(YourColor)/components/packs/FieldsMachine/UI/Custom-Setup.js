@@ -1409,6 +1409,70 @@ jQuery(function($){
 				return output;
 			}
 
+			function ContextField_GradientBuilder(argument,key=false,value) {
+				value = ( value && typeof value === 'object' ) ? value : {};
+				var defaults = {
+					enabled: '',
+					type: 'linear',
+					angle: '135',
+					radial_shape: 'circle',
+					radial_position: 'center',
+					apply_target: 'body',
+					stops: {
+						0: { color: '#a03576', position: '0' },
+						1: { color: '#2563eb', position: '100' }
+					}
+				};
+				value = $.extend(true, {}, defaults, value);
+
+				var InputName;
+				if( argument.InsertElements != undefined && argument.InsertElements != false){
+					argument.InsertElements = false;
+					InputName = 'Insert_'+argument.id;
+				}else if( key == false && argument.parent_id != undefined){
+					InputName = argument.parent_id+'['+argument.id+']';
+				}else if( argument.parent_id != undefined ){
+					InputName = argument.parent_id+'['+key+']['+argument.id+']';
+				}else{
+					InputName = argument.id;
+				}
+
+				var output = '';
+				var S_argums = JSON.stringify(argument);
+				output += '<div class="-fix-inputs-area kayan-gradient-builder-field" '+( ( argument.parent_id != undefined ) ? 'data-field-argums="'+$.base64.btoa( S_argums )+'" ' : 'data-vars="'+$.base64.btoa( S_argums )+'"' )+'>';
+					output += '<div class="-fix-forms-field-title"><h3>'+argument.title+'</h3></div>';
+					output += '<div class="kayan-gradient-builder" data-input-name="'+InputName+'">';
+						output += '<div class="kayan-gradient-toolbar">';
+							output += '<label class="kayan-gradient-toggle"><input type="checkbox" name="'+InputName+'[enabled]" value="1"'+( value.enabled ? ' checked' : '' )+' /><span>Enable gradient</span></label>';
+							output += '<div class="kayan-gradient-type"><label>Type</label><select name="'+InputName+'[type]" class="kayan-gradient-type-select"><option value="linear"'+( value.type === 'linear' ? ' selected' : '' )+'>Linear</option><option value="radial"'+( value.type === 'radial' ? ' selected' : '' )+'>Radial</option></select></div>';
+						output += '</div>';
+						output += '<div class="kayan-gradient-preview-wrap"><div class="kayan-gradient-preview"></div><code class="kayan-gradient-css-output"></code></div>';
+						output += '<div class="kayan-gradient-linear-controls'+( value.type === 'radial' ? ' is-hidden' : '' )+'"><label>Angle</label><div class="kayan-gradient-angle-row"><input type="range" min="0" max="360" class="kayan-gradient-angle-range" value="'+value.angle+'" /><input type="number" min="0" max="360" name="'+InputName+'[angle]" value="'+value.angle+'" class="kayan-gradient-angle-input" /><span>°</span></div></div>';
+						output += '<div class="kayan-gradient-stops">';
+							$.each(value.stops,function(stopIndex, stop){
+								output += '<div class="kayan-gradient-stop" data-stop-index="'+stopIndex+'">';
+									output += '<span class="kayan-gradient-stop-handle"><i class="fa-solid fa-grip-vertical"></i></span>';
+									output += '<input type="text" class="ColorViewer kayan-gradient-stop-color" name="'+InputName+'[stops]['+stopIndex+'][color]" value="'+stop.color+'" />';
+									output += '<input type="number" min="0" max="100" class="kayan-gradient-stop-position" name="'+InputName+'[stops]['+stopIndex+'][position]" value="'+stop.position+'" />';
+									output += '<span class="kayan-gradient-stop-unit">%</span>';
+									output += '<button type="button" class="kayan-gradient-remove-stop"><i class="fa-solid fa-trash"></i></button>';
+								output += '</div>';
+							});
+						output += '</div>';
+						output += '<button type="button" class="button kayan-gradient-add-stop">Add color</button>';
+					output += '</div>';
+					output += ( ( argument.disc != undefined ) ) ? '<descor>'+argument.disc+'</descor>' : '';
+				output += '</div>';
+
+				setTimeout(function(){
+					if (typeof initKayanGradientBuilder === 'function') {
+						initKayanGradientBuilder(document);
+					}
+				}, 20);
+
+				return output;
+			}
+
 			function ContextField_GroupsField(argument,key=false,value){
 				var output = '';
 				argument.value = value;
@@ -2088,6 +2152,11 @@ jQuery(function($){
 				CurrentValue = field.value;
 
 				return ContextField_Color(field,curkeys,CurrentValue);
+			}else if( field.type == 'Gradient-Builder' ){
+				if( field.value == undefined ) field.value = {};
+				CurrentValue = field.value;
+
+				return ContextField_GradientBuilder(field,curkeys,CurrentValue);
 			}else if( field.type == 'TextArea_Code' ){
 
 				// # VALUE CHECK. 

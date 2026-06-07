@@ -13,6 +13,9 @@ function CustomPin__Query(){
 
 		echo 'function PinnedJQuery() {
 			$(".ColorViewer").colorpicker();
+			if (typeof initKayanGradientBuilder === "function") {
+				initKayanGradientBuilder(document);
+			}
 
 			var CodesNumb = 0;	
 			$(".CodePreview").each(function(els, el){
