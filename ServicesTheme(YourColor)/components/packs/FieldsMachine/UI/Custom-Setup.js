@@ -1525,6 +1525,48 @@ jQuery(function($){
 				return output;
 			}
 
+			function ContextField_HomepageSectionsOrder(argument,key=false,value) {
+				value = ( value && typeof value === 'object' ) ? value : {};
+				var sections = ( value.sections && value.sections.length ) ? value.sections : [];
+				var InputName;
+				if( argument.InsertElements != undefined && argument.InsertElements != false){
+					argument.InsertElements = false;
+					InputName = 'Insert_'+argument.id;
+				}else if( key == false && argument.parent_id != undefined){
+					InputName = argument.parent_id+'['+argument.id+']';
+				}else if( argument.parent_id != undefined ){
+					InputName = argument.parent_id+'['+key+']['+argument.id+']';
+				}else{
+					InputName = argument.id;
+				}
+
+				var output = '';
+				var S_argums = JSON.stringify(argument);
+				output += '<div class="-fix-inputs-area kayan-homepage-sections-field" '+( ( argument.parent_id != undefined ) ? 'data-field-argums="'+$.base64.btoa( S_argums )+'" ' : 'data-vars="'+$.base64.btoa( S_argums )+'"' )+'>';
+					output += '<div class="-fix-forms-field-title"><h3>'+argument.title+'</h3></div>';
+					output += '<div class="kayan-homepage-sections-order" data-input-name="'+InputName+'">';
+						output += '<label><input type="checkbox" name="'+InputName+'[enabled]" value="1"'+( value.enabled ? ' checked' : '' )+' /> Enable custom section order</label>';
+						output += '<div class="kayan-homepage-sections-list">';
+							$.each(sections,function(index, section){
+								output += '<div class="kayan-homepage-section-item" data-section-index="'+index+'">';
+									output += '<span class="kayan-homepage-section-handle"><i class="fa-solid fa-grip-vertical"></i></span>';
+									output += '<div class="kayan-homepage-section-content"><strong>'+(section.label || section.section_id)+'</strong></div>';
+									output += '<input type="hidden" class="kayan-homepage-section-id" name="'+InputName+'[sections]['+index+'][section_id]" value="'+section.section_id+'" />';
+								output += '</div>';
+							});
+						output += '</div>';
+					output += '</div>';
+				output += '</div>';
+
+				setTimeout(function(){
+					if (typeof initKayanHomepageSectionsOrder === 'function') {
+						initKayanHomepageSectionsOrder(document);
+					}
+				}, 20);
+
+				return output;
+			}
+
 			function ContextField_GroupsField(argument,key=false,value){
 				var output = '';
 				argument.value = value;
@@ -2214,6 +2256,11 @@ jQuery(function($){
 				CurrentValue = field.value;
 
 				return ContextField_GlobalShadows(field,curkeys,CurrentValue);
+			}else if( field.type == 'Homepage-Sections-Order' ){
+				if( field.value == undefined ) field.value = {};
+				CurrentValue = field.value;
+
+				return ContextField_HomepageSectionsOrder(field,curkeys,CurrentValue);
 			}else if( field.type == 'TextArea_Code' ){
 
 				// # VALUE CHECK. 

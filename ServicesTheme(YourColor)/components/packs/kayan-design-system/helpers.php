@@ -408,3 +408,188 @@ if ( ! function_exists( 'kayan_render_global_shadow_styles' ) ) {
 		echo '</style>';
 	}
 }
+
+if ( ! function_exists( 'kayan_homepage_sections_order_defaults' ) ) {
+	function kayan_homepage_sections_order_defaults() {
+		return array(
+			'enabled' => '',
+			'sections' => array(),
+		);
+	}
+}
+
+if ( ! function_exists( 'kayan_get_homepage_sections_catalog' ) ) {
+	function kayan_get_homepage_sections_catalog() {
+		$sections = array();
+		$home_intro = yc_get_option( 'HomeIntro' );
+
+		if ( is_array( $home_intro ) && ! empty( $home_intro['SelectedModel'] ) ) {
+			$sections[] = array(
+				'section_id' => 'intro',
+				'type' => 'intro',
+				'label' => is_rtl() ? 'قسم المقدمة (Intro)' : 'Intro Section',
+				'meta' => $home_intro['SelectedModel'],
+			);
+		}
+
+		$home_widgets = yc_get_option( 'widgets_home__meta' );
+		if ( ! is_array( $home_widgets ) ) {
+			return $sections;
+		}
+
+		global $yc__widgets__center;
+
+		foreach ( $home_widgets as $widget_key => $widget ) {
+			if ( empty( $widget['widget_id'] ) || empty( $widget['widget_post__id'] ) ) {
+				continue;
+			}
+
+			$label = $widget['widget_id'];
+			if (
+				isset( $yc__widgets__center['Standard']['Packs'][ $widget['widget_id'] ]['title'] )
+				&& ! empty( $yc__widgets__center['Standard']['Packs'][ $widget['widget_id'] ]['title'] )
+			) {
+				$label = $yc__widgets__center['Standard']['Packs'][ $widget['widget_id'] ]['title'];
+			}
+
+			$post = get_post( $widget['widget_post__id'] );
+			if ( $post && ! empty( $post->post_title ) ) {
+				$label = $post->post_title;
+			}
+
+			$sections[] = array(
+				'section_id' => 'widget_' . $widget['widget_post__id'],
+				'type' => 'widget',
+				'widget_key' => (string) $widget_key,
+				'widget_post__id' => (string) $widget['widget_post__id'],
+				'widget_id' => $widget['widget_id'],
+				'label' => $label,
+			);
+		}
+
+		return $sections;
+	}
+}
+
+if ( ! function_exists( 'kayan_normalize_homepage_sections_order' ) ) {
+	function kayan_normalize_homepage_sections_order( $value ) {
+		$value = wp_parse_args( is_array( $value ) ? $value : array(), kayan_homepage_sections_order_defaults() );
+		$catalog = kayan_get_homepage_sections_catalog();
+		$catalog_by_id = array();
+
+		foreach ( $catalog as $item ) {
+			$catalog_by_id[ $item['section_id'] ] = $item;
+		}
+
+		$ordered = array();
+		$used = array();
+
+		if ( is_array( $value['sections'] ) ) {
+			foreach ( $value['sections'] as $saved_section ) {
+				if ( ! is_array( $saved_section ) ) {
+					continue;
+				}
+
+				$section_id = isset( $saved_section['section_id'] ) ? sanitize_key( $saved_section['section_id'] ) : '';
+				if ( empty( $section_id ) || ! isset( $catalog_by_id[ $section_id ] ) ) {
+					continue;
+				}
+
+				$ordered[] = array_merge(
+					$catalog_by_id[ $section_id ],
+					array(
+						'visible' => ! empty( $saved_section['visible'] ) ? '1' : '',
+					)
+				);
+				$used[ $section_id ] = true;
+			}
+		}
+
+		foreach ( $catalog as $item ) {
+			if ( isset( $used[ $item['section_id'] ] ) ) {
+				continue;
+			}
+
+			$ordered[] = array_merge(
+				$item,
+				array(
+					'visible' => '1',
+				)
+			);
+		}
+
+		$value['sections'] = array_values( $ordered );
+		return $value;
+	}
+}
+
+if ( ! function_exists( 'kayan_get_homepage_sections_order_option' ) ) {
+	function kayan_get_homepage_sections_order_option() {
+		return kayan_normalize_homepage_sections_order( yc_get_option( 'kayan_homepage_sections_order', array() ) );
+	}
+}
+
+if ( ! function_exists( 'kayan_get_homepage_render_queue' ) ) {
+	function kayan_get_homepage_render_queue( $home_intro, $home_widgets, $show_intro ) {
+		$home_widgets = is_array( $home_widgets ) ? $home_widgets : array();
+		$order = kayan_get_homepage_sections_order_option();
+
+		if ( empty( $order['enabled'] ) ) {
+			$queue = array();
+			if ( $show_intro ) {
+				$queue[] = array( 'type' => 'intro' );
+			}
+			foreach ( $home_widgets as $widget_key => $widget_data ) {
+				$queue[] = array(
+					'type' => 'widget',
+					'key' => $widget_key,
+					'data' => $widget_data,
+				);
+			}
+			return $queue;
+		}
+
+		$queue = array();
+		foreach ( $order['sections'] as $section ) {
+			if ( empty( $section['visible'] ) ) {
+				continue;
+			}
+
+			if ( $section['type'] === 'intro' && $show_intro ) {
+				$queue[] = array( 'type' => 'intro' );
+				continue;
+			}
+
+			if ( $section['type'] !== 'widget' ) {
+				continue;
+			}
+
+			$widget_key = isset( $section['widget_key'] ) ? $section['widget_key'] : '';
+			if ( $widget_key !== '' && isset( $home_widgets[ $widget_key ] ) ) {
+				$queue[] = array(
+					'type' => 'widget',
+					'key' => $widget_key,
+					'data' => $home_widgets[ $widget_key ],
+				);
+				continue;
+			}
+
+			if ( empty( $section['widget_post__id'] ) ) {
+				continue;
+			}
+
+			foreach ( $home_widgets as $fallback_key => $widget_data ) {
+				if ( (string) $widget_data['widget_post__id'] === (string) $section['widget_post__id'] ) {
+					$queue[] = array(
+						'type' => 'widget',
+						'key' => $fallback_key,
+						'data' => $widget_data,
+					);
+					break;
+				}
+			}
+		}
+
+		return $queue;
+	}
+}

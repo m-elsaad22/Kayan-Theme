@@ -52,10 +52,34 @@ $YC__WidgetsMachine = new YC__WidgetsMachine;
 
 $this->Part('header',array('Styles'=>$Styles,'IntroPage'=>true,'Widgets__list'=>$Widgets__list));
 
-	# INTRO UI.
-	if( $ShowIntro == true ) $YC__WidgetsMachine->widgets__model__UI( array( 'model__value'=> $HomeIntro) );
+	# HOMEPAGE SECTIONS QUEUE (supports kayan_homepage_sections_order).
+	$homepage_render_queue = function_exists( 'kayan_get_homepage_render_queue' )
+		? kayan_get_homepage_render_queue( $HomeIntro, $home_widgets, $ShowIntro )
+		: array();
 
-	# WIDGETS UI
-	if( !empty( $home_widgets ) )  $YC__WidgetsMachine->widgets___UI( array('Widgets_data'=>$home_widgets,'WidgetID'=>'home_widgets') );
+	if ( ! empty( $homepage_render_queue ) ) {
+		foreach ( $homepage_render_queue as $homepage_section ) {
+			if ( $homepage_section['type'] === 'intro' ) {
+				$YC__WidgetsMachine->widgets__model__UI( array( 'model__value' => $HomeIntro ) );
+			} elseif ( $homepage_section['type'] === 'widget' && ! empty( $homepage_section['data'] ) ) {
+				$YC__WidgetsMachine->widgets___UI(
+					array(
+						'Widgets_data' => array( $homepage_section['key'] => $homepage_section['data'] ),
+						'WidgetID' => 'home_widgets',
+					)
+				);
+			}
+		}
+	} else {
+		# INTRO UI.
+		if ( $ShowIntro == true ) {
+			$YC__WidgetsMachine->widgets__model__UI( array( 'model__value' => $HomeIntro ) );
+		}
+
+		# WIDGETS UI
+		if ( ! empty( $home_widgets ) ) {
+			$YC__WidgetsMachine->widgets___UI( array( 'Widgets_data' => $home_widgets, 'WidgetID' => 'home_widgets' ) );
+		}
+	}
 
 $this->Part('footer',array('Styles'=>$Styles,'Widgets__list'=>$Widgets__list));

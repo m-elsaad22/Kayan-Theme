@@ -22,5 +22,13 @@ $metaboxes = array(
 			'important_value' => true,
 			'disc' => 'تحكم في ظلال العناصر (Depth Shadows) مع مستويات عمق جاهزة ومعاينة مباشرة.',
 		),
+		array(
+			'title' => 'Homepage Sections Order',
+			'en_title' => 'Homepage Sections Order',
+			'type' => 'Homepage-Sections-Order',
+			'id' => 'kayan_homepage_sections_order',
+			'important_value' => true,
+			'disc' => 'رتّب أقسام الصفحة الرئيسية (Intro والودجات) بالسحب والإفلات مع إظهار/إخفاء كل قسم.',
+		),
 	),
 );
