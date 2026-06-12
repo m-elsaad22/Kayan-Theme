@@ -1,0 +1,3 @@
+.build/
+wordpress-dev/
+dist/*.zip
