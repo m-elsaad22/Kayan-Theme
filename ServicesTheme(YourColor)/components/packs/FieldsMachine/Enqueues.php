@@ -75,6 +75,7 @@ class YC__CFM_Enqueues {
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$this->Style__URL.'kayan-gradient-builder.css?'.rand().'" />';
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$this->Style__URL.'kayan-global-shadows.css?'.rand().'" />';
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$this->Style__URL.'kayan-homepage-sections-order.css?'.rand().'" />';
+		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$this->Style__URL.'kayan-seo-dashboard.css?'.rand().'" />';
 
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$this->UI__URL.'Custom-Style.css?'.rand().'" />';
 		echo '<link href="'.$this->Style__URL.'flatpickr.min.css" rel="stylesheet">';

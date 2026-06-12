@@ -176,6 +176,9 @@ if ( ! function_exists( 'kayan_seo_output_page_schema' ) ) {
 		if ( ! kayan_seo_uses_modern_schema() || ! is_page() ) {
 			return;
 		}
+		if ( function_exists( 'kayan_seo_is_cities_index_page' ) && kayan_seo_is_cities_index_page() ) {
+			return;
+		}
 
 		global $post;
 		$permalink = get_permalink( $post );
@@ -210,6 +213,70 @@ if ( ! function_exists( 'kayan_seo_output_page_schema' ) ) {
 			$graph[0]['primaryImageOfPage'] = array(
 				'@type' => 'ImageObject',
 				'url' => $thumbnail,
+			);
+		}
+
+		kayan_seo_print_json_ld( $graph );
+	}
+}
+
+if ( ! function_exists( 'kayan_seo_output_cities_index_schema' ) ) {
+	function kayan_seo_output_cities_index_schema() {
+		if ( ! kayan_seo_uses_modern_schema() || ! function_exists( 'kayan_seo_is_cities_index_page' ) || ! kayan_seo_is_cities_index_page() ) {
+			return;
+		}
+
+		global $post;
+		$permalink = get_permalink( $post );
+		$list_items = array();
+		$position = 0;
+
+		$cities = get_terms(
+			array(
+				'taxonomy' => 'city',
+				'hide_empty' => false,
+				'number' => 60,
+			)
+		);
+
+		if ( is_array( $cities ) ) {
+			foreach ( $cities as $city ) {
+				$city_link = get_term_link( $city );
+				if ( is_wp_error( $city_link ) ) {
+					continue;
+				}
+				$position++;
+				$list_items[] = array(
+					'@type' => 'ListItem',
+					'position' => $position,
+					'name' => kayan_seo_text( $city->name ),
+					'url' => $city_link,
+				);
+			}
+		}
+
+		$graph = array(
+			array(
+				'@type' => 'CollectionPage',
+				'@id' => $permalink . '#cities-index',
+				'name' => kayan_seo_text( get_the_title( $post ) ),
+				'description' => kayan_seo_get_description(),
+				'url' => $permalink,
+				'inLanguage' => 'ar',
+				'isPartOf' => array(
+					'@type' => 'WebSite',
+					'@id' => home_url( '/#website' ),
+					'name' => kayan_seo_get_site_name(),
+				),
+			),
+		);
+
+		if ( ! empty( $list_items ) ) {
+			$graph[] = array(
+				'@type' => 'ItemList',
+				'@id' => $permalink . '#city-list',
+				'name' => 'المدن التي نخدمها',
+				'itemListElement' => $list_items,
 			);
 		}
 
@@ -388,6 +455,7 @@ if ( ! function_exists( 'kayan_seo_output_schema_graph' ) ) {
 		kayan_seo_output_home_schema();
 		kayan_seo_output_single_schema();
 		kayan_seo_output_page_schema();
+		kayan_seo_output_cities_index_schema();
 		kayan_seo_output_city_archive_schema();
 		kayan_seo_output_breadcrumb_schema();
 	}

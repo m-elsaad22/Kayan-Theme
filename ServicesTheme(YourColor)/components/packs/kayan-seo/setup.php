@@ -1,5 +1,6 @@
 <?
 require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/dashboard.php';
 require_once __DIR__ . '/schema-output.php';
 
 add_action( 'wp_head', 'kayan_seo_output_schema_graph', 2 );

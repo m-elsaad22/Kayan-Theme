@@ -103,6 +103,38 @@
 	background: #f8fafc;
 }
 
+.kayan-cities-index .kayan-cities-index__thumb {
+	margin: -45px -30px 16px;
+	height: 160px;
+	overflow: hidden;
+	border-radius: var(--miniradius) var(--miniradius) 0 0;
+}
+
+.kayan-cities-index .kayan-cities-index__thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.kayan-cities-index .--city-name-- {
+	font-size: 22px;
+}
+
+.kayan-cities-index__count {
+	display: inline-block;
+	margin-top: 8px;
+	font-size: 13px;
+	color: var(--uicolor, #2563eb);
+	font-weight: 600;
+}
+
+.kayan-cities-index__empty {
+	text-align: center;
+	padding: 32px 16px;
+	color: var(--secondarytext);
+}
+
 @media (max-width: 767px) {
 	.kayan-city-archive .kayan-city-hero {
 		padding: 40px 0 32px;
