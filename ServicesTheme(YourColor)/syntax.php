@@ -19,10 +19,6 @@ class ThemeStatic extends ThemeTree {
 
 		}
 		wp_reset_query();
-		if( is_404() ) {
-			wp_redirect( home_url(),303 );
-			die();
-		}
 		global $post;
 		if( is_home() ) {
 			do_action('BeforeBlade_index');

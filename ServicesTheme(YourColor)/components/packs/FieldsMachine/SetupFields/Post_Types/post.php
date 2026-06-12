@@ -15,6 +15,13 @@ $metaboxes['first__posts_edits'] = array(
 	'title'    => 'إعدادات المقال ',
 	'fields' => array(
 		array(
+			'title'  => 'وصف SEO (Meta Description)',
+			'en_title' => 'SEO Meta Description',
+			'type'  => 'TextArea',
+			'id'    => 'kayan_meta_description',
+			'disc'  => 'وصف مخصص لمحركات البحث (150–160 حرفاً). إن تُرك فارغاً يُستخرج تلقائياً من المقتطف أو المحتوى.',
+		),
+		array(
 			'id'=> 'pin',
 			'type'=>'SwitchBox',
 			'title'=>'المثبت ',

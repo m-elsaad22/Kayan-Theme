@@ -15,9 +15,13 @@ if( !isset($_GET['ajax']) ) {
 	echo '<head>';
 		echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 		echo '<meta charset="utf-8">';
-		$hide__description_show = yc_get_option('hide__description_show');
-		if( empty( $hide__description_show ) || empty( $hide__description_show ) ) {
-			echo'<meta name="description" content="'.get_bloginfo("name").'">';
+		if ( function_exists( 'kayan_seo_render_head_meta' ) && kayan_seo_is_enabled() ) {
+			kayan_seo_render_head_meta();
+		} else {
+			$hide__description_show = yc_get_option('hide__description_show');
+			if( empty( $hide__description_show ) || empty( $hide__description_show ) ) {
+				echo'<meta name="description" content="'.esc_attr( get_bloginfo("name") ).'">';
+			}
 		}
 
 

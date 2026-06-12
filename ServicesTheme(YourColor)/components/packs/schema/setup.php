@@ -165,7 +165,7 @@ class YourColor__Schema{
 						$YourColor_Article = get_post_meta( $post->ID,'YourColor_Article',true);
 						$YourColor_Article = ( is_array( $YourColor_Article ) ) ? $YourColor_Article : array();
 						#
-						if( !isset( $YourColor_Article['hide_schema_Article'] ) || ( isset( $YourColor_Article['hide_schema_Article'] ) && empty( $YourColor_Article['hide_schema_Service'] ) ) ) {
+						if( !isset( $YourColor_Article['hide_schema_Article'] ) || ( isset( $YourColor_Article['hide_schema_Article'] ) && empty( $YourColor_Article['hide_schema_Article'] ) ) ) {
 
 							$defualt_Service = get_option('YourColor_Article');
 							$defualt_Service = ( is_array( $defualt_Service ) ) ? $defualt_Service : array();
@@ -391,6 +391,10 @@ class YourColor__Schema{
 		$validate__schema = get_option('validate__schema');
 
 		if( !empty( $validate__schema ) ) return ;
+
+		if ( function_exists( 'kayan_seo_uses_modern_schema' ) && kayan_seo_uses_modern_schema() ) {
+			return;
+		}
 
 		if( is_home() ) $this->Home();
 

@@ -1,0 +1,88 @@
+<?
+$metaboxes = array(
+	'title' => 'تحسين محركات البحث',
+	'en_title' => 'KAYAN SEO',
+	'icon' => '<i class="fa-solid fa-chart-line"></i>',
+	'number' => 3,
+	'disc' => 'إعدادات SEO الحديثة المتوافقة مع Google (2027)',
+	'fields' => array(
+		array(
+			'title' => 'إيقاف KAYAN SEO',
+			'en_title' => 'Disable KAYAN SEO',
+			'type' => 'SwitchBox',
+			'id' => 'kayan_seo_disable',
+			'disc' => 'فعّل هذا الخيار فقط إذا كنت تستخدم إضافة SEO خارجية. الافتراضي: KAYAN SEO مفعّل.',
+		),
+		array(
+			'title' => 'الوصف الافتراضي للموقع',
+			'en_title' => 'Default meta description',
+			'type' => 'TextArea',
+			'id' => 'kayan_seo_default_description',
+			'disc' => 'يُستخدم في الصفحة الرئيسية والأرشيف عند عدم وجود وصف مخصص.',
+		),
+		array(
+			'title' => 'صورة المشاركة (OG Image)',
+			'en_title' => 'OG Image',
+			'type' => 'File',
+			'id' => 'kayan_seo_og_image',
+		),
+		array(
+			'title' => 'نوع النشاط في Schema',
+			'en_title' => 'Business schema type',
+			'type' => 'Select',
+			'id' => 'kayan_seo_business_type',
+			'options' => array(
+				'HomeAndConstructionBusiness' => 'HomeAndConstructionBusiness',
+				'LocalBusiness' => 'LocalBusiness',
+				'HousePainter' => 'HousePainter',
+				'Plumber' => 'Plumber',
+				'Electrician' => 'Electrician',
+				'CleaningService' => 'CleaningService',
+			),
+		),
+		array(
+			'title' => 'رابط Google Business Profile',
+			'en_title' => 'Google Business Profile URL',
+			'type' => 'Text',
+			'id' => 'kayan_seo_gbp_url',
+		),
+		array(
+			'title' => 'روابط sameAs (سطر لكل رابط)',
+			'en_title' => 'sameAs URLs',
+			'type' => 'TextArea',
+			'id' => 'kayan_seo_same_as',
+		),
+		array(
+			'title' => 'خط العرض',
+			'en_title' => 'Latitude',
+			'type' => 'Text',
+			'id' => 'kayan_seo_latitude',
+		),
+		array(
+			'title' => 'خط الطول',
+			'en_title' => 'Longitude',
+			'type' => 'Text',
+			'id' => 'kayan_seo_longitude',
+		),
+		array(
+			'title' => 'Locale للمشاركة',
+			'en_title' => 'OG Locale',
+			'type' => 'Text',
+			'id' => 'kayan_seo_locale',
+			'disc' => 'مثال: ar_SA',
+		),
+		array(
+			'title' => 'تفعيل hreflang للصفحة الرئيسية',
+			'en_title' => 'Enable hreflang on homepage',
+			'type' => 'SwitchBox',
+			'id' => 'kayan_seo_hreflang_enabled',
+		),
+		array(
+			'title' => 'استخدام Schema القديم',
+			'en_title' => 'Use legacy schema output',
+			'type' => 'SwitchBox',
+			'id' => 'kayan_seo_legacy_schema',
+			'disc' => 'فعّل فقط للرجوع للمخرجات القديمة. الافتراضي: Schema حديث بصيغة @graph.',
+		),
+	),
+);
