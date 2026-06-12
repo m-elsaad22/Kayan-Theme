@@ -71,7 +71,7 @@ $vars['SearchArguments'] = base64_encode(json_encode($SearchArguments));
 $vars['vars'] = base64_encode(json_encode($vars));
 if( !isset( $Ajax ) ){
 	echo '<div class="-fix-inputs-area '.( ( isset( $Custom_Class ) ) ? $Custom_Class : '' ).'" data-field-id="'.$id.'" '.( ( isset( $Custom_attrs ) ) ? $Custom_attrs : '' ).'>';
-		echo '<div class="-fix-forms-field-title"><h3>'.$title.'</h3>'.( ( isset( $disc ) ) ? '<descor data-tooltip="'.$disc.'"><i class="fa-regular fa-circle-info"></i></descor>' : '').'</div>';
+		echo '<div class="-fix-forms-field-title"><h3>'.$title.'</h3>'.( ( isset( $disc ) ) ? '<descor data-tooltip="'.$disc.'"><i class="fa-solid fa-circle-info"></i></descor>' : '').'</div>';
 		#
 		echo '<div class="-CheckBox-Centers">';
 			if( $LoadMoreAjax == true ){

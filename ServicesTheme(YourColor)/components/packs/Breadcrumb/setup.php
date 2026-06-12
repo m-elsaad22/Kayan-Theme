@@ -4,7 +4,7 @@ function Breadcrumb() {
 	echo '<ol itemscope itemtype="http://schema.org/BreadcrumbList" class="BreadcrumbsFilters">';
 		echo '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">';
 			echo '<a class="unline" itemprop="item" href="'.home_url().'">';
-			echo '<span itemprop="name">'.((is_single()) ? '<i class="fa-regular fa-house-chimney"></i>' : '<i class="fa-regular fa-house-chimney"></i>').get_option('sitename').'</span></a>';
+			echo '<span itemprop="name">'.((is_single()) ? '<i class="fa-solid fa-house-chimney"></i>' : '<i class="fa-solid fa-house-chimney"></i>').get_option('sitename').'</span></a>';
 			echo '<meta itemprop="position" content="'.$position.'" />';
 		echo '</li>';
 		if( is_page() ) {

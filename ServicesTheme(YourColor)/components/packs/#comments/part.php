@@ -50,7 +50,7 @@ echo '<div class="single-post-parent-container-comments">';
 			
 		echo '</div>';
 
-		echo '<div class="-comments-form-Button-area"><button class="hoverable activable" type="submit">إرســال التعليق <i class="fa-regular fa-arrow-left"></i></button></div>';
+		echo '<div class="-comments-form-Button-area"><button class="hoverable activable" type="submit">إرســال التعليق <i class="fa-solid fa-arrow-left"></i></button></div>';
 	echo '</form>';
 	$arguments = array(
 		'status' => 'approve',

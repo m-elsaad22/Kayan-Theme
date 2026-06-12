@@ -7,7 +7,9 @@ $Styles = array(
 );
 
 $page_title = get_the_title( $post );
-$custom_meta = get_post_meta( $post->ID, 'kayan_meta_description', true );
+$custom_meta = function_exists( 'kayan_seo_get_post_seo_description' )
+	? kayan_seo_get_post_seo_description( $post->ID )
+	: get_post_meta( $post->ID, 'kayan_meta_description', true );
 $post_content = $post->post_content;
 $post_content = str_replace( '<br/>', PHP_EOL, $post_content );
 $post_content = str_replace( '&nbsp;', ' ', $post_content );

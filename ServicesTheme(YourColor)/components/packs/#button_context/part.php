@@ -22,6 +22,9 @@
 		}
 	}else if( $button_context['button_mode'] == 'phonenumber' ){
 
+		if ( function_exists( 'kayan_ui_show_call_button' ) && ! kayan_ui_show_call_button() ) {
+			return;
+		}
 		if( !empty( $button_context[ $button_context['button_mode'] ] ) && isset( $button_context[ $button_context['button_mode'] ]['phonenumber'] ) && !empty( $button_context[ $button_context['button_mode'] ]['phonenumber'] ) ){
 			$PermaLink = "tel:{$button_context[ $button_context['button_mode'] ]['phonenumber']}";
 		}else if( !empty( get_option('phonenumber') ) ){

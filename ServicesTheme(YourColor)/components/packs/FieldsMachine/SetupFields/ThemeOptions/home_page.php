@@ -2,7 +2,7 @@
 $metaboxes = array(
 	'title'    => ' الرئيسية ',
 	'en_title'  => 'HOME OPTIONS',
-	'icon'    => '<i class="fa-regular fa-house-chimney"></i>',
+	'icon'    => '<i class="fa-solid fa-house-chimney"></i>',
 	'number'=>4,
 	'disc'=>'اعدادات شكل الصفحة الرئيسية ',
 	'fields'  => array(

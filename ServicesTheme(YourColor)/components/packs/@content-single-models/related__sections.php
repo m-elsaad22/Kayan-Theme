@@ -46,7 +46,7 @@ $related__sections_data['related__per_page'] = ( ( isset( $related__sections_dat
 									echo '<div class="-TitleContent-section">';
 										echo '<span>'.$related__sections_data['related__title'].' </span>';
 										echo '<p>'.$term->name.'</p>';
-										echo ( ( !isset( $related__sections_data['hide__related__more'] ) || isset( $related__sections_data['hide__related__more'] ) && empty( $related__sections_data['hide__related__more'] ) ) ) ? '<a href="'.get_term_link($term).'" class="-BTN--hoverable"><span>عرض المزيد </span><i class="fa-regular fa-arrow-left"></i></a>' : '';
+										echo ( ( !isset( $related__sections_data['hide__related__more'] ) || isset( $related__sections_data['hide__related__more'] ) && empty( $related__sections_data['hide__related__more'] ) ) ) ? '<a href="'.get_term_link($term).'" class="-BTN--hoverable"><span>عرض المزيد </span><i class="fa-solid fa-arrow-left"></i></a>' : '';
 									echo '</div>';
 
 									echo '<div class="-Posts-RelatedBoxes">';

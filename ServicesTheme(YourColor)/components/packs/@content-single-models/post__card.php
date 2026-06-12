@@ -23,7 +23,7 @@ if( empty( $hide__post_card ) ) {
 
 		        echo '<div class="-post-card--burrons--area">';
 
-		        	if( !isset( $post__card__data['hide__card__callbutton'] ) || isset( $post__card__data['hide__card__callbutton'] ) && empty( $post__card__data['hide__card__callbutton'] ) ){
+		        	if( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() && ( ! isset( $post__card__data['hide__card__callbutton'] ) || empty( $post__card__data['hide__card__callbutton'] ) ) ){
 		                echo '<a class="post-card-buttons -callbutton--post-card -BTN--hoverable" href="tel:'.$phonenumber.'" rel="nofollow">';
 		                    echo '<i class="fa-solid fa-phone"></i>';
 		                    echo '<strong>اتصل بنا</strong>';

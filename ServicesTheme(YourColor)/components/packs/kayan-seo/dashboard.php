@@ -18,7 +18,11 @@ if ( ! function_exists( 'kayan_seo_get_dashboard_data' ) ) {
 		$cities_with_seo = 0;
 		$cities_with_image = 0;
 		foreach ( $cities as $city ) {
-			if ( ! empty( get_term_meta( $city->term_id, 'kayan_meta_description', true ) ) ) {
+			$city_desc = get_term_meta( $city->term_id, 'rank_math_description', true );
+			if ( empty( $city_desc ) ) {
+				$city_desc = get_term_meta( $city->term_id, 'kayan_meta_description', true );
+			}
+			if ( ! empty( $city_desc ) ) {
 				$cities_with_seo++;
 			}
 			if ( function_exists( 'kayan_seo_get_term_image_url' ) && kayan_seo_get_term_image_url( $city->term_id ) ) {
@@ -37,6 +41,12 @@ if ( ! function_exists( 'kayan_seo_get_dashboard_data' ) ) {
 						'posts_per_page' => -1,
 						'fields' => 'ids',
 						'meta_query' => array(
+							'relation' => 'OR',
+							array(
+								'key' => 'rank_math_description',
+								'value' => '',
+								'compare' => '!=',
+							),
 							array(
 								'key' => 'kayan_meta_description',
 								'value' => '',
@@ -70,6 +80,11 @@ if ( ! function_exists( 'kayan_seo_get_dashboard_data' ) ) {
 				'label' => 'KAYAN SEO مفعّل',
 				'ok' => function_exists( 'kayan_seo_is_enabled' ) && kayan_seo_is_enabled(),
 				'hint' => 'إعدادات القالب → KAYAN SEO',
+			),
+			array(
+				'label' => 'Rank Math متصل',
+				'ok' => function_exists( 'kayan_seo_rank_math_active' ) && kayan_seo_rank_math_active(),
+				'hint' => 'العناوين والأوصاف تُخزَّن في rank_math_title / rank_math_description',
 			),
 			array(
 				'label' => 'الوصف الافتراضي للموقع',

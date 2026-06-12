@@ -11,7 +11,7 @@ if( isset( $InsertElements ) ){
 	$InputName = $id;
 }
 echo '<div class="-fix-inputs-area -Yc-Selected-Field -Select-Cuntryes-Item" data-field-id="'.$id.'">';
-	echo '<div class="-fix-forms-field-title"><h3>'.$title.'</h3>'.( ( isset( $disc ) ) ? '<descor data-tooltip="'.$disc.'"><i class="fa-regular fa-circle-info"></i></descor>' : '').'</div>';
+	echo '<div class="-fix-forms-field-title"><h3>'.$title.'</h3>'.( ( isset( $disc ) ) ? '<descor data-tooltip="'.$disc.'"><i class="fa-solid fa-circle-info"></i></descor>' : '').'</div>';
 	echo '<div class="Select-Options-Items">';
 		echo '<input type="text" name="'.$InputName.'" id="'.$InputName.'" value="'.$value.'" style="display:none" class="Selected-Value">';
 		echo '<h2 data-select-open="'.$InputName.'" data-cuntry-loded="'.$type.'" data-value="'.$value.'">';

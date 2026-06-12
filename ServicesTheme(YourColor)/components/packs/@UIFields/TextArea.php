@@ -11,7 +11,7 @@ if( isset( $InsertElements ) ){
 }
 
 $disc__info = '';
-if( isset( $desc ) && isset( $i_desc ) ) $disc__info = "<descor data-tooltip='{$desc}' class='--for-tooltip-descor'><i class='fa-regular fa-circle-info'></i></descor>";
+if( isset( $desc ) && isset( $i_desc ) ) $disc__info = "<descor data-tooltip='{$desc}' class='--for-tooltip-descor'><i class='fa-solid fa-circle-info'></i></descor>";
 if( isset( $desc ) && !isset( $i_desc ) ) $disc__info = "<descor>{$desc}</descor>";
 
 if( !isset( $Icon ) ) $Icon = '';

@@ -24,9 +24,6 @@ class YC__CFM_Enqueues {
 		# datepicker	
 			echo '<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>';
 
-		# lordicon	
-			echo '<script src="https://cdn.lordicon.com/lusqsztk.js"></script>';
-
 		# jquery-ui
 			echo '<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>';
 

@@ -76,7 +76,7 @@ echo '<Inseder--Appender>';
 			echo '<div class="Head--Text">';
 				echo '<h2>تصدير واستيراد </h2><p>تصدير</p>';
 			echo '</div>';
-			echo '<div class="Header Icon"><lord-icon src="https://cdn.lordicon.com/puvaffet.json" trigger="hover" style="width:250px;height:250px" colors="secondary:#ffffff,primary:#ffffff"></lord-icon></div>';
+			echo '<div class="Header Icon"><i class="fa-solid fa-cloud-arrow-down" style="font-size:120px;color:#ffffff;"></i></div>';
 		echo '</div>';
 	echo '</header>';
 	echo '<div class="PagesModelConainer -PageIs--ThemeOptions --pageIS--Export-And-Import">';
@@ -102,7 +102,7 @@ echo '<Inseder--Appender>';
 					echo '</div>';
 
 				echo '</div>';
-				echo '<div class="-row-create-button"><button type="submit"><span>إستيراد</span><i class="fa-regular fa-arrow-left"></i></button></div>';
+				echo '<div class="-row-create-button"><button type="submit"><span>إستيراد</span><i class="fa-solid fa-arrow-left"></i></button></div>';
 			echo '</form>';
 		echo '</div>';
 	echo '</div>';

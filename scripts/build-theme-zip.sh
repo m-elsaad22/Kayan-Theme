@@ -30,9 +30,6 @@ rsync -a \
 	zip -rq "$DIST_DIR/$ZIP_NAME" kayan-theme
 )
 
-if [[ -f "$ROOT_DIR/dist/README-INSTALL-ar.md" ]]; then
-	cp "$ROOT_DIR/dist/README-INSTALL-ar.md" "$DIST_DIR/README-INSTALL-ar.md"
-fi
 
 echo "Built: $DIST_DIR/$ZIP_NAME (v$VERSION)"
 echo "Upload via WordPress: المظهر → قوالب → أضف جديد → رفع قالب"

@@ -11,7 +11,7 @@ if( isset( $InsertElements ) ){
 }
 $vars['vars'] = base64_encode(json_encode($vars));
 echo '<div class="-fix-inputs-area -Yc-Switch-Field" data-field-id="'.$id.'">';
-	echo '<div class="-fix-forms-field-title"><h3>'.$title.'</h3>'.( ( isset( $disc ) ) ? '<descor data-tooltip="'.$disc.'"><i class="fa-regular fa-circle-info"></i></descor>' : '').'</div>';
+	echo '<div class="-fix-forms-field-title"><h3>'.$title.'</h3>'.( ( isset( $disc ) ) ? '<descor data-tooltip="'.$disc.'"><i class="fa-solid fa-circle-info"></i></descor>' : '').'</div>';
 	#
 	echo '<SwitchField data-field="'.$id.'">';
 		echo '<input type="checkbox" value="on" '.(( $value == 'on' ) ? 'checked' : '').' name="'.$InputName.'" id="'.$id.'YC_CheckBox" />';

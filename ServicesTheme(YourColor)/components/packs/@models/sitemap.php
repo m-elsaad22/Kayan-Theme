@@ -186,7 +186,7 @@ $ShareHastags = array();
 					            echo'</div>';
 					            echo '<div class="-post-card--burrons--area">';
 
-						        	if( !isset( $post__service_request__data['hide__service__callbuttony'] ) || isset( $post__service_request__data['hide__service__callbuttony'] ) && empty( $post__service_request__data['hide__service__callbuttony'] ) ){
+						        	if( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() && ( ! isset( $post__service_request__data['hide__service__callbuttony'] ) || empty( $post__service_request__data['hide__service__callbuttony'] ) ) ){
 						                echo '<a class="post-card-buttons -callbutton--post-card -BTN--hoverable" href="tel:'.$phonenumber.'" rel="nofollow">';
 						                    echo '<i class="fa-solid fa-phone"></i>';
 						                    echo '<strong>اتصل بنا</strong>';

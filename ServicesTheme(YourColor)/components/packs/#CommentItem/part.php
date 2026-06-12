@@ -30,7 +30,7 @@ $show_date = get_option( 'show_date' );
 echo '<div class="-comment--single-item" id="comment-'.$comment->comment_ID.'">';
 	echo '<div class="CommentContent">';
 		echo '<div class="-comments-head-area">';
-			echo '<div class="UserAvatar '.$class.'"><i class="fa-regular fa-user"></i></div>';
+			echo '<div class="UserAvatar '.$class.'"><i class="fa-solid fa-user"></i></div>';
 			echo '<div class="-comment-user-area">';
 				echo '<div class="--user--comment-name">'.$comment->comment_author.'</div>';
 				if( !empty( $show_date ) && $show_date == 'on' ){

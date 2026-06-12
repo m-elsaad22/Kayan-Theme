@@ -156,6 +156,9 @@
 											);
 												
 											foreach ( $contact_footer_list as $social__item ) {
+												if ( $social__item === 'phonenumber' && ( ! function_exists( 'kayan_ui_show_call_button' ) || ! kayan_ui_show_call_button() ) ) {
+													continue;
+												}
 												$social_value = yc_get_option($social__item);
 												if( !empty($social_value) ) {
 													$URL__value = $social_value;
@@ -292,7 +295,7 @@
 	echo '<div class ="btn-fixed-bh">';
 
 		# زر الاتصال — يختفي إذا أُخفي عالمياً أو لهذا المقال أو كان وضع المحادثة مفعّلاً
-		$show_call_btn = empty( $hide__floating__call__global ) && empty( $hide__floating__call ) && !$chat_mode_active;
+		$show_call_btn = ( ! function_exists( 'kayan_ui_show_call_button' ) || kayan_ui_show_call_button() ) && empty( $hide__floating__call__global ) && empty( $hide__floating__call ) && ! $chat_mode_active;
 		if( $show_call_btn ){
 			echo '<div class="--yourcolor--button--phones --YourColor--phone-button">';
 				echo'<a href="tel:'.$phonenumber.'" aria-label="اتصل بنا :" data-call="Phone" data-tooltip="اتصل بنا " data-position="top">';
@@ -449,6 +452,7 @@ if( isset($_GET['ajax']) ) {
 		echo "var TmpDIR = '".get_template_directory_uri()."';";
 		echo "var ISMobile = ".((wp_is_mobile()) ? 'true' : 'false').";";
 		echo "var IsSpeed = ".( ( IsSpeed() != false ) ? 'true' : 'false').";";
+		echo "var kayanShowCallButtons = ".( ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() ) ? 'true' : 'false' ).";";
 		echo "var IsHome = ".((is_home()) ? 'true' : 'false').";";
 		echo "var IsSingle = ".(is_single() ? 'true' : 'false').";";
 

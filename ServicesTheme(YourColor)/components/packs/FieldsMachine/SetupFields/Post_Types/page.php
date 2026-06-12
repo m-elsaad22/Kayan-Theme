@@ -35,11 +35,10 @@ $metaboxes['first__page_edits'] = array(
 	'title'    => 'إعدادات المقال ',
 	'fields' => array(
 		array(
-			'title'  => 'وصف SEO (Meta Description)',
-			'en_title' => 'SEO Meta Description',
-			'type'  => 'TextArea',
-			'id'    => 'kayan_meta_description',
-			'disc'  => 'وصف مخصص لمحركات البحث (150–160 حرفاً). إن تُرك فارغاً يُستخرج تلقائياً من المحتوى.',
+			'title'  => 'SEO عبر Rank Math',
+			'type'  => 'Title',
+			'id'    => 'kayan_rank_math_page_seo_note',
+			'disc'  => 'العنوان والوصف يُخزَّنان في Rank Math من محرر الصفحة.',
 		),
 		array(
 			'title'  => 'المراجع ',

@@ -112,7 +112,11 @@ $ShareHastags = array();
 					if( !empty( $post__popover__data ) && isset( $post__popover__data['popover_call_title'] ) && !empty( $post__popover__data['popover_call_title'] ) ){
 						$found__popover = true;
 						$post__popover__data['whatsapp_number'] = $whatsapp_number;
-						$post__popover__data['phonenumber'] = $phonenumber;
+						if ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() ) {
+							$post__popover__data['phonenumber'] = $phonenumber;
+						} else {
+							unset( $post__popover__data['phonenumber'] );
+						}
 						$PopOver__Attr = ' data-scroll-popover="'.base64_encode( json_encode( $post__popover__data ) ).'"';
 					}
 
@@ -122,7 +126,11 @@ $ShareHastags = array();
 						if( !empty( $post__popover__data ) && isset( $post__popover__data['popover_call_title'] ) && !empty( $post__popover__data['popover_call_title'] ) ){
 							$found__popover = true;
 							$post__popover__data['whatsapp_number'] = $whatsapp_number;
-							$post__popover__data['phonenumber'] = $phonenumber;
+							if ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() ) {
+								$post__popover__data['phonenumber'] = $phonenumber;
+							} else {
+								unset( $post__popover__data['phonenumber'] );
+							}
 							$PopOver__Attr = ' data-scroll-popover="'.base64_encode( json_encode( $post__popover__data ) ).'"';
 						}
 					}
@@ -234,7 +242,7 @@ $ShareHastags = array();
 						            echo'</div>';
 						            echo '<div class="-post-card--burrons--area">';
 
-							        	if( !isset( $post__service_request__data['hide__service__callbutton'] ) || isset( $post__service_request__data['hide__service__callbutton'] ) && empty( $post__service_request__data['hide__service__callbutton'] ) ){
+							        	if( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() && ( ! isset( $post__service_request__data['hide__service__callbutton'] ) || empty( $post__service_request__data['hide__service__callbutton'] ) ) ){
 							                echo '<a class="post-card-buttons -callbutton--post-card -BTN--hoverable" href="tel:'.$phonenumber.'" rel="nofollow">';
 							                    echo '<i class="fa-solid fa-phone"></i>';
 							                    echo '<strong>اتصل بنا</strong>';
@@ -282,13 +290,13 @@ $ShareHastags = array();
 											echo '<ul>';
 												if( empty( $hide__post__author ) ){
 													echo '<li class="-single-bottom-list-user-area">';
-														echo '<a href="'.$author__url.'"><i class="fa-regular fa-pencil"></i><span>'.$post_author->display_name.'</span></a>';
+														echo '<a href="'.$author__url.'"><i class="fa-solid fa-pencil"></i><span>'.$post_author->display_name.'</span></a>';
 													echo '</li>';
 												}
 
 												if( isset( $category__sorted['parent'][0] ) && empty( $hide__post__category ) ){
 													echo '<li class="-single-bottom-list-category-terms" style="--categoryuicolor:'.( ( isset( $category__sorted['parent'][0]->uicolor ) ) ? $category__sorted['parent'][0]->uicolor : 'var(--uicolor2)').';">';
-														echo '<a href="'.$category__sorted['parent'][0]->term_link.'"><i class="fa-regular fa-list-ul"></i><span>'.$category__sorted['parent'][0]->name.'</span></a>';
+														echo '<a href="'.$category__sorted['parent'][0]->term_link.'"><i class="fa-solid fa-list-ul"></i><span>'.$category__sorted['parent'][0]->name.'</span></a>';
 													echo '</li>';
 												}
 

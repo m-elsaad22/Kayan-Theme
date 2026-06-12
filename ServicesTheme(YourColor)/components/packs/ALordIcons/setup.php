@@ -1,29 +1,25 @@
-<? function LoardIcons($json="",$w="50px",$h="50px",$options=array("primary"=>'#ffffff',"secondary"=>'#ffffff',"stroke"=>'70',"trigger"=>'loop',"delay"=>'3000')){
-	if($json == '') return false;
-	if(!isset($options['trigger'])) $options['trigger'] = 'loop';
-	if(!isset($options['primary'])) $options['primary'] = '#151c28';
-	if(!isset($options['secondary'])) $options['secondary'] = '#1147a7';
-	$Trigger = '<lord-icon ';
-		$Trigger .= 'src="https://cdn.lordicon.com/'.$json.'.json" ';
-		$Trigger .= 'style="width:'.$w.';height:'.$h.'" ';
-		$Trigger .= 'trigger="'.$options['trigger'].'" ';
-		$Trigger .= 'colors="primary:'.$options['primary'].',secondary:'.$options['secondary'].'" ';
-		if(isset($options['stroke'])){
-			$Trigger .= 'stroke="'.$options['stroke'].'" ';
-		}
-		if(isset($options['axis-x'])){
-			$Trigger .= 'axis-x="'.$options['axis-x'].'" ';
-		}
-		if(isset($options['axis-y'])){
-			$Trigger .= 'axis-y="'.$options['axis-y'].'" ';
-		}
+<?php
+if ( ! function_exists( 'kayan_ui_fa_icon_from_lord' ) ) {
+	function kayan_ui_fa_icon_from_lord( $json ) {
+		$map = array(
+			'puvaffet'  => 'fa-cloud-arrow-up',
+			'jvucoldz'  => 'fa-layer-group',
+			'tdrtiskw'  => 'fa-circle-xmark',
+			'zczmziog'  => 'fa-circle-check',
+			'slkvcfos'  => 'fa-box-open',
+			'xfftqrxe'  => 'fa-file-lines',
+			'gzvfczvr'  => 'fa-gear',
+			'wloilxuq'  => 'fa-star',
+		);
+		return isset( $map[ $json ] ) ? $map[ $json ] : 'fa-icons';
+	}
+}
 
-		if(isset($options['delay'])){
-			$Trigger .= 'delay="'.$options['delay'].'" ';
-		}
-		if(isset($options['scale'])){
-			$Trigger .= 'scale="'.$options['scale'].'" ';
-		}
-	$Trigger .= "></lord-icon>";
-	return $Trigger;
+function LoardIcons( $json = '', $w = '50px', $h = '50px', $options = array( 'primary' => '#ffffff', 'secondary' => '#ffffff', 'stroke' => '70', 'trigger' => 'loop', 'delay' => '3000' ) ) {
+	if ( $json === '' ) {
+		return false;
+	}
+	$icon = kayan_ui_fa_icon_from_lord( $json );
+	$color = isset( $options['primary'] ) ? $options['primary'] : '#1269eb';
+	return '<i class="fa-solid ' . esc_attr( $icon ) . ' kayan-fa-lord-replacement" style="width:' . esc_attr( $w ) . ';height:' . esc_attr( $h ) . ';font-size:calc(' . esc_attr( $w ) . ' * 0.45);color:' . esc_attr( $color ) . ';display:inline-flex;align-items:center;justify-content:center;"></i>';
 }

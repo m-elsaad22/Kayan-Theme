@@ -249,7 +249,7 @@
 									echo '<input type="hidden" name="YTSSubmit" value="1" />';
 									echo '<div class="YTSBottomBar">';
 										$text = (is_rtl()) ? 'حفظ الإعدادات' : 'Save settings';
-										echo '<button type="submit">'.$text.'<i class="fa-regular fa-arrow-left"></i></button>';
+										echo '<button type="submit">'.$text.'<i class="fa-solid fa-arrow-left"></i></button>';
 									echo '</div>';
 								echo '</form>';
 

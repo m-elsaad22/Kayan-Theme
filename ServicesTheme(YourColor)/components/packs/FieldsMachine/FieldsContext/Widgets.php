@@ -34,7 +34,7 @@ if( isset( $yc__widgets__center[$ModelCenter] ) && isset( $yc__widgets__center[$
 			echo '<i class="fa-solid fa-layer-group"></i>';
 			echo '<h2>'.$title.'</h2>';
 			echo '<div class="-show-models-selected">';
-				echo '<lord-icon src="https://cdn.lordicon.com/jvucoldz.json" trigger="loop" delay="5000" stroke="60" scale="64" colors="secondary:#1269eb,primary:#041c36"></lord-icon>';
+				echo '<i class="fa-solid fa-layer-group" style="font-size:28px;color:#1269eb;"></i>';
 				echo '<span>إضافة شريحة جديدة </span>';
 			echo '</div>';
 		echo '</div>';

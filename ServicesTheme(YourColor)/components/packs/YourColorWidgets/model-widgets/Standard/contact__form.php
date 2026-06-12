@@ -81,6 +81,9 @@ class contact__form extends YC__WidgetsMachine{
 							);
 							$VeDelay=0;	
 							foreach ( $contact_footer_list as $social__item ) {
+								if ( $social__item === 'phonenumber' && ( ! function_exists( 'kayan_ui_show_call_button' ) || ! kayan_ui_show_call_button() ) ) {
+									continue;
+								}
 								$VeDelay = $VeDelay + 0.1;
 								$social_value = get_option($social__item);
 								if( !empty($social_value) ) {

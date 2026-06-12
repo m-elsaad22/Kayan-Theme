@@ -227,6 +227,9 @@ echo '<root>';
 									'company__mail'=>'<i class="fa-solid fa-envelope"></i>',
 								);
 								foreach ( $contact_header_list as $social__item ) {
+									if ( $social__item === 'phonenumber' && ( ! function_exists( 'kayan_ui_show_call_button' ) || ! kayan_ui_show_call_button() ) ) {
+										continue;
+									}
 									$social_value = yc_get_option($social__item);
 									if( !empty($social_value) ) {
 										$URL__value = $social_value;
@@ -467,21 +470,32 @@ else init();
 					if( empty($hide_city_bar) ) {
 						if(	isset( $city )  && !empty( $city ) ) {
 							echo'<div class="all-taxonimes-in">';
-								echo'<div class="-header-call-">';
-									echo'<i class="fa-solid fa-phone"></i>';
-								echo'</div>';
+								if ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() ) {
+									echo'<div class="-header-call-">';
+										echo'<i class="fa-solid fa-phone"></i>';
+									echo'</div>';
+								}
 								echo'<div class="-taxonomy--contact-">';
 									foreach ($city as $c => $r) {
 										$phonenumber = yc_get_option('number_city');
 										$iconss = yc_get_option('city_name');
 										echo'<div class="-taxonimes-">';
-											echo'<a href="tel:'.$r['number_city'].'" class="tax-in-here">';
-												echo'<i class="fa-solid fa-phone"></i>';
-												echo'<div class="-cits-taxonimes-">';
-													echo'<span class="-city-name-">' .$r['city_name']. '</span>';
-													echo'<span class="-city-number-">' .$r['number_city']. '</span>';
+											if ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() && ! empty( $r['number_city'] ) ) {
+												echo'<a href="tel:'.$r['number_city'].'" class="tax-in-here">';
+													echo'<i class="fa-solid fa-phone"></i>';
+													echo'<div class="-cits-taxonimes-">';
+														echo'<span class="-city-name-">' .$r['city_name']. '</span>';
+														echo'<span class="-city-number-">' .$r['number_city']. '</span>';
+													echo'</div>';
+												echo'</a>';
+											} else {
+												echo'<div class="tax-in-here tax-in-here--label">';
+													echo'<i class="fa-solid fa-location-dot"></i>';
+													echo'<div class="-cits-taxonimes-">';
+														echo'<span class="-city-name-">' .$r['city_name']. '</span>';
+													echo'</div>';
 												echo'</div>';
-											echo'</a>';
+											}
 										echo'</div>';
 									}
 									echo'<div class="contact-us-header">';

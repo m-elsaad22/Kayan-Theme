@@ -15,11 +15,10 @@ $metaboxes['citiesOptions'] = array(
 			'id'    => 'image_blog_id',
 		),
 		array(
-			'title'  => 'وصف SEO (Meta Description)',
-			'en_title' => 'SEO Meta Description',
-			'type'  => 'TextArea',
-			'id'    => 'kayan_meta_description',
-			'disc'  => 'وصف مخصص لصفحة المدينة في محركات البحث (150–160 حرفاً).',
+			'title'  => 'SEO عبر Rank Math',
+			'type'  => 'Title',
+			'id'    => 'kayan_rank_math_city_seo_note',
+			'disc'  => 'عنوان ووصف المدينة يُعدَّلان من Rank Math (rank_math_title / rank_math_description) في تصنيف المدينة.',
 		),
 	),
 );

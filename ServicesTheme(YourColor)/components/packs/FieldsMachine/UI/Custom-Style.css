@@ -6252,11 +6252,14 @@ a.SliderOwl-prev {
     --bghover: #1269eb0f;
 }
 
-.-show-models-selected > lord-icon {
+.-show-models-selected > i.fa-solid {
     width: var(--icon-width);
     height: var(--icon-width);
     margin-inline-end: 15px;
     margin-inline-start: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .YourColorEdits-Class-Style .accordion-section {

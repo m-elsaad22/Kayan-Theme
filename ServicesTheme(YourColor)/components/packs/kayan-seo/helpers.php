@@ -38,10 +38,20 @@ if ( ! function_exists( 'kayan_seo_get_site_name' ) ) {
 if ( ! function_exists( 'kayan_seo_get_title' ) ) {
 	function kayan_seo_get_title() {
 		if ( is_singular() ) {
+			$seo_title = function_exists( 'kayan_seo_get_post_seo_title' ) ? kayan_seo_get_post_seo_title( get_queried_object_id() ) : '';
+			if ( ! empty( $seo_title ) ) {
+				return $seo_title;
+			}
 			return kayan_seo_text( get_the_title() );
 		}
 		if ( is_category() || is_tax() || is_tag() ) {
 			$obj = get_queried_object();
+			if ( isset( $obj->term_id ) && function_exists( 'kayan_seo_get_term_seo_title' ) ) {
+				$term_title = kayan_seo_get_term_seo_title( $obj->term_id );
+				if ( ! empty( $term_title ) ) {
+					return $term_title;
+				}
+			}
 			if ( is_tax( 'city' ) && ! empty( $obj->name ) ) {
 				return kayan_seo_get_city_headline( $obj );
 			}
@@ -51,6 +61,12 @@ if ( ! function_exists( 'kayan_seo_get_title' ) ) {
 			return 'نتائج البحث عن: ' . kayan_seo_text( get_search_query() );
 		}
 		if ( is_home() || is_front_page() ) {
+			if ( function_exists( 'kayan_seo_rank_math_active' ) && kayan_seo_rank_math_active() ) {
+				$rm_titles = kayan_seo_get_rank_math_titles_option();
+				if ( ! empty( $rm_titles['homepage_title'] ) ) {
+					return kayan_seo_rank_math_replace_vars( $rm_titles['homepage_title'] );
+				}
+			}
 			$title = yc_get_option( 'home__title' );
 			return kayan_seo_text( $title ? $title : kayan_seo_get_site_name() );
 		}
@@ -62,9 +78,9 @@ if ( ! function_exists( 'kayan_seo_get_description' ) ) {
 	function kayan_seo_get_description() {
 		if ( is_singular() ) {
 			global $post;
-			$custom = get_post_meta( $post->ID, 'kayan_meta_description', true );
+			$custom = function_exists( 'kayan_seo_get_post_seo_description' ) ? kayan_seo_get_post_seo_description( $post->ID ) : '';
 			if ( ! empty( $custom ) ) {
-				return kayan_seo_text( $custom );
+				return $custom;
 			}
 			if ( has_excerpt( $post ) ) {
 				return kayan_seo_text( get_the_excerpt( $post ) );
@@ -75,9 +91,9 @@ if ( ! function_exists( 'kayan_seo_get_description' ) ) {
 		if ( is_category() || is_tax() || is_tag() ) {
 			$obj = get_queried_object();
 			if ( isset( $obj->term_id ) ) {
-				$custom = get_term_meta( $obj->term_id, 'kayan_meta_description', true );
+				$custom = function_exists( 'kayan_seo_get_term_seo_description' ) ? kayan_seo_get_term_seo_description( $obj->term_id ) : '';
 				if ( ! empty( $custom ) ) {
-					return kayan_seo_text( $custom );
+					return $custom;
 				}
 			}
 			if ( ! empty( $obj->description ) ) {
@@ -87,6 +103,15 @@ if ( ! function_exists( 'kayan_seo_get_description' ) ) {
 				return kayan_seo_text( 'خدمات منزلية في ' . ( $obj->name ?? '' ) . ' | ' . kayan_seo_get_site_name() );
 			}
 			return kayan_seo_text( ( $obj->name ?? '' ) . ' | ' . kayan_seo_get_site_name() );
+		}
+
+		if ( is_home() || is_front_page() ) {
+			if ( function_exists( 'kayan_seo_rank_math_active' ) && kayan_seo_rank_math_active() ) {
+				$rm_titles = kayan_seo_get_rank_math_titles_option();
+				if ( ! empty( $rm_titles['homepage_description'] ) ) {
+					return kayan_seo_rank_math_replace_vars( $rm_titles['homepage_description'] );
+				}
+			}
 		}
 
 		$default = yc_get_option( 'kayan_seo_default_description' );

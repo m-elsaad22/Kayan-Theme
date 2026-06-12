@@ -4,8 +4,15 @@ $metaboxes = array(
 	'en_title' => 'KAYAN SEO',
 	'icon' => '<i class="fa-solid fa-chart-line"></i>',
 	'number' => 3,
-	'disc' => 'إعدادات SEO الحديثة المتوافقة مع Google (2027)',
+	'disc' => 'إعدادات SEO الحديثة المتوافقة مع Google (2027). عند تثبيت Rank Math تُقرأ/تُزامَن العناوين والأوصاف من جداول rank_math_*.',
 	'fields' => array(
+		array(
+			'title' => 'تفعيل أزرار الاتصال (اتصل بنا)',
+			'en_title' => 'Show call buttons',
+			'type' => 'SwitchBox',
+			'id' => 'kayan_show_call_buttons',
+			'disc' => 'الافتراضي: مخفي. يُظهر زر الاتصال في البوب أب والبطاقة وودجت الخدمة والهيدر عند التفعيل. واتساب يبقى ظاهراً.',
+		),
 		array(
 			'title' => 'إيقاف KAYAN SEO',
 			'en_title' => 'Disable KAYAN SEO',

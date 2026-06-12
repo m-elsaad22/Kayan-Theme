@@ -52,7 +52,7 @@ if( isset( $yc__widgets__center[$ModelCenter] ) && isset( $yc__widgets__center[$
 		echo  '</div>';
   		echo '<div class="-YC-widget-save-area">';
   			echo '<div class="-YC-widget-action-button -YC-widget-undo-button activable disable" data-un-key="'.$single_widget__uniq.'"><span>تراجع </span><i class="fa-solid fa-rotate-left"></i></div>';
-  			echo '<div class="-YC-widget-action-button -YC-widget-save-button activable disable" data-uniq="'.$Widget__Key.'" data-un-key="'.$single_widget__uniq.'" data-save-widget="widget_post_meta_'.$single_widget__uniq.'_'.$id.'"><span>حفظ</span><i class="fa-regular fa-arrow-left"></i></div>';
+  			echo '<div class="-YC-widget-action-button -YC-widget-save-button activable disable" data-uniq="'.$Widget__Key.'" data-un-key="'.$single_widget__uniq.'" data-save-widget="widget_post_meta_'.$single_widget__uniq.'_'.$id.'"><span>حفظ</span><i class="fa-solid fa-arrow-left"></i></div>';
 		echo '</div>';
 	echo '</div>';
 }

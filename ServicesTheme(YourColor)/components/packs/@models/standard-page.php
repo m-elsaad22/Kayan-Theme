@@ -57,7 +57,11 @@ $ShareHastags = array();
 			$post__popover__data = ( ( is_array( $post__popover__data ) ) ) ? $post__popover__data : array();
 			if( !empty( $post__popover__data ) ){
 				$post__popover__data['whatsapp_number'] = $whatsapp_number;
-				$post__popover__data['phonenumber'] = $phonenumber;
+				if ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() ) {
+					$post__popover__data['phonenumber'] = $phonenumber;
+				} else {
+					unset( $post__popover__data['phonenumber'] );
+				}
 				$PopOver__Attr = ' data-scroll-popover="'.base64_encode( json_encode( $post__popover__data ) ).'"';
 			}
 		}

@@ -19,9 +19,9 @@ jQuery(function($){
 		// # TOP MENU EDITS
 /*			var First__Icon__List = {
 				'wp-admin-bar-wp-logo':'<span class="YouColor-reader-text">YourColor</span>',
-				'wp-admin-bar-site-name':'<i class="fa-regular fa-house"></i>',
+				'wp-admin-bar-site-name':'<i class="fa-solid fa-house"></i>',
 				'wp-admin-bar-updates':'<i class="fa-solid fa-arrows-rotate"></i>',
-				'wp-admin-bar-comments':'<i class="fa-regular fa-comment-dots"></i>',
+				'wp-admin-bar-comments':'<i class="fa-solid fa-comment-dots"></i>',
 				'wp-admin-bar-new-content':'<i class="fa-solid fa-plus"></i>',
 			};
 
@@ -49,7 +49,7 @@ jQuery(function($){
 					}else if( CLass_Text.indexOf( 'misc-pub-visibility' ) > 0 ){
 						Icon = '<i class="fa-solid fa-eye-slash"></i>';		
 					}else if( CLass_Text.indexOf( 'misc-pub-revisions' ) > 0 ){
-						Icon = '<i class="fa-regular fa-clock-rotate-left"></i>';		
+						Icon = '<i class="fa-solid fa-clock-rotate-left"></i>';		
 					}else if( CLass_Text.indexOf( 'misc-pub-curtime' ) > 0 ){
 						Icon = '<i class="fa-solid fa-calendar-days"></i>';
 					}
@@ -104,7 +104,7 @@ jQuery(function($){
 
 		// # OPTION PAGE SLIDER TAPS.
 		if( $(".-Pages-Taps").length > 0 ){
-			var NavBarSlider = ["<a class='SliderOwl-prev'><i class='fa-regular fa-arrow-right'></i></a>", "<a class='SliderOwl-next'><i class='fa-regular fa-arrow-left'></i></a>"];
+			var NavBarSlider = ["<a class='SliderOwl-prev'><i class='fa-solid fa-arrow-right'></i></a>", "<a class='SliderOwl-next'><i class='fa-solid fa-arrow-left'></i></a>"];
 			$(".-Pages-Taps").owlCarousel({
         responsiveClass:true,
         stopOnHover: true,
@@ -753,9 +753,9 @@ jQuery(function($){
 				  PopRemoverElement += '<div class="PopverInnerElemnt">';
 				    PopRemoverElement += '<p class="-submit-ContentAlert--Popvoer">';
 							if(rgua.type == 'error'){
-								PopRemoverElement += '<lord-icon src="https://cdn.lordicon.com/tdrtiskw.json" trigger="loop" trigger="loop" delay="2000" colors="primary:#121331,secondary:#1269eb" style="width:250px;height:250px"></lord-icon>';
+								PopRemoverElement += '<i class="fa-solid fa-circle-xmark" style="font-size:96px;color:#1269eb;"></i>';
 							}else{
-								PopRemoverElement += '<lord-icon src="https://cdn.lordicon.com/zczmziog.json" trigger="loop" trigger="loop" delay="2000" colors="primary:#121331,secondary:#1269eb" style="width:250px;height:250px"></lord-icon>';
+								PopRemoverElement += '<i class="fa-solid fa-circle-check" style="font-size:96px;color:#1269eb;"></i>';
 							}
 						 	PopRemoverElement += '<span class="Alert-Subs--Popvoer">'+rgua.alert+'</span>';
 				    PopRemoverElement += '</p>';
@@ -3321,7 +3321,7 @@ jQuery(function($){
 										}
 						  		html_output += '</div>';
 						  		html_output += '<div class="-YC-widget-save-area">';
-										html_output += '<div class="-YC-widget-action-button -YC-widget-save-button activable disable" data-uniq="'+CurrKey+'" data-un-key="'+Cr_uniq+'" data-save-widget="widget_post_meta_'+Cr_uniq+'_'+FieldArguments.id+'"><span>حفظ</span><i class="fa-regular fa-arrow-left"></i></div>';
+										html_output += '<div class="-YC-widget-action-button -YC-widget-save-button activable disable" data-uniq="'+CurrKey+'" data-un-key="'+Cr_uniq+'" data-save-widget="widget_post_meta_'+Cr_uniq+'_'+FieldArguments.id+'"><span>حفظ</span><i class="fa-solid fa-arrow-left"></i></div>';
 									html_output +='</div>';
 
 								html_output +='</div>';
@@ -4531,7 +4531,7 @@ jQuery(function($){
     var This = $(this);
     clipboardText = This.parent().find('input').val(); 
     copyToClipboard( clipboardText );
-    FastAlerts('<i class="fa-regular fa-circle-check"></i><span>تم نسخ الكود بنجاح </span><em class="notifications--tempo--close"><i class="fas fa-times"></i></em>');
+    FastAlerts('<i class="fa-solid fa-circle-check"></i><span>تم نسخ الكود بنجاح </span><em class="notifications--tempo--close"><i class="fas fa-times"></i></em>');
   });
 
 

@@ -62,9 +62,9 @@ echo '<div class="-primary-body kayan-city-archive">';
 					if ( $post_count > 0 ) {
 						echo '<p class="kayan-city-hero__stat"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> ' . (int) $post_count . ' خدمة متاحة في ' . $city_name . '</p>';
 					}
-					if ( ! empty( $phone ) || ! empty( $whatsapp ) ) {
+					if ( ! empty( $whatsapp ) || ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() && ! empty( $phone ) ) ) {
 						echo '<div class="kayan-city-hero__cta">';
-							if ( ! empty( $phone ) ) {
+							if ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() && ! empty( $phone ) ) {
 								echo '<a class="btn-ket_2 -BTN--hoverable" href="tel:' . esc_attr( preg_replace( '/\s+/', '', $phone ) ) . '"><i class="fa-solid fa-phone"></i> اتصل الآن</a>';
 							}
 							if ( ! empty( $whatsapp ) ) {

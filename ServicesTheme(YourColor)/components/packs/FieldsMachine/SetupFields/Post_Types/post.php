@@ -15,11 +15,10 @@ $metaboxes['first__posts_edits'] = array(
 	'title'    => 'إعدادات المقال ',
 	'fields' => array(
 		array(
-			'title'  => 'وصف SEO (Meta Description)',
-			'en_title' => 'SEO Meta Description',
-			'type'  => 'TextArea',
-			'id'    => 'kayan_meta_description',
-			'disc'  => 'وصف مخصص لمحركات البحث (150–160 حرفاً). إن تُرك فارغاً يُستخرج تلقائياً من المقتطف أو المحتوى.',
+			'title'  => 'SEO عبر Rank Math',
+			'type'  => 'Title',
+			'id'    => 'kayan_rank_math_post_seo_note',
+			'disc'  => 'العنوان والوصف يُخزَّنان في Rank Math (rank_math_title / rank_math_description) من لوحة المقال. بدون Rank Math يُستخدم المقتطف والمحتوى تلقائياً.',
 		),
 		array(
 			'id'=> 'pin',

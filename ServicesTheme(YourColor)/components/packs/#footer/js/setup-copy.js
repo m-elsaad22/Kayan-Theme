@@ -1282,8 +1282,8 @@ function SubMenusIcons() {
                     output += '<div class="order-services--overlay" data-button="closse--order-services"></div>';
                     output += '<div class="order-services--body">';
 
-                        output += '<div class="order-services--closse" data-button="closse--order-services"><i class="fa-regular fa-xmark"></i></div>';
-                        output += '<div class="order-services--icon">'+( ( DecodeArgums.popover_call_icon != undefined && !isEmpty( DecodeArgums.popover_call_icon ) ) ? DecodeArgums.popover_call_icon : '<i class="fa-regular fa-headset"></i>' )+'</div>';
+                        output += '<div class="order-services--closse" data-button="closse--order-services"><i class="fa-solid fa-xmark"></i></div>';
+                        output += '<div class="order-services--icon">'+( ( DecodeArgums.popover_call_icon != undefined && !isEmpty( DecodeArgums.popover_call_icon ) ) ? DecodeArgums.popover_call_icon : '<i class="fa-solid fa-headset"></i>' )+'</div>';
 
                         output += '<div class="order-services--info-context">';
                             output += ( ( DecodeArgums.popover_call_title != undefined ) ) ? '<h2>'+DecodeArgums.popover_call_title+'</h2>' : '';
@@ -1291,7 +1291,7 @@ function SubMenusIcons() {
 
                             output += '<div class="popup-boxnumber">';
 
-                                if( DecodeArgums.phonenumber != undefined ){
+                                if( DecodeArgums.phonenumber != undefined && window.kayanShowCallButtons ){
                                     output += '<a class="order-services-button order-services-phonenumber -BTN--hoverable" href="tel:'+DecodeArgums.phonenumber+'" rel="nofollow">';
                                         output += '<i class="fa-solid fa-phone"></i>';
                                         output += '<span>اتصل بنا</span>';
@@ -2215,7 +2215,7 @@ function SubMenusIcons() {
             VideoPopover += '<div class="video--popover">';
                 VideoPopover += '<div class="video--popover--overlay" data-button="closse--video"></div>';
                 VideoPopover += '<div class="video--popover--body">';
-                  VideoPopover += '<div class="video--popover--closse" data-button="closse--video"><i class="fa-regular fa-xmark"></i></div>';
+                  VideoPopover += '<div class="video--popover--closse" data-button="closse--video"><i class="fa-solid fa-xmark"></i></div>';
 
                   VideoPopover += '<div class="video--popover-iframe">';
                     VideoPopover += DecodeArgums;
@@ -2436,7 +2436,7 @@ function open__searching(e) {
             i = $.base64.atob(a, !0);
             t += '<div class="search_header">', 
                 t += '<div class="container">',
-                    t += '<div class="search_closse" data-button="closse--searching"><i class="fa-regular fa-xmark"></i></div>', 
+                    t += '<div class="search_closse" data-button="closse--searching"><i class="fa-solid fa-xmark"></i></div>', 
                     t += '<div class="search_body">', 
                         t += '<div class="search_content">', 
                             t += '<div class="search__close_x_">',
