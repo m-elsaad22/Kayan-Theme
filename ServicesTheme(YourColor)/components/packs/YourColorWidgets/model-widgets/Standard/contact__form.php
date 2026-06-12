@@ -90,7 +90,7 @@ class contact__form extends YC__WidgetsMachine{
 									$URL__value = $social_value;
 									$Name__value = $social_value;
 									if( $social__item == 'whatsapp_number' ) {
-										$URL__value = "https://wa.me/{$social_value}";
+										$URL__value = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $social_value ) : "https://wa.me/{$social_value}";
 										$Name__value = 'تواصل عبر الواتساب ';
 										$social__item = 'whatsapp';
 									}

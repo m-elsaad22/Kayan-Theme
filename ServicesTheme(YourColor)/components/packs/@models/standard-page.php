@@ -57,6 +57,9 @@ $ShareHastags = array();
 			$post__popover__data = ( ( is_array( $post__popover__data ) ) ) ? $post__popover__data : array();
 			if( !empty( $post__popover__data ) ){
 				$post__popover__data['whatsapp_number'] = $whatsapp_number;
+				if ( function_exists( 'kayan_wa_default_message' ) ) {
+					$post__popover__data['whatsapp_message'] = kayan_wa_default_message( get_the_title( $post->ID ) );
+				}
 				if ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() ) {
 					$post__popover__data['phonenumber'] = $phonenumber;
 				} else {

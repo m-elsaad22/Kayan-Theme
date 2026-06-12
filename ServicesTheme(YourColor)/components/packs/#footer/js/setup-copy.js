@@ -1299,7 +1299,11 @@ function SubMenusIcons() {
                                 }
 
                                 if( DecodeArgums.whatsapp_number != undefined ){
-                                    output += '<a target="_blank" rel="noopener" class="order-services-button order-services-whatsapp -BTN--hoverable" href="https://wa.me/'+DecodeArgums.whatsapp_number+'">';
+                                    var waHref = 'https://wa.me/'+DecodeArgums.whatsapp_number;
+                                    if( DecodeArgums.whatsapp_message != undefined && DecodeArgums.whatsapp_message != '' ){
+                                        waHref += '?text='+encodeURIComponent(DecodeArgums.whatsapp_message);
+                                    }
+                                    output += '<a target="_blank" rel="noopener" class="order-services-button order-services-whatsapp -BTN--hoverable" href="'+waHref+'">';
                                         output += '<i class="fa-brands fa-whatsapp"></i>';
                                         output += '<span>   الواتساب</span>';
                                     output += '</a>';

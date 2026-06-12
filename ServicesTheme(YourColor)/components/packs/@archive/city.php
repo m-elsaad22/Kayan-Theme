@@ -69,7 +69,8 @@ echo '<div class="-primary-body kayan-city-archive">';
 							}
 							if ( ! empty( $whatsapp ) ) {
 								$wa_digits = preg_replace( '/\D+/', '', $whatsapp );
-								echo '<a class="btn-ket_1 -BTN--hoverable button_url_2" href="https://wa.me/' . esc_attr( $wa_digits ) . '" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> واتساب</a>';
+								$wa_city_url = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $wa_digits, null, $city_headline ) : 'https://wa.me/' . $wa_digits;
+								echo '<a class="btn-ket_1 -BTN--hoverable button_url_2" href="' . esc_url( $wa_city_url ) . '" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> واتساب</a>';
 							}
 						echo '</div>';
 					}

@@ -112,6 +112,9 @@ $ShareHastags = array();
 					if( !empty( $post__popover__data ) && isset( $post__popover__data['popover_call_title'] ) && !empty( $post__popover__data['popover_call_title'] ) ){
 						$found__popover = true;
 						$post__popover__data['whatsapp_number'] = $whatsapp_number;
+						if ( function_exists( 'kayan_wa_default_message' ) ) {
+							$post__popover__data['whatsapp_message'] = kayan_wa_default_message( get_the_title( $post->ID ) );
+						}
 						if ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() ) {
 							$post__popover__data['phonenumber'] = $phonenumber;
 						} else {
@@ -250,7 +253,8 @@ $ShareHastags = array();
 							        	}
 
 							        	if( !isset( $post__service_request__data['hide__service__whatsapp'] ) || isset( $post__service_request__data['hide__service__whatsapp'] ) && empty( $post__service_request__data['hide__service__whatsapp'] ) ){
-							                echo '<a target="_blank" rel="nofollow" class="post-card-buttons whatsapp--callbutton--post-card -BTN--hoverable" href="https://wa.me/'.$whatsapp_number.'">';
+											$wa_service_url = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $whatsapp_number, null, get_the_title( $post->ID ) ) : 'https://wa.me/' . preg_replace( '/\D+/', '', $whatsapp_number );
+							                echo '<a target="_blank" rel="nofollow" class="post-card-buttons whatsapp--callbutton--post-card -BTN--hoverable" href="'.esc_url( $wa_service_url ).'">';
 							                    echo '<i class="fa-brands fa-whatsapp"></i>';
 							                    echo '<strong>   الواتساب</strong>';
 							                echo '</a>';

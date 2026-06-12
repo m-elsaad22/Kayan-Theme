@@ -18,11 +18,14 @@ if( empty( $hide__price__button ) ){
 			
 		}else if( $price__option_data['price__mode'] == 'watshapp' ){
 
+			$wa_num = '';
 			if( !empty( $price__option_data[ $price__option_data['price__mode'] ] ) && isset( $price__option_data[ $price__option_data['price__mode'] ]['watshapp'] ) && !empty( $price__option_data[ $price__option_data['price__mode'] ]['watshapp'] ) ){
-				$PermaLink = "https://wa.me/{$price__option_data[ $price__option_data['price__mode'] ]['watshapp']}";
+				$wa_num = $price__option_data[ $price__option_data['price__mode'] ]['watshapp'];
 			}else if( !empty( get_option('whatsapp_number') ) ){
-				$whatsapp_number = get_option('whatsapp_number');
-				$PermaLink = "https://wa.me/{$whatsapp_number}";
+				$wa_num = get_option('whatsapp_number');
+			}
+			if( $wa_num !== '' ) {
+				$PermaLink = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $wa_num ) : "https://wa.me/{$wa_num}";
 			}
 			$target = ' target="_blank"';
 		}else if( $price__option_data['price__mode'] == 'phonenumber' ){

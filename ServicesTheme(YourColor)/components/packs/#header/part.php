@@ -235,7 +235,7 @@ echo '<root>';
 										$URL__value = $social_value;
 										$Name__value = $social_value;
 										if( $social__item == 'whatsapp_number' ) {
-											$URL__value = "https://wa.me/{$social_value}";
+											$URL__value = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $social_value ) : "https://wa.me/{$social_value}";
 											$Name__value = 'تواصل عبر الواتساب ';
 											$social__item = 'whatsapp';
 										}
@@ -322,11 +322,15 @@ echo '<root>';
 						echo '</div>';
 					echo '</div>';
 					// ── Switcher JS (inline, no dependencies)
+					$kayan_geo_base_domain = wp_parse_url( home_url( '/' ), PHP_URL_HOST );
+					if ( empty( $kayan_geo_base_domain ) ) {
+						$kayan_geo_base_domain = isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
+					}
 					echo '<script>
 (function(){
 "use strict";
 var CFG={
-  baseDomain:"www.rukn-eltatawer.com",
+  baseDomain:'.wp_json_encode( $kayan_geo_base_domain ).',
   countryPaths:{
       ae:"",
       sa:"/sa",

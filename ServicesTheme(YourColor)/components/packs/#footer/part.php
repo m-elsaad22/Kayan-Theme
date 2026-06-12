@@ -164,7 +164,7 @@
 													$URL__value = $social_value;
 													$Name__value = $social_value;
 													if( $social__item == 'whatsapp_number' ) {
-														$URL__value = "https://wa.me/{$social_value}";
+														$URL__value = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $social_value ) : "https://wa.me/{$social_value}";
 														$Name__value = 'تواصل عبر الواتساب ';
 														$social__item = 'whatsapp';
 													}
@@ -240,9 +240,6 @@
 	echo '</footer>';
 
 	// btn contact — floating buttons
-	// رقم الواتساب الثابت لنافذة المحادثة
-	$YC_CHAT_WA_NUMBER = '971586634710';
-
 	if( is_single() || is_page() ){
 		global $post;
 		$phonenumber = get_post_meta( $post->ID,'phone_number',true );
@@ -309,7 +306,8 @@
 		# زر الواتساب الأساسي — يختفي عند تفعيل وضع المحادثة
 		if( !$chat_mode_active ){
 			echo'<div class="--yourcolor--button--phones --YourColor--whatsapp-button">';
-				echo '<a href="https://wa.me/'.$whatsapp_number.'" target="_blank" aria-label="  الواتساب  " data-call="whatsapp" data-tooltip="تواصل عبر واتساب" data-position="top">';
+				$wa_float_url = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $whatsapp_number ) : 'https://wa.me/' . preg_replace( '/\D+/', '', $whatsapp_number );
+				echo '<a href="'.esc_url( $wa_float_url ).'" target="_blank" aria-label="  الواتساب  " data-call="whatsapp" data-tooltip="تواصل عبر واتساب" data-position="top">';
 					echo '<div class="footer-header">';
 						echo '<i class="fa-brands fa-whatsapp"></i>';
 					echo '</div>';
@@ -328,12 +326,12 @@
 			$wa_msg   = get_post_meta( $post->ID, 'floating_whatsapp_chat_message', true );
 		}
 		if( empty( $wa_title ) ) $wa_title = yc_get_option('whatsapp_chat_title');
-		if( empty( $wa_title ) ) $wa_title = 'تحدث معنا على واتساب';
 		if( empty( $wa_msg ) )   $wa_msg   = yc_get_option('whatsapp_chat_message');
-		if( empty( $wa_msg ) )   $wa_msg   = 'مرحباً! كيف يمكنني مساعدتك؟';
-		$wa_encoded = rawurlencode( $wa_msg );
-		$pid = isset($post) ? $post->ID : 0;
-		$wa_link = 'https://wa.me/'.$YC_CHAT_WA_NUMBER.'?text='.$wa_encoded;
+		$page_title_for_wa = isset( $post ) ? kayan_wa_get_page_title( $post->ID ) : kayan_wa_get_page_title();
+		$wa_title = function_exists( 'kayan_wa_resolve_title' ) ? kayan_wa_resolve_title( $wa_title ) : $wa_title;
+		$wa_msg   = function_exists( 'kayan_wa_resolve_message' ) ? kayan_wa_resolve_message( $wa_msg, $page_title_for_wa ) : $wa_msg;
+		$wa_link  = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $whatsapp_number, $wa_msg, $page_title_for_wa ) : 'https://wa.me/' . preg_replace( '/\D+/', '', $whatsapp_number );
+		$pid = isset( $post ) ? $post->ID : 0;
 
 		echo '<div class="yc-float-wa-bubble" id="yc-float-wa-'.$pid.'">';
 
@@ -343,17 +341,17 @@
 					echo '<div class="yc-float-wa-header-info">';
 						echo '<div class="yc-float-wa-icon"><i class="fa-brands fa-whatsapp"></i></div>';
 						echo '<div>';
-							echo '<span class="yc-float-wa-name">'.$wa_title.'</span>';
+							echo '<span class="yc-float-wa-name">'.esc_html( $wa_title ).'</span>';
 							echo '<span class="yc-float-wa-status"><b></b>متاح الآن</span>';
 						echo '</div>';
 					echo '</div>';
 					echo '<button class="yc-float-wa-close" onclick="document.getElementById(\'yc-float-wa-box-'.$pid.'\').classList.add(\'yc-float-wa-hidden\')" aria-label="إغلاق">&times;</button>';
 				echo '</div>';
 				echo '<div class="yc-float-wa-body">';
-					echo '<div class="yc-float-wa-msg"><p>'.$wa_msg.'</p><span class="yc-float-wa-time">'.date('H:i').'</span></div>';
+					echo '<div class="yc-float-wa-msg"><p>'.esc_html( $wa_msg ).'</p><span class="yc-float-wa-time">'.date('H:i').'</span></div>';
 				echo '</div>';
 				echo '<div class="yc-float-wa-footer">';
-					echo '<a class="yc-float-wa-btn" href="'.$wa_link.'" target="_blank" rel="nofollow">';
+					echo '<a class="yc-float-wa-btn" href="'.esc_url( $wa_link ).'" target="_blank" rel="nofollow">';
 						echo '<i class="fa-brands fa-whatsapp"></i> ابدأ المحادثة';
 					echo '</a>';
 				echo '</div>';

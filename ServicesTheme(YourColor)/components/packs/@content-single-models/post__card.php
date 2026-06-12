@@ -31,7 +31,8 @@ if( empty( $hide__post_card ) ) {
 		        	}
 
 		        	if( !isset( $post__card__data['hide__card__whatsapp'] ) || isset( $post__card__data['hide__card__whatsapp'] ) && empty( $post__card__data['hide__card__whatsapp'] ) ){
-		                echo '<a target="_blank" rel="nofollow" class="post-card-buttons whatsapp--callbutton--post-card -BTN--hoverable" href="https://wa.me/'.$whatsapp_number.'">';
+						$wa_card_url = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $whatsapp_number, null, get_the_title( $post->ID ) ) : 'https://wa.me/' . preg_replace( '/\D+/', '', $whatsapp_number );
+		                echo '<a target="_blank" rel="nofollow" class="post-card-buttons whatsapp--callbutton--post-card -BTN--hoverable" href="'.esc_url( $wa_card_url ).'">';
 		                    echo '<i class="fa-brands fa-whatsapp"></i>';
 		                    echo '<strong>   الواتساب</strong>';
 		                echo '</a>';
