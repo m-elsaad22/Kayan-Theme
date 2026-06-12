@@ -18,6 +18,9 @@ if( !isset($_GET['ajax']) ) {
 		if ( function_exists( 'kayan_perf_render_resource_hints' ) ) {
 			kayan_perf_render_resource_hints();
 		}
+		if ( function_exists( 'kayan_seo_render_verification_meta' ) ) {
+			kayan_seo_render_verification_meta();
+		}
 		if ( function_exists( 'kayan_seo_render_head_meta' ) && kayan_seo_is_enabled() ) {
 			kayan_seo_render_head_meta();
 		} else {

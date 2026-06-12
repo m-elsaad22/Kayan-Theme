@@ -42,6 +42,9 @@ if ( ! function_exists( 'kayan_seo_get_title' ) ) {
 		}
 		if ( is_category() || is_tax() || is_tag() ) {
 			$obj = get_queried_object();
+			if ( is_tax( 'city' ) && ! empty( $obj->name ) ) {
+				return kayan_seo_get_city_headline( $obj );
+			}
 			return kayan_seo_text( $obj->name ?? '' );
 		}
 		if ( is_search() ) {
@@ -296,6 +299,38 @@ if ( ! function_exists( 'kayan_seo_print_json_ld' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_seo_get_city_headline' ) ) {
+	function kayan_seo_get_city_headline( $term = null ) {
+		if ( ! $term ) {
+			$term = get_queried_object();
+		}
+		$name = kayan_seo_text( $term->name ?? '' );
+		if ( empty( $name ) ) {
+			return '';
+		}
+		return kayan_seo_text( 'خدمات منزلية في ' . $name );
+	}
+}
+
+if ( ! function_exists( 'kayan_seo_render_verification_meta' ) ) {
+	function kayan_seo_render_verification_meta() {
+		$gsc = trim( (string) yc_get_option( 'kayan_seo_gsc_verification' ) );
+		if ( ! empty( $gsc ) ) {
+			echo '<meta name="google-site-verification" content="' . esc_attr( $gsc ) . '" />' . "\n";
+		}
+
+		$bing = trim( (string) yc_get_option( 'kayan_seo_bing_verification' ) );
+		if ( ! empty( $bing ) ) {
+			echo '<meta name="msvalidate.01" content="' . esc_attr( $bing ) . '" />' . "\n";
+		}
+
+		$yandex = trim( (string) yc_get_option( 'kayan_seo_yandex_verification' ) );
+		if ( ! empty( $yandex ) ) {
+			echo '<meta name="yandex-verification" content="' . esc_attr( $yandex ) . '" />' . "\n";
+		}
+	}
+}
+
 if ( ! function_exists( 'kayan_seo_render_head_meta' ) ) {
 	function kayan_seo_render_head_meta() {
 		if ( ! kayan_seo_is_enabled() ) {
@@ -353,6 +388,10 @@ if ( ! function_exists( 'kayan_seo_render_head_meta' ) ) {
 			$home = home_url( '/' );
 			echo '<link rel="alternate" hreflang="ar" href="' . esc_url( $home ) . '" />' . "\n";
 			echo '<link rel="alternate" hreflang="x-default" href="' . esc_url( $home ) . '" />' . "\n";
+		}
+
+		if ( ! kayan_seo_should_noindex() && get_option( 'blog_public' ) ) {
+			echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="' . esc_url( home_url( '/wp-sitemap.xml' ) ) . '" />' . "\n";
 		}
 	}
 }

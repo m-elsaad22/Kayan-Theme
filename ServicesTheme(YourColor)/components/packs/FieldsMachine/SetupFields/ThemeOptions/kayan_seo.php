@@ -97,5 +97,24 @@ $metaboxes = array(
 			'type' => 'SwitchBox',
 			'id' => 'kayan_perf_disable_preload',
 		),
+		array(
+			'title' => 'تحقق Google Search Console',
+			'en_title' => 'Google Search Console verification',
+			'type' => 'Text',
+			'id' => 'kayan_seo_gsc_verification',
+			'disc' => 'الصق قيمة content من وسم meta الخاص بالتحقق (بدون الوسم كاملاً).',
+		),
+		array(
+			'title' => 'تحقق Bing Webmaster',
+			'en_title' => 'Bing Webmaster verification',
+			'type' => 'Text',
+			'id' => 'kayan_seo_bing_verification',
+		),
+		array(
+			'title' => 'تحقق Yandex',
+			'en_title' => 'Yandex verification',
+			'type' => 'Text',
+			'id' => 'kayan_seo_yandex_verification',
+		),
 	),
 );
