@@ -15,6 +15,9 @@ if( !isset($_GET['ajax']) ) {
 	echo '<head>';
 		echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 		echo '<meta charset="utf-8">';
+		if ( function_exists( 'kayan_perf_render_resource_hints' ) ) {
+			kayan_perf_render_resource_hints();
+		}
 		if ( function_exists( 'kayan_seo_render_head_meta' ) && kayan_seo_is_enabled() ) {
 			kayan_seo_render_head_meta();
 		} else {

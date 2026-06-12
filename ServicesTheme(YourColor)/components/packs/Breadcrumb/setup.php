@@ -41,6 +41,17 @@ function Breadcrumb() {
 					echo '<meta itemprop="position" content="'.$position.'" />';
 				echo '</li>';
 			}
+			$cities = (is_array(get_the_terms($post->ID, 'city', ''))) ? get_the_terms($post->ID, 'city', '') : array();
+			if( !empty( $cities ) ){
+				foreach ( array_slice($cities,0,1) as $city_term) {
+					$position++;
+					echo '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">';
+						echo '<a class="unline" itemprop="item" href="'.get_term_link($city_term).'">';
+						echo '<span itemprop="name">'.$city_term->name.'</span></a>';
+						echo '<meta itemprop="position" content="'.$position.'" />';
+					echo '</li>';
+				}
+			}
 			$services = (is_array(get_the_terms($post->ID, 'services', ''))) ? get_the_terms($post->ID, 'services', '') : array();
 			if( !empty( $services ) ){
 				foreach ( array_slice($services,0,2) as $serv) {
@@ -94,7 +105,7 @@ function Breadcrumb() {
 					echo '<meta itemprop="position" content="'.$position.'" />';
 				echo '</li>';
 			}
-		}else if( is_tag() or is_tax('services') or is_tax('filters') or is_tax('ratingbars') or is_tax('stores') or is_tax('statistics') or is_tax('customers') ) {
+		}else if( is_tag() or is_tax('city') or is_tax('services') or is_tax('filters') or is_tax('ratingbars') or is_tax('stores') or is_tax('statistics') or is_tax('customers') ) {
 			$obj = get_queried_object();
 			$parentID = 0;
 			if( $obj->parent > 0 ) {

@@ -139,7 +139,7 @@ if ( ! function_exists( 'kayan_seo_output_single_schema' ) ) {
 			'description' => kayan_seo_get_description(),
 			'url' => $permalink,
 			'provider' => kayan_seo_build_local_business_node( $business, home_url( '/#business' ) ),
-			'areaServed' => ! empty( $business['addressLocality'] ) ? $business['addressLocality'] : $business['addressCountry'],
+			'areaServed' => kayan_seo_get_post_area_served( $post->ID ),
 		);
 
 		$questions = get_post_meta( $post->ID, 'yourcolor__faqs', true );
@@ -217,6 +217,91 @@ if ( ! function_exists( 'kayan_seo_output_page_schema' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_seo_output_city_archive_schema' ) ) {
+	function kayan_seo_output_city_archive_schema() {
+		if ( ! kayan_seo_uses_modern_schema() || ! is_tax( 'city' ) ) {
+			return;
+		}
+
+		$term = get_queried_object();
+		if ( ! $term || empty( $term->term_id ) ) {
+			return;
+		}
+
+		$term_link = get_term_link( $term );
+		if ( is_wp_error( $term_link ) ) {
+			return;
+		}
+
+		$business = kayan_seo_get_business_settings();
+		$graph = array(
+			array(
+				'@type' => 'CollectionPage',
+				'@id' => $term_link . '#collection',
+				'name' => kayan_seo_text( $term->name ),
+				'description' => kayan_seo_get_description(),
+				'url' => $term_link,
+				'inLanguage' => 'ar',
+				'isPartOf' => array(
+					'@type' => 'WebSite',
+					'@id' => home_url( '/#website' ),
+					'name' => kayan_seo_get_site_name(),
+				),
+				'about' => array(
+					'@type' => 'City',
+					'name' => kayan_seo_text( $term->name ),
+				),
+				'provider' => kayan_seo_build_local_business_node( $business, home_url( '/#business' ) ),
+			),
+		);
+
+		$term_image = kayan_seo_get_term_image_url( $term->term_id );
+		if ( ! empty( $term_image ) ) {
+			$graph[0]['primaryImageOfPage'] = array(
+				'@type' => 'ImageObject',
+				'url' => $term_image,
+			);
+		}
+
+		$list_items = array();
+		$posts = get_posts(
+			array(
+				'post_type' => 'post',
+				'posts_per_page' => 12,
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'city',
+						'field' => 'term_id',
+						'terms' => $term->term_id,
+					),
+				),
+			)
+		);
+
+		$position = 0;
+		foreach ( $posts as $city_post ) {
+			$position++;
+			$list_items[] = array(
+				'@type' => 'ListItem',
+				'position' => $position,
+				'url' => get_permalink( $city_post ),
+				'name' => kayan_seo_text( get_the_title( $city_post ) ),
+			);
+		}
+
+		if ( ! empty( $list_items ) ) {
+			$graph[] = array(
+				'@type' => 'ItemList',
+				'@id' => $term_link . '#itemlist',
+				'name' => 'خدمات في ' . kayan_seo_text( $term->name ),
+				'itemListElement' => $list_items,
+			);
+		}
+
+		kayan_seo_print_json_ld( $graph );
+	}
+}
+
 if ( ! function_exists( 'kayan_seo_output_breadcrumb_schema' ) ) {
 	function kayan_seo_output_breadcrumb_schema() {
 		if ( ! kayan_seo_uses_modern_schema() || is_front_page() || is_home() ) {
@@ -242,6 +327,18 @@ if ( ! function_exists( 'kayan_seo_output_breadcrumb_schema' ) ) {
 						'position' => $position,
 						'name' => $category->name,
 						'item' => get_term_link( $category ),
+					);
+				}
+			}
+			$cities = get_the_terms( get_queried_object_id(), 'city' );
+			if ( is_array( $cities ) ) {
+				foreach ( array_slice( $cities, 0, 1 ) as $city ) {
+					$position++;
+					$items[] = array(
+						'@type' => 'ListItem',
+						'position' => $position,
+						'name' => $city->name,
+						'item' => get_term_link( $city ),
 					);
 				}
 			}
@@ -291,6 +388,7 @@ if ( ! function_exists( 'kayan_seo_output_schema_graph' ) ) {
 		kayan_seo_output_home_schema();
 		kayan_seo_output_single_schema();
 		kayan_seo_output_page_schema();
+		kayan_seo_output_city_archive_schema();
 		kayan_seo_output_breadcrumb_schema();
 	}
 }

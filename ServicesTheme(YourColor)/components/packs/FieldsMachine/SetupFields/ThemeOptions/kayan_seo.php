@@ -84,5 +84,18 @@ $metaboxes = array(
 			'id' => 'kayan_seo_legacy_schema',
 			'disc' => 'فعّل فقط للرجوع للمخرجات القديمة. الافتراضي: Schema حديث بصيغة @graph.',
 		),
+		array(
+			'title' => 'إيقاف تحسينات الأداء',
+			'en_title' => 'Disable performance hints',
+			'type' => 'SwitchBox',
+			'id' => 'kayan_perf_disable',
+			'disc' => 'يعطّل preload لصورة LCP و preconnect و fetchpriority (مفعّل افتراضياً).',
+		),
+		array(
+			'title' => 'إيقاف preload لصورة LCP',
+			'en_title' => 'Disable LCP image preload',
+			'type' => 'SwitchBox',
+			'id' => 'kayan_perf_disable_preload',
+		),
 	),
 );

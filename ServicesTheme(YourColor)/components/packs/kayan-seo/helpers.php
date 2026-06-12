@@ -71,8 +71,17 @@ if ( ! function_exists( 'kayan_seo_get_description' ) ) {
 
 		if ( is_category() || is_tax() || is_tag() ) {
 			$obj = get_queried_object();
+			if ( isset( $obj->term_id ) ) {
+				$custom = get_term_meta( $obj->term_id, 'kayan_meta_description', true );
+				if ( ! empty( $custom ) ) {
+					return kayan_seo_text( $custom );
+				}
+			}
 			if ( ! empty( $obj->description ) ) {
 				return kayan_seo_text( $obj->description );
+			}
+			if ( is_tax( 'city' ) ) {
+				return kayan_seo_text( 'خدمات منزلية في ' . ( $obj->name ?? '' ) . ' | ' . kayan_seo_get_site_name() );
 			}
 			return kayan_seo_text( ( $obj->name ?? '' ) . ' | ' . kayan_seo_get_site_name() );
 		}
@@ -118,12 +127,66 @@ if ( ! function_exists( 'kayan_seo_get_canonical_url' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_seo_get_term_image_url' ) ) {
+	function kayan_seo_get_term_image_url( $term_id ) {
+		$image_id = get_term_meta( $term_id, 'image_blog_id_id', true );
+		if ( empty( $image_id ) ) {
+			$image_id = get_term_meta( $term_id, 'image_blog_id', true );
+		}
+		if ( ! empty( $image_id ) && is_numeric( $image_id ) ) {
+			$url = wp_get_attachment_image_url( (int) $image_id, 'full' );
+			if ( $url ) {
+				return esc_url( $url );
+			}
+		}
+
+		$url_meta = get_term_meta( $term_id, 'image_blog_id', true );
+		if ( ! empty( $url_meta ) && is_string( $url_meta ) && filter_var( $url_meta, FILTER_VALIDATE_URL ) ) {
+			return esc_url( $url_meta );
+		}
+
+		return '';
+	}
+}
+
+if ( ! function_exists( 'kayan_seo_get_post_area_served' ) ) {
+	function kayan_seo_get_post_area_served( $post_id ) {
+		$terms = get_the_terms( $post_id, 'city' );
+		if ( is_array( $terms ) && ! empty( $terms ) ) {
+			$served = array();
+			foreach ( $terms as $term ) {
+				$served[] = array(
+					'@type' => 'City',
+					'name' => kayan_seo_text( $term->name ),
+				);
+			}
+			return $served;
+		}
+
+		$business = kayan_seo_get_business_settings();
+		if ( ! empty( $business['addressLocality'] ) ) {
+			return kayan_seo_text( $business['addressLocality'] );
+		}
+		return kayan_seo_text( $business['addressCountry'] );
+	}
+}
+
 if ( ! function_exists( 'kayan_seo_get_og_image' ) ) {
 	function kayan_seo_get_og_image() {
 		if ( is_singular() && has_post_thumbnail() ) {
 			$url = get_the_post_thumbnail_url( get_queried_object_id(), 'full' );
 			if ( $url ) {
 				return esc_url( $url );
+			}
+		}
+
+		if ( is_tax() || is_category() || is_tag() ) {
+			$obj = get_queried_object();
+			if ( isset( $obj->term_id ) ) {
+				$term_image = kayan_seo_get_term_image_url( $obj->term_id );
+				if ( ! empty( $term_image ) ) {
+					return $term_image;
+				}
 			}
 		}
 
