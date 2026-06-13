@@ -8,7 +8,7 @@ if( !empty( $_POST ) ){
 		$Extract__data = new Extract__data;
 		$XML__Data = $Extract__data->ExtractXML($_POST);
 
-		$filename = 'YourColor-Export-'.date('Y-m-d').'.json';
+		$filename = 'KAYAN-Export-'.date('Y-m-d').'.json';
 		$content = json_encode( $XML__Data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE );
 
 		header('Content-Disposition: attachment; filename="' . $filename . '"');

@@ -295,7 +295,7 @@ $metaboxes['posts_ImageObject'] = array(
 	'title'=>'Schema ImageObject',
 	'fields'=>array(
 		array(
-			'title'  => 'YourColor Schema ImageObject',
+			'title'  => 'KAYAN Schema ImageObject',
 			'titleEN'=> 'disable local',
 			'type'  => 'SingleGroup',
 			'id'    => 'YourColor_ImageObject',
@@ -328,7 +328,7 @@ $metaboxes['posts_YourColor_Service'] = array(
 	'title'=>'Schema Service',
 	'fields'=>array(
 		array(
-			'title'  => 'YourColor Schema Service',
+			'title'  => 'KAYAN Schema Service',
 			'titleEN'=> 'disable local',
 			'type'  => 'SingleGroup',
 			'id'    => 'YourColor_Service',
@@ -421,7 +421,7 @@ $metaboxes['posts_YourColor_Article'] = array(
 	'title'=>'Schema Article',
 	'fields'=>array(
 		array(
-			'title'  => 'YourColor Schema Article',
+			'title'  => 'KAYAN Schema Article',
 			'titleEN'=> 'disable local',
 			'type'  => 'SingleGroup',
 			'id'    => 'YourColor_Article',
@@ -460,7 +460,7 @@ $metaboxes['posts_YourColor_Rating'] = array(
 	'title'=>'Rating Schema',
 	'fields'=>array(
 		array(
-			'title'  => 'YourColor Schema Rating',
+			'title'  => 'KAYAN Schema Rating',
 			'titleEN'=> 'disable local',
 			'type'  => 'SingleGroup',
 			'id'    => 'YourColor__Rating',
