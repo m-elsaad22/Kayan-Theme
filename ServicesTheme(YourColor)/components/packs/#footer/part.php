@@ -291,9 +291,12 @@
 
 	echo '<div class ="btn-fixed-bh">';
 
-		# زر الاتصال — يختفي إذا أُخفي عالمياً أو لهذا المقال أو كان وضع المحادثة مفعّلاً
-		$show_call_btn = ( ! function_exists( 'kayan_ui_show_call_button' ) || kayan_ui_show_call_button() ) && empty( $hide__floating__call__global ) && empty( $hide__floating__call ) && ! $chat_mode_active;
-		if( $show_call_btn ){
+		# زر الاتصال العائم — مستقل عن kayan_show_call_buttons
+		$post_id_for_floating = ( ( is_single() || is_page() ) && isset( $post ) ) ? (int) $post->ID : 0;
+		$show_floating_call_btn = function_exists( 'kayan_ui_show_floating_call_button' )
+			? kayan_ui_show_floating_call_button( $post_id_for_floating, $chat_mode_active )
+			: ( empty( $hide__floating__call__global ) && empty( $hide__floating__call ) && ! $chat_mode_active );
+		if( $show_floating_call_btn ){
 			echo '<div class="--yourcolor--button--phones --YourColor--phone-button">';
 				echo'<a href="tel:'.$phonenumber.'" aria-label="اتصل بنا :" data-call="Phone" data-tooltip="اتصل بنا " data-position="top">';
 					echo '<div class="footer-header">';
@@ -451,6 +454,16 @@ if( isset($_GET['ajax']) ) {
 		echo "var ISMobile = ".((wp_is_mobile()) ? 'true' : 'false').";";
 		echo "var IsSpeed = ".( ( IsSpeed() != false ) ? 'true' : 'false').";";
 		echo "var kayanShowCallButtons = ".( ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() ) ? 'true' : 'false' ).";";
+		$floating_call_js = true;
+		if ( function_exists( 'kayan_ui_show_floating_call_button' ) ) {
+			$floating_call_js = kayan_ui_show_floating_call_button(
+				( ( is_single() || is_page() ) && isset( $post ) ) ? (int) $post->ID : 0,
+				! empty( $chat_mode_active )
+			);
+		} elseif ( ! empty( $hide__floating__call__global ) || ! empty( $hide__floating__call ) || ! empty( $chat_mode_active ) ) {
+			$floating_call_js = false;
+		}
+		echo "var kayanShowFloatingCallButton = ".( $floating_call_js ? 'true' : 'false' ).";";
 		echo "var IsHome = ".((is_home()) ? 'true' : 'false').";";
 		echo "var IsSingle = ".(is_single() ? 'true' : 'false').";";
 

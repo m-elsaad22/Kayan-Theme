@@ -9,7 +9,7 @@ function kayan_ui_enqueue_fixes() {
 		'kayan-ui-fixes',
 		get_template_directory_uri() . '/components/packs/kayan-ui/kayan-ui-fixes.js',
 		array( 'jquery', 'yourcolor-init' ),
-		'2027.1.2',
+		'2027.1.4',
 		true
 	);
 }

@@ -1,5 +1,5 @@
 (function ($) {
-	function removeCallButtons() {
+	function removeContentCallButtons() {
 		if (window.kayanShowCallButtons) {
 			return;
 		}
@@ -8,8 +8,19 @@
 		$('.-company-contact-minibox .phonenumber').remove();
 		$('.-taxonomy--contact- a[href^="tel:"]').closest('.-taxonimes-').remove();
 		$('.-header-call-').remove();
-		$('.--YourColor--phone-button').remove();
 		$('a[href^="tel:"].order-services-button').remove();
+	}
+
+	function removeFloatingCallButton() {
+		if (window.kayanShowFloatingCallButton !== false) {
+			return;
+		}
+		$('.--YourColor--phone-button').remove();
+	}
+
+	function removeCallButtons() {
+		removeContentCallButtons();
+		removeFloatingCallButton();
 	}
 
 	$(document).ready(removeCallButtons);
