@@ -7,6 +7,13 @@ $metaboxes = array(
 	'disc'=>'اعدادات شكل الصفحة الرئيسية ',
 	'fields'  => array(
 		array(
+			'title'  => 'تفعيل الصفحة الرئيسية الجديدة (تصميم 2026)',
+			'en_title' => 'Homepage v3',
+			'type'   => 'SwitchBox',
+			'id'     => 'kayan_homepage_v3',
+			'disc'   => 'يعرض تصميم KAYAN Homepage الجديد بدلاً من Intro والودجات القديمة. يستخدم اسم الموقع وأرقام التواصل من إعدادات القالب.',
+		),
+		array(
 			'id'=>'HomeIntro',
 			'type'=>'Widget-Selector',
 			'ModelCenter'=>'intro-models',
