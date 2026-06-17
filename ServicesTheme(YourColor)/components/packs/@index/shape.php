@@ -1,10 +1,17 @@
-<?php
+<?
 $Styles = array();
 $Widgets__list = array();
-#
 $YC__WidgetsMachine = new YC__WidgetsMachine;
-# INTRO SETUP
-	$ShowIntro = false;
+
+$home_widgets = ( is_array( yc_get_option( 'widgets_home__meta' ) ) ) ? yc_get_option( 'widgets_home__meta' ) : array();
+$home_widgets = ( is_array( $home_widgets ) ) ? $home_widgets : array();
+
+if ( function_exists( 'kayan_home_widgets_use_v2026' ) && kayan_home_widgets_use_v2026( $home_widgets ) ) {
+	kayan_home_v2026_render_page( $home_widgets );
+}
+
+# LEGACY HOMEPAGE (Intro + Standard widgets) — below only when Home2026 widgets are not used.
+$ShowIntro = false;
 	$HomeIntro = ( is_array( yc_get_option('HomeIntro') ) ) ? yc_get_option('HomeIntro') : array();
 	$HomeIntro = ( is_array( $HomeIntro ) ) ? $HomeIntro : array();
 	#
@@ -37,11 +44,8 @@ $YC__WidgetsMachine = new YC__WidgetsMachine;
 		}
 	}
 
-# HOME WIDGETS SETUP 
-	$home_widgets = ( is_array( yc_get_option( 'widgets_home__meta' ) ) ) ? yc_get_option( 'widgets_home__meta' ) : array();
-	$home_widgets = ( is_array( $home_widgets ) ) ? $home_widgets : array();
-
-	if( !empty( $home_widgets ) ){
+# HOME WIDGETS SETUP (legacy Standard widgets)
+	if ( ! empty( $home_widgets ) && ! kayan_home_widgets_use_v2026( $home_widgets ) ) {
 		$widgets__Enqueues = $YC__WidgetsMachine->widgets__Enqueues($home_widgets);
 		$Styles = array_merge($Styles,$widgets__Enqueues);
 

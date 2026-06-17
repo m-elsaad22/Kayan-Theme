@@ -1,0 +1,23 @@
+<?php
+/** Section: Pricing Guides Hub — defaults from design; overridden via widget fields. */
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+$v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+?>
+<!-- ═══════════════ Pricing Guides Hub ═══════════════ -->
+<section class="sec" id="pricing">
+  <div class="wrap">
+    <div class="shead rv">
+      <span class="tag">الأسعار</span>
+      <h2>أدلة الأسعار <span>والتكاليف</span></h2>
+      <p>تقديرات شفافة تساعدك على معرفة التكلفة قبل اتخاذ القرار.</p>
+    </div>
+    <div class="price-grid">
+      <div class="pcard rv"><div class="pic"><i class="fas fa-droplet"></i></div><h3>تكلفة كشف التسربات</h3><p>كشف دقيق بدون تكسير مع تقرير مصور.</p><div class="range"><b>250 – 800</b><small>درهم تقريباً</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
+      <div class="pcard rv"><div class="pic"><i class="fas fa-layer-group"></i></div><h3>تكلفة عزل الأسطح</h3><p>حسب المساحة ونوع العزل المستخدم.</p><div class="range"><b>15 – 35</b><small>درهم / قدم²</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
+      <div class="pcard rv"><div class="pic"><i class="fas fa-water"></i></div><h3>تكلفة عزل الخزانات</h3><p>عزل صحي آمن يطيل عمر الخزان.</p><div class="range"><b>400 – 1200</b><small>درهم تقريباً</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
+      <div class="pcard rv"><div class="pic"><i class="fas fa-spray-can-sparkles"></i></div><h3>تكلفة تنظيف الخزانات</h3><p>تنظيف وتعقيم كامل بمواد معتمدة.</p><div class="range"><b>150 – 500</b><small>درهم تقريباً</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
+      <div class="pcard rv"><div class="pic"><i class="fas fa-bug-slash"></i></div><h3>تكلفة مكافحة الحشرات</h3><p>مواد آمنة مع ضمان عدم العودة.</p><div class="range"><b>120 – 450</b><small>درهم تقريباً</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
+      <div class="pcard rv"><div class="pic"><i class="fas fa-house-chimney"></i></div><h3>تكلفة الصيانة المنزلية</h3><p>صيانة شاملة للتكييف والسباكة والكهرباء.</p><div class="range"><b>100 – 600</b><small>درهم تقريباً</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
+    </div>
+  </div>
+</section>

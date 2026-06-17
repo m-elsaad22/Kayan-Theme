@@ -420,10 +420,6 @@ if ( ! function_exists( 'kayan_homepage_sections_order_defaults' ) ) {
 
 if ( ! function_exists( 'kayan_get_homepage_sections_catalog' ) ) {
 	function kayan_get_homepage_sections_catalog() {
-		if ( function_exists( 'kayan_homepage_uses_new_design' ) && kayan_homepage_uses_new_design() ) {
-			return array();
-		}
-
 		$sections = array();
 		$home_intro = yc_get_option( 'HomeIntro' );
 

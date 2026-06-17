@@ -237,6 +237,12 @@ class YC__WidgetsMachine {
 
 			# INIT FIELDS HOOK 
 				add_action('after_setup_theme',array($this,'SetupHooks'),1);
+
+			# KAYAN Homepage 2026 widget base (Home2026 packs extend this).
+				$kayan_widget_base = get_template_directory() . '/components/packs/kayan-homepage/includes/class-section-widget.php';
+				if ( file_exists( $kayan_widget_base ) ) {
+					require_once $kayan_widget_base;
+				}
 			
 			# SETUP WIDGETS FILES .
 				foreach ( $this->require__setup as $file ) {
