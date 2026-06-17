@@ -5,10 +5,10 @@ if ( ! class_exists( 'Kayan_Home_Section_Widget' ) ) {
 		protected $section_slug = '';
 		protected $widget_title = '';
 		protected $widget_description = '';
+		protected $folder__name = 'Home2026';
 
 		public function __construct() {
 			$this->widget__name = $this->get_widget_id();
-			$this->folder__name = basename( __DIR__ );
 		}
 
 		public function get_widget_id() {
