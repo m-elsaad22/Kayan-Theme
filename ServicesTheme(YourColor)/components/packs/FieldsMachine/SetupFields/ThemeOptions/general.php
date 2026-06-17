@@ -4,7 +4,13 @@ $metaboxes = array(
 	'en_title'  => 'General settings',
 	'icon'    => '<i class="fal fa-sliders-h"></i>',
 	'number'=>1,
+	'disc'  => 'لون الموقع يُطبَّق على الهيدر والفوتر والرئيسية 2026 بشكل متناسق.',
 	'fields'  => array(
+		array(
+			'type'  => 'Title',
+			'title' => 'ألوان الموقع الموحّدة',
+			'disc'  => '«لون الموقع» يتحكم في الأزرار والهيدر والفوتر والأقسام. «لون الكتابة» للنصوص الرئيسية. يُفضّل اختيار لون قريب من تركواز/أزرق ركن التطور.',
+		),
 		array(
 			'title'  => 'اختار لون مخصص',
 			'en_title'=> 'Choose your own color',

@@ -8,6 +8,7 @@ $metaboxes = array(
     'en_title' => 'Header Options',
     'icon'     => '<i class="fa-solid fa-arrow-up"></i>',
     'number'   => 2,
+    'disc'     => 'يظهر الهيدر شفافاً فوق الهيرو ويتحول للأبيض عند التمرير. الألوان تُؤخذ من «الإعدادات العامة».',
     'fields'   => array(
     	#
     	array(

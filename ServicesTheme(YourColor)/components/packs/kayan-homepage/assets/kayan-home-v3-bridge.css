@@ -1,0 +1,148 @@
+/**
+ * ربط هيدر/فوتر القالب مع تصميم الرئيسية 2026 + سلوك التمرير.
+ */
+
+/* ── عربية: لا كسر داخل الكلمة ── */
+body.kayan-homepage-v3,
+body.kayan-homepage-v3 .kayan-home-2026-main {
+	word-break: normal;
+	overflow-wrap: normal;
+	hyphens: manual;
+	-webkit-hyphens: manual;
+}
+
+body.kayan-homepage-v3 .live,
+body.kayan-homepage-v3 .chip,
+body.kayan-homepage-v3 .dash-top .ttl,
+body.kayan-homepage-v3 .atb-item b,
+body.kayan-homepage-v3 .tb {
+	word-break: keep-all;
+	overflow-wrap: normal;
+	white-space: normal;
+}
+
+body.kayan-homepage-v3 .live {
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+/* ── هيدر القالب: شفاف فوق الخلفية → أبيض عند التمرير ── */
+body.kayan-homepage-v3 > root > header.fixedintro,
+body.kayan-homepage-v3 header.fixedintro {
+	position: fixed;
+	top: 0;
+	inset-inline: 0;
+	z-index: 1000;
+	transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+	background: transparent !important;
+	border-bottom: 1px solid transparent;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro::before,
+body.kayan-homepage-v3 header.fixedintro::before {
+	opacity: 0 !important;
+	visibility: hidden !important;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled,
+body.kayan-homepage-v3 header.fixedintro.scrolled {
+	background: rgba(255, 255, 255, 0.92) !important;
+	backdrop-filter: blur(18px);
+	-webkit-backdrop-filter: blur(18px);
+	box-shadow: 0 8px 28px rgba(10, 31, 78, 0.1);
+	border-bottom-color: rgba(226, 234, 245, 0.85);
+}
+
+/* نص الهيدر فوق الهيرو (أبيض) */
+body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .-site-logo a,
+body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .--Site--Menu > ul > li > a,
+body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .--MH--header-contact--,
+body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .--open--searching {
+	color: #fff !important;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .--Site--Menu > ul > li > a:hover {
+	color: var(--aqua, var(--turq)) !important;
+}
+
+/* نص الهيدر بعد التمرير */
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled .-site-logo a,
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled .--Site--Menu > ul > li > a,
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled .--MH--header-contact--,
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled .--open--searching {
+	color: var(--primary-text, var(--text)) !important;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled .--Site--Menu > ul > li > a:hover {
+	color: var(--uicolor, var(--turq)) !important;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .menu__icon span,
+body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .-mobile-menu-button {
+	background: rgba(255, 255, 255, 0.15);
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled .menu__icon span {
+	background: var(--navy, #0a1f4e);
+}
+
+/* ── فوتر القالب بنفس ألوان التصميم ── */
+body.kayan-homepage-v3 footer,
+body.kayan-homepage-v3 .--YC-footer--,
+body.kayan-homepage-v3 .Yc--footer {
+	background: var(--kayan-footer-bg, var(--navy)) !important;
+	color: rgba(255, 255, 255, 0.78);
+}
+
+body.kayan-homepage-v3 .-footer-widgets-title,
+body.kayan-homepage-v3 .-footer-site-logo a,
+body.kayan-homepage-v3 .-footer-widgets-links a:hover {
+	color: #fff;
+}
+
+body.kayan-homepage-v3 .-footer-widgets-links a,
+body.kayan-homepage-v3 .-footer-p-content {
+	color: rgba(255, 255, 255, 0.72);
+}
+
+body.kayan-homepage-v3 .-row-shares-items > a:hover {
+	background: var(--grad-cta, linear-gradient(135deg, var(--blue), var(--turq)));
+}
+
+body.kayan-homepage-v3 .second-logo-word,
+body.kayan-homepage-v3 footer .second-logo-word {
+	color: var(--aqua, var(--turq)) !important;
+}
+
+/* مسافة تحت الهيدر الثابت */
+body.kayan-homepage-v3 .kayan-home-2026-main {
+	padding-top: 0;
+}
+
+body.kayan-homepage-v3 .kayan-home-2026-main .hero {
+	padding-top: 100px;
+}
+
+@media (max-width: 640px) {
+	body.kayan-homepage-v3 .trustbar .inner {
+		grid-template-columns: 1fr;
+		gap: 12px;
+	}
+
+	body.kayan-homepage-v3 .tb {
+		justify-content: flex-start;
+		font-size: 14px;
+	}
+
+	body.kayan-homepage-v3 .dash-mini,
+	body.kayan-homepage-v3 .dash-stats {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	body.kayan-homepage-v3 .hero-ctas .btn,
+	body.kayan-homepage-v3 .fcta-btns .btn {
+		white-space: normal;
+		text-align: center;
+		line-height: 1.35;
+	}
+}

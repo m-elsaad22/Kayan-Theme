@@ -2,9 +2,15 @@
 window.addEventListener('load',()=>{const ld=document.getElementById('loader');if(ld)setTimeout(()=>ld.classList.add('out'),900)});
 
 /* ═══════════════ Sticky header + FAB ═══════════════ */
-const hdr=document.getElementById('hdr'),fab=document.getElementById('fab');
+function kayanHomeGetHeader(){
+  return document.getElementById('hdr')
+    || document.querySelector('body.kayan-homepage-v3 > root > header.fixedintro')
+    || document.querySelector('body.kayan-homepage-v3 header.fixedintro');
+}
+const fab=document.getElementById('fab');
 const onScroll=()=>{
   const y=window.scrollY;
+  const hdr=kayanHomeGetHeader();
   if(hdr)hdr.classList.toggle('scrolled',y>40);
   if(fab)fab.classList.toggle('show',y>500);
 };

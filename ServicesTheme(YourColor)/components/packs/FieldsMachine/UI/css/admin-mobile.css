@@ -33,6 +33,23 @@ yourcolorapi--conatiner {
 	overflow-x: hidden;
 }
 
+/* ── عربية: لا كسر الكلمات من المنتصف (مباشر / الإمارات…) ── */
+body.YourColorEdits-Class-Style,
+body.YourColorEdits-Class-Style yourcolorapi--conatiner,
+body.YourColorEdits-Class-Style yourcolorapi--conatiner *:not(code):not(pre):not(.CodeMirror):not(.kayan-gradient-css-output):not(.kayan-shadow-css-output) {
+	word-break: normal !important;
+	overflow-wrap: normal !important;
+	hyphens: none !important;
+	-webkit-hyphens: none !important;
+}
+
+body.YourColorEdits-Class-Style .kayan-gradient-css-output,
+body.YourColorEdits-Class-Style .kayan-shadow-css-output,
+body.YourColorEdits-Class-Style .CodeMirror {
+	word-break: break-all;
+	overflow-wrap: anywhere;
+}
+
 /* ── خط أصغر قليلاً على الهاتف ── */
 body.YourColorEdits-Class-Style {
 	font-size: 14px;
@@ -55,7 +72,7 @@ header.YS_Header > .PluginName {
 header.YS_Header > .PluginName .Head--Text > h2 {
 	font-size: 18px;
 	line-height: 1.35;
-	word-break: break-word;
+	word-break: normal;
 }
 
 header.YS_Header > .PluginName .Head--Text > p {
@@ -169,7 +186,7 @@ header.YS_Header > .PluginName > .Head--Text > em {
 	font-size: 15px !important;
 	padding-right: 14px;
 	line-height: 1.4;
-	word-break: break-word;
+	word-break: normal;
 }
 
 .-before-insert-fix-fields .-fix-forms-field-title {
@@ -246,7 +263,7 @@ yourcolorapi--conatiner textarea,
 
 .Title-MoreForms > h2 {
 	font-size: 16px;
-	word-break: break-word;
+	word-break: normal;
 }
 
 .Title-MoreForms > h2 > em {
@@ -299,7 +316,7 @@ yourcolorapi--conatiner textarea,
 .-widget-item-title- > h2 {
 	font-size: 15px !important;
 	flex-wrap: wrap;
-	word-break: break-word;
+	word-break: normal;
 }
 
 .apbsortable > *:before {
@@ -414,7 +431,7 @@ taptaxselect > ul {
 
 .-currrent-single-elements > .-currrent-single-elements-box-title > a {
 	font-size: 15px;
-	word-break: break-word;
+	word-break: normal;
 }
 
 /* ── Kayan: SEO / تدرج / ظلال / ترتيب الأقسام ── */
@@ -457,7 +474,7 @@ taptaxselect > ul {
 
 .kayan-homepage-section-label {
 	font-size: 13px;
-	word-break: break-word;
+	word-break: normal;
 }
 
 /* ── نصوص العناوين والوصف ── */
@@ -467,8 +484,8 @@ yourcolorapi--conatiner p,
 single--field > p {
 	font-size: 13px !important;
 	line-height: 1.55 !important;
-	word-break: break-word;
-	overflow-wrap: break-word;
+	word-break: normal;
+	overflow-wrap: normal;
 }
 
 yourcolorapi--conatiner .Title-Field-Disc a.button {
@@ -489,7 +506,7 @@ yourcolorapi--conatiner .Title-Field-Disc a.button {
 
 .YourColorEdits-Class-Style .widefat th,
 .YourColorEdits-Class-Style .widefat td {
-	word-break: break-word;
+	word-break: normal;
 }
 
 /* ── عناصر عريضة إضافية ── */
@@ -753,4 +770,34 @@ yourcolorapi--conatiner .Title-Field-Disc a.button {
 		padding-right: 20px;
 		border-right: 1px solid var(--diver);
 	}
+}
+
+/* ── تنظيم عناوين الأقسام في الإعدادات ── */
+body.YourColorEdits-Class-Style .-Title-Field-Context,
+body.YourColorEdits-Class-Style single--field > .Title-Field-Disc {
+	background: linear-gradient(135deg, #f0f7ff 0%, #f8fafc 100%);
+	border: 1px solid #dbeafe;
+	border-radius: 14px;
+	padding: 14px 16px;
+	margin: 0 0 18px;
+	line-height: 1.6;
+}
+
+body.YourColorEdits-Class-Style .-Title-Field-Context h2,
+body.YourColorEdits-Class-Style single--field.Title > h2 {
+	font-size: 17px !important;
+	font-weight: 700 !important;
+	color: #0f172a;
+	margin: 0 0 6px !important;
+}
+
+body.YourColorEdits-Class-Style .-Title-Field-Context p,
+body.YourColorEdits-Class-Style .Title-Field-Disc {
+	font-size: 13px !important;
+	color: #475569 !important;
+	margin: 0 !important;
+}
+
+body.YourColorEdits-Class-Style .-Title-Field-Context a.button {
+	margin-top: 10px;
 }

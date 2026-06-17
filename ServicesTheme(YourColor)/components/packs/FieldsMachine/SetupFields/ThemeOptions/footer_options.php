@@ -8,6 +8,7 @@ $metaboxes = array(
 	'en_title'  => 'Footer Options',
 	'icon'    => '<i class="fa-solid fa-arrow-down"></i>',
 	'number'=>3,
+	'disc'  => 'خلفية الفوتر تتناسق تلقائياً مع لون الموقع في الرئيسية 2026.',
 	'fields'  => array(
 
    		array(
