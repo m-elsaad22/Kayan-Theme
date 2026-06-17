@@ -1,16 +1,20 @@
 <?
-require_once __DIR__ . '/helpers.php';
-
-function kayan_homepage_v3_active_request() {
-	return is_front_page();
-}
+require_once __DIR__ . '/includes/fields-common.php';
+require_once __DIR__ . '/includes/widget-fields.php';
+require_once __DIR__ . '/includes/data-sources.php';
+require_once __DIR__ . '/includes/section-fields.php';
+require_once __DIR__ . '/includes/section-defaults.php';
+require_once __DIR__ . '/includes/section-helpers.php';
+require_once __DIR__ . '/includes/defaults-data.php';
+require_once __DIR__ . '/includes/seed.php';
+require_once __DIR__ . '/includes/render.php';
 
 function kayan_homepage_v3_asset_version() {
-	return '2027.2.2';
+	return '2027.4.1';
 }
 
-function kayan_homepage_v3_enqueue_assets() {
-	if ( ! kayan_homepage_v3_active_request() ) {
+function kayan_homepage_enqueue_v2026_assets() {
+	if ( ! function_exists( 'kayan_home_v2026_active' ) || ! kayan_home_v2026_active() ) {
 		return;
 	}
 
@@ -37,29 +41,23 @@ function kayan_homepage_v3_enqueue_assets() {
 	$inline = '
 .fa:not(.fa-brands):not(.fab),.fas,.fa-solid,.fa-regular,.far,i[class^="fa-"]:not(.fa-brands):not(.fab),i[class*=" fa-"]:not(.fa-brands):not(.fab){font-family:"Font Awesome 6 Free" !important;font-weight:900 !important;}
 .fa-brands,.fab,.fa-brands::before,.fab::before{font-family:"Font Awesome 6 Brands" !important;font-weight:400 !important;}
-.kayan-no-content-call .btn-call,
-.kayan-no-content-call .m-call,
-.kayan-no-content-call a[href^="tel:"] { display: none !important; }
-.kayan-no-floating-call .mbar .m-call,
-.kayan-no-floating-call .fab#fab { display: none !important; }
+.kayan-no-content-call .btn-call,.kayan-no-content-call .m-call,.kayan-no-content-call a[href^="tel:"]{display:none!important;}
+.kayan-no-floating-call .mbar .m-call,.kayan-no-floating-call .fab#fab{display:none!important;}
+.kayan-home-widgets .kayan-home-widget-inner{width:100%;max-width:none;padding:0;margin:0;}
 ';
 	wp_add_inline_style( 'kayan-home', $inline );
 }
-add_action( 'wp_enqueue_scripts', 'kayan_homepage_v3_enqueue_assets', 5 );
+add_action( 'wp_enqueue_scripts', 'kayan_homepage_enqueue_v2026_assets', 5 );
 
-/**
- * Theme Enqueues pack strips all queued assets at priority 999999; re-attach homepage v3 assets after.
- */
-function kayan_homepage_v3_reenqueue_assets() {
-	if ( ! kayan_homepage_v3_active_request() ) {
-		return;
+function kayan_homepage_reenqueue_v2026_assets() {
+	if ( function_exists( 'kayan_home_v2026_active' ) && kayan_home_v2026_active() ) {
+		kayan_homepage_enqueue_v2026_assets();
 	}
-	kayan_homepage_v3_enqueue_assets();
 }
-add_action( 'wp_enqueue_scripts', 'kayan_homepage_v3_reenqueue_assets', 1000000 );
+add_action( 'wp_enqueue_scripts', 'kayan_homepage_reenqueue_v2026_assets', 1000000 );
 
-function kayan_homepage_v3_dequeue_legacy_assets() {
-	if ( ! kayan_homepage_v3_active_request() ) {
+function kayan_homepage_dequeue_legacy_on_v2026() {
+	if ( ! function_exists( 'kayan_home_v2026_active' ) || ! kayan_home_v2026_active() ) {
 		return;
 	}
 	$handles = array( 'yourcolor-init', 'yourcolor-script', 'yourcolor-owlcarousel', 'kayan-ui-fixes' );
@@ -68,15 +66,16 @@ function kayan_homepage_v3_dequeue_legacy_assets() {
 		wp_deregister_script( $handle );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'kayan_homepage_v3_dequeue_legacy_assets', 100 );
-add_action( 'wp_footer', 'kayan_homepage_v3_dequeue_legacy_assets', 999 );
+add_action( 'wp_enqueue_scripts', 'kayan_homepage_dequeue_legacy_on_v2026', 100 );
+add_action( 'wp_footer', 'kayan_homepage_dequeue_legacy_on_v2026', 999 );
 
-function kayan_homepage_v3_takeover() {
-	if ( ! kayan_homepage_v3_active_request() ) {
+function kayan_homepage_render_static_front_page() {
+	if ( ! is_front_page() || ! is_page() ) {
 		return;
 	}
-	kayan_homepage_v3_render();
-	die();
+	$home_widgets = kayan_home_get_widgets_option();
+	if ( kayan_home_widgets_use_v2026( $home_widgets ) ) {
+		kayan_home_v2026_render_page( $home_widgets );
+	}
 }
-add_action( 'BeforeBlade_index', 'kayan_homepage_v3_takeover', 0 );
-add_action( 'BeforeBlade_page', 'kayan_homepage_v3_takeover', 0 );
+add_action( 'BeforeBlade_page', 'kayan_homepage_render_static_front_page', 0 );

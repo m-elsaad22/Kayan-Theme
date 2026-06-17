@@ -6,6 +6,7 @@ function PostTypes() {
 
     $ThemeTree->AddPType('خطط الأسعار', 'الاسعار', 'ة', 'price', true, array("slug"=>get_option('plans_url')) , array('title', "editor"), 8);
     $ThemeTree->AddPType('سابقة الاعمال', 'سابقة الاعمال', 'ة', 'works', true, array("slug"=>'works') , array('title', "editor", "thumbnail"), 8);
+    $ThemeTree->AddPType('الفريق', 'عضو الفريق', 'اً', 'team', true, array("slug"=>'team') , array('title', "editor", "thumbnail"), 8);
     #
 }
 add_action('Initialize', 'PostTypes', 10, 3);
