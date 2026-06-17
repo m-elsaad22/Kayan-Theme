@@ -6,7 +6,7 @@ $metaboxes = array(
 	'en_title'  => 'HOME OPTIONS',
 	'icon'    => '<i class="fa-solid fa-house-chimney"></i>',
 	'number'=>4,
-	'disc'=>'تحكم كامل في أقسام الصفحة الرئيسية — تصميم ركن التطور 2026. يُستورد المحتوى تلقائياً من index.html عند أول تشغيل.',
+	'disc'=>'تحكم كامل في أقسام الصفحة الرئيسية — تصميم ركن التطور 2026. عند فتح هذا التبويب لأول مرة (أو بعد التحديث) تُضاف الأقسام الـ25 بمحتوى index.html تلقائياً.',
 	'fields'  => array(
 		array(
 			'type'  => 'Title',

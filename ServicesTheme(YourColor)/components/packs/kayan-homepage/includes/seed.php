@@ -11,7 +11,83 @@ if ( ! function_exists( 'kayan_home_seed_is_done' ) ) {
 
 if ( ! function_exists( 'kayan_home_seed_version' ) ) {
 	function kayan_home_seed_version() {
-		return '2027.3.2';
+		return '2027.3.3';
+	}
+}
+
+if ( ! function_exists( 'kayan_home_count_seeded_widgets' ) ) {
+	function kayan_home_count_seeded_widgets() {
+		$widgets = kayan_home_get_widgets_option();
+		if ( empty( $widgets ) ) {
+			return 0;
+		}
+		$count = 0;
+		foreach ( $widgets as $widget_row ) {
+			if ( empty( $widget_row['widget_id'] ) || strpos( $widget_row['widget_id'], 'kayan_home_' ) !== 0 ) {
+				continue;
+			}
+			if ( empty( $widget_row['widget_post__id'] ) ) {
+				continue;
+			}
+			$meta = get_post_meta( (int) $widget_row['widget_post__id'], 'widget_post_meta', true );
+			if ( is_array( $meta ) && ! empty( $meta['content_html'] ) ) {
+				$count++;
+			}
+		}
+		return $count;
+	}
+}
+
+if ( ! function_exists( 'kayan_home_needs_seed' ) ) {
+	function kayan_home_needs_seed() {
+		return kayan_home_count_seeded_widgets() === 0;
+	}
+}
+
+if ( ! function_exists( 'kayan_home_delete_home_widget_posts' ) ) {
+	function kayan_home_delete_home_widget_posts( $widgets ) {
+		if ( empty( $widgets ) || ! is_array( $widgets ) ) {
+			return;
+		}
+		foreach ( $widgets as $widget_row ) {
+			if ( ! empty( $widget_row['widget_post__id'] ) ) {
+				wp_delete_post( (int) $widget_row['widget_post__id'], true );
+			}
+		}
+	}
+}
+
+if ( ! function_exists( 'kayan_home_seed_new_widget_post' ) ) {
+	function kayan_home_seed_new_widget_post( $post_id, $widget_type ) {
+		if ( strpos( (string) $widget_type, 'kayan_home_' ) !== 0 ) {
+			return;
+		}
+		if ( ! function_exists( 'kayan_home_get_widget_defaults' ) ) {
+			return;
+		}
+		$defaults = kayan_home_get_widget_defaults( $widget_type );
+		if ( ! empty( $defaults ) ) {
+			update_post_meta( (int) $post_id, 'widget_post_meta', $defaults );
+		}
+	}
+}
+
+if ( ! function_exists( 'kayan_home_merge_widget_admin_meta' ) ) {
+	function kayan_home_merge_widget_admin_meta( $widget_type, $meta ) {
+		if ( strpos( (string) $widget_type, 'kayan_home_' ) !== 0 ) {
+			return is_array( $meta ) ? $meta : array();
+		}
+		if ( ! function_exists( 'kayan_home_get_widget_defaults' ) ) {
+			return is_array( $meta ) ? $meta : array();
+		}
+		$defaults = kayan_home_get_widget_defaults( $widget_type );
+		$meta     = is_array( $meta ) ? $meta : array();
+		foreach ( $defaults as $key => $value ) {
+			if ( ! isset( $meta[ $key ] ) || $meta[ $key ] === '' ) {
+				$meta[ $key ] = $value;
+			}
+		}
+		return $meta;
 	}
 }
 
@@ -22,16 +98,12 @@ if ( ! function_exists( 'kayan_home_seed_default_widgets' ) ) {
 		}
 
 		$existing = kayan_home_get_widgets_option();
-		if ( ! $force && ! empty( $existing ) ) {
+		if ( ! $force && ! kayan_home_needs_seed() ) {
 			return false;
 		}
 
-		if ( $force && ! empty( $existing ) ) {
-			foreach ( $existing as $widget_row ) {
-				if ( ! empty( $widget_row['widget_post__id'] ) ) {
-					wp_delete_post( (int) $widget_row['widget_post__id'], true );
-				}
-			}
+		if ( ( $force || kayan_home_needs_seed() ) && ! empty( $existing ) ) {
+			kayan_home_delete_home_widget_posts( $existing );
 		}
 
 		$manifest     = kayan_home_seed_manifest();
@@ -107,17 +179,51 @@ if ( ! function_exists( 'kayan_home_seed_default_widgets' ) ) {
 
 if ( ! function_exists( 'kayan_home_maybe_auto_seed' ) ) {
 	function kayan_home_maybe_auto_seed() {
-		if ( kayan_home_seed_is_done() ) {
+		if ( ! kayan_home_needs_seed() ) {
+			if ( ! kayan_home_seed_is_done() ) {
+				yc_update_option( 'kayan_home_seeded_v1', kayan_home_seed_version() );
+			}
 			return;
 		}
-		if ( ! empty( kayan_home_get_widgets_option() ) ) {
-			yc_update_option( 'kayan_home_seeded_v1', kayan_home_seed_version() );
-			return;
+		if ( kayan_home_seed_default_widgets( false ) ) {
+			set_transient( 'kayan_home_auto_seeded_notice', '1', 120 );
 		}
-		kayan_home_seed_default_widgets( false );
 	}
 }
 add_action( 'after_setup_theme', 'kayan_home_maybe_auto_seed', 20 );
+add_action( 'after_switch_theme', 'kayan_home_maybe_auto_seed', 20 );
+
+if ( ! function_exists( 'kayan_home_maybe_seed_in_admin' ) ) {
+	function kayan_home_maybe_seed_in_admin() {
+		if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+		if ( $page !== 'yts-home_page' ) {
+			return;
+		}
+		if ( ! kayan_home_needs_seed() ) {
+			return;
+		}
+		if ( kayan_home_seed_default_widgets( false ) ) {
+			set_transient( 'kayan_home_auto_seeded_notice', '1', 120 );
+		}
+	}
+}
+add_action( 'admin_init', 'kayan_home_maybe_seed_in_admin', 5 );
+
+if ( ! function_exists( 'kayan_home_admin_notices' ) ) {
+	function kayan_home_admin_notices() {
+		if ( isset( $_GET['kayan_home_imported'] ) ) {
+			echo '<div class="notice notice-success is-dismissible"><p>تم استيراد محتوى التصميم بنجاح — 25 قسماً جاهزاً للتعديل من إعدادات الرئيسية.</p></div>';
+		}
+		if ( get_transient( 'kayan_home_auto_seeded_notice' ) ) {
+			delete_transient( 'kayan_home_auto_seeded_notice' );
+			echo '<div class="notice notice-success is-dismissible"><p>تم تعبئة أقسام الرئيسية تلقائياً من تصميم index.html. يمكنك تعديل أي قسم من الأسفل.</p></div>';
+		}
+	}
+}
+add_action( 'admin_notices', 'kayan_home_admin_notices' );
 
 function kayan_home_admin_import_defaults() {
 	if ( ! current_user_can( 'manage_options' ) ) {
