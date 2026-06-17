@@ -445,11 +445,15 @@ if ( ! function_exists( 'kayan_get_homepage_sections_catalog' ) ) {
 			}
 
 			$label = $widget['widget_id'];
-			if (
-				isset( $yc__widgets__center['Standard']['Packs'][ $widget['widget_id'] ]['title'] )
-				&& ! empty( $yc__widgets__center['Standard']['Packs'][ $widget['widget_id'] ]['title'] )
-			) {
-				$label = $yc__widgets__center['Standard']['Packs'][ $widget['widget_id'] ]['title'];
+			$widget_centers = array( 'Home2026', 'Standard' );
+			foreach ( $widget_centers as $center ) {
+				if (
+					isset( $yc__widgets__center[ $center ]['Packs'][ $widget['widget_id'] ]['title'] )
+					&& ! empty( $yc__widgets__center[ $center ]['Packs'][ $widget['widget_id'] ]['title'] )
+				) {
+					$label = $yc__widgets__center[ $center ]['Packs'][ $widget['widget_id'] ]['title'];
+					break;
+				}
 			}
 
 			$post = get_post( $widget['widget_post__id'] );
