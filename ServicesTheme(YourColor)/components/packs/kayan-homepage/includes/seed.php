@@ -11,7 +11,7 @@ if ( ! function_exists( 'kayan_home_seed_is_done' ) ) {
 
 if ( ! function_exists( 'kayan_home_seed_version' ) ) {
 	function kayan_home_seed_version() {
-		return '2027.3.3';
+		return '2027.4.0';
 	}
 }
 
@@ -30,7 +30,7 @@ if ( ! function_exists( 'kayan_home_count_seeded_widgets' ) ) {
 				continue;
 			}
 			$meta = get_post_meta( (int) $widget_row['widget_post__id'], 'widget_post_meta', true );
-			if ( is_array( $meta ) && ! empty( $meta['content_html'] ) ) {
+			if ( is_array( $meta ) && ( ! empty( $meta['content_html'] ) || ( isset( $meta['data_source'] ) && $meta['data_source'] === 'wordpress' ) ) ) {
 				$count++;
 			}
 		}
@@ -122,7 +122,7 @@ if ( ! function_exists( 'kayan_home_seed_default_widgets' ) ) {
 
 		foreach ( $manifest as $widget_id => $slug ) {
 			$defaults = kayan_home_get_widget_defaults( $widget_id );
-			if ( empty( $defaults['content_html'] ) ) {
+			if ( empty( $defaults ) ) {
 				continue;
 			}
 
@@ -215,7 +215,7 @@ add_action( 'admin_init', 'kayan_home_maybe_seed_in_admin', 5 );
 if ( ! function_exists( 'kayan_home_admin_notices' ) ) {
 	function kayan_home_admin_notices() {
 		if ( isset( $_GET['kayan_home_imported'] ) ) {
-			echo '<div class="notice notice-success is-dismissible"><p>تم استيراد محتوى التصميم بنجاح — 25 قسماً جاهزاً للتعديل من إعدادات الرئيسية.</p></div>';
+			echo '<div class="notice notice-success is-dismissible"><p>تم استيراد إعدادات الرئيسية بنجاح — الأقسام جاهزة للتعديل (الهيدر والفوتر من تبويباتهما).</p></div>';
 		}
 		if ( get_transient( 'kayan_home_auto_seeded_notice' ) ) {
 			delete_transient( 'kayan_home_auto_seeded_notice' );

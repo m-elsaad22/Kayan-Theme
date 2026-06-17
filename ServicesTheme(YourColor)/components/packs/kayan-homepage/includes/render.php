@@ -30,7 +30,10 @@ if ( ! function_exists( 'kayan_home_render_section' ) ) {
 	function kayan_home_render_section( $slug, $vars ) {
 		$vars = kayan_home_merge_section_vars( $slug, is_array( $vars ) ? $vars : array() );
 
-		if ( ! empty( $vars['content_html'] ) ) {
+		$use_manual_html = ! empty( $vars['content_html'] )
+			&& ( ! function_exists( 'kayan_home_uses_wordpress_data' ) || ! kayan_home_uses_wordpress_data( $vars ) );
+
+		if ( $use_manual_html ) {
 			kayan_home_echo_section_html( $vars['content_html'] );
 			return;
 		}
@@ -60,7 +63,7 @@ if ( ! function_exists( 'kayan_home_h' ) ) {
 
 if ( ! function_exists( 'kayan_home_body_classes' ) ) {
 	function kayan_home_body_classes() {
-		$classes = array( 'kayan-homepage-v3', 'kayan-homepage-rukn' );
+		$classes = array( 'kayan-homepage-v3', 'kayan-homepage-rukn', 'before-start' );
 		if ( function_exists( 'kayan_ui_show_call_button' ) && ! kayan_ui_show_call_button() ) {
 			$classes[] = 'kayan-no-content-call';
 		}
@@ -68,31 +71,6 @@ if ( ! function_exists( 'kayan_home_body_classes' ) ) {
 			$classes[] = 'kayan-no-floating-call';
 		}
 		return implode( ' ', $classes );
-	}
-}
-
-if ( ! function_exists( 'kayan_home_document_open' ) ) {
-	function kayan_home_document_open() {
-		$theme_color = '#0A1F4E';
-		?><!DOCTYPE html>
-<html <?php language_attributes(); ?> lang="ar" dir="rtl">
-<head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="<?php echo esc_attr( $theme_color ); ?>">
-	<?php wp_head(); ?>
-</head>
-<body class="<?php echo esc_attr( kayan_home_body_classes() ); ?>">
-		<?php
-	}
-}
-
-if ( ! function_exists( 'kayan_home_document_close' ) ) {
-	function kayan_home_document_close() {
-		wp_footer();
-		?></body>
-</html>
-		<?php
 	}
 }
 
@@ -114,30 +92,72 @@ if ( ! function_exists( 'kayan_home_render_widgets_ui' ) ) {
 	}
 }
 
-if ( ! function_exists( 'kayan_home_v2026_render_page' ) ) {
-	function kayan_home_v2026_render_page( $home_widgets ) {
+if ( ! function_exists( 'kayan_home_render_section_queue' ) ) {
+	function kayan_home_render_section_queue( $home_widgets ) {
 		$show_intro = false;
 		$home_intro = array();
 		$queue      = function_exists( 'kayan_get_homepage_render_queue' )
 			? kayan_get_homepage_render_queue( $home_intro, $home_widgets, $show_intro )
 			: array();
-
-		kayan_home_document_open();
+		$skip       = function_exists( 'kayan_home_layout_widget_ids' ) ? kayan_home_layout_widget_ids() : array();
 
 		if ( ! empty( $queue ) ) {
-			$machine = new YC__WidgetsMachine();
 			foreach ( $queue as $section ) {
-				if ( $section['type'] === 'widget' && ! empty( $section['data'] ) ) {
-					$key  = isset( $section['key'] ) ? $section['key'] : '';
-					$data = array( $key => $section['data'] );
-					kayan_home_render_widgets_ui( $data, 'home_widgets' );
+				if ( $section['type'] !== 'widget' || empty( $section['data'] ) ) {
+					continue;
 				}
+				$data = $section['data'];
+				if ( ! empty( $data['widget_id'] ) && in_array( $data['widget_id'], $skip, true ) ) {
+					continue;
+				}
+				$key = isset( $section['key'] ) ? $section['key'] : '';
+				kayan_home_render_widgets_ui( array( $key => $data ), 'home_widgets' );
 			}
-		} else {
-			kayan_home_render_widgets_ui( $home_widgets, 'home_widgets' );
+			return;
 		}
 
-		kayan_home_document_close();
+		$filtered = function_exists( 'kayan_home_filter_content_widgets' )
+			? kayan_home_filter_content_widgets( $home_widgets )
+			: $home_widgets;
+		kayan_home_render_widgets_ui( $filtered, 'home_widgets' );
+	}
+}
+
+if ( ! function_exists( 'kayan_home_v2026_render_page' ) ) {
+	function kayan_home_v2026_render_page( $home_widgets ) {
+		global $ThemeStatic;
+		if ( ! isset( $ThemeStatic ) ) {
+			$ThemeStatic = new ThemeStatic();
+		}
+
+		$content_widgets = function_exists( 'kayan_home_filter_content_widgets' )
+			? kayan_home_filter_content_widgets( $home_widgets )
+			: $home_widgets;
+		$machine         = new YC__WidgetsMachine();
+		$styles          = $machine->widgets__Enqueues( $content_widgets );
+		$widgets_list    = $machine->get__widgets__list( $content_widgets );
+
+		$ThemeStatic->Part(
+			'header',
+			array(
+				'Styles'        => $styles,
+				'IntroPage'     => true,
+				'Widgets__list' => $widgets_list,
+				'bodyClass'     => kayan_home_body_classes(),
+			)
+		);
+
+		echo '<div class="kayan-home-2026-main">';
+		kayan_home_render_section_queue( $home_widgets );
+		echo '</div>';
+
+		$ThemeStatic->Part(
+			'footer',
+			array(
+				'Styles'        => $styles,
+				'Widgets__list' => $widgets_list,
+			)
+		);
 		die();
 	}
 }

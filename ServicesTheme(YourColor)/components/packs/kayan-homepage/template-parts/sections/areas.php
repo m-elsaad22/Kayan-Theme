@@ -1,43 +1,37 @@
 <?php
-/** Section: Service areas — defaults from design; overridden via widget fields. */
+/** Section: Areas — من تصنيف city */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-$v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$v     = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$terms = function_exists( 'kayan_home_get_taxonomy_terms' ) ? kayan_home_get_taxonomy_terms( $v, 'city', 7 ) : array();
 ?>
-<!-- ═══════════════ Service areas ═══════════════ -->
 <section class="sec" id="areas">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">مناطق الخدمة</span>
-      <h2>خدماتنا في جميع <span>إمارات الدولة</span></h2>
-      <p>أينما كنت في الإمارات، فريق ركن التطور قريب منك وجاهز للخدمة.</p>
-    </div>
-    <div class="areas">
-      <div class="area-map rv-l">
-        <div><h3>تغطية كاملة لـ 7 إمارات</h3><p>استجابة سريعة وفريق محلي في كل إمارة.</p></div>
-        <div class="mp">
-          <svg class="uae-svg" viewBox="0 0 300 220" aria-hidden="true">
-            <path d="M40,70 L90,40 L150,30 L210,45 L260,55 L270,90 L250,130 L235,175 L180,195 L120,185 L70,160 L45,120 Z"/>
-          </svg>
-          <span class="pin" style="top:55%;left:42%"></span>
-          <span class="pin" style="top:70%;left:28%"></span>
-          <span class="pin" style="top:40%;left:60%"></span>
-          <span class="pin" style="top:35%;left:48%"></span>
-        </div>
-        <div class="dash-trust" style="margin-top:8px">
-          <span class="dt"><i class="fas fa-location-dot" style="color:var(--aqua)"></i> 7 إمارات</span>
-          <span class="dt"><i class="fas fa-bolt" style="color:var(--aqua)"></i> استجابة خلال ساعة</span>
-        </div>
-      </div>
-      <div class="area-cards">
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>دبي</b><small>6 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span><span>سباكة</span><span>مكافحة حشرات</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>أبوظبي</b><small>6 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span><span>سباكة</span><span>مكافحة حشرات</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>الشارقة</b><small>6 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span><span>سباكة</span><span>مكافحة حشرات</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>عجمان</b><small>5 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span><span>سباكة</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>رأس الخيمة</b><small>5 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span><span>مكافحة حشرات</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>الفجيرة</b><small>4 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>أم القيوين</b><small>4 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span></div></div>
-        <div class="acard rv" style="display:grid;place-items:center;text-align:center;background:var(--grad);color:#fff;border:none" onclick="location.href='#contact'"><div><i class="fas fa-headset" style="font-size:26px;margin-bottom:8px"></i><b style="color:#fff">لم تجد مدينتك؟</b><small style="color:rgba(255,255,255,.8)">تواصل معنا الآن</small></div></div>
-      </div>
+    <?php kayan_home_render_shead( $v, 'مناطق الخدمة', 'خدماتنا في جميع <span>إمارات الدولة</span>', 'أينما كنت في الإمارات، فريق ركن التطور قريب منك وجاهز للخدمة.' ); ?>
+    <div class="areas-grid">
+      <?php if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) : ?>
+        <?php foreach ( $terms as $term ) :
+          $url  = get_term_link( $term );
+          $img  = function_exists( 'kayan_home_term_image_url' ) ? kayan_home_term_image_url( $term->term_id, 'image_blog_id' ) : '';
+          if ( empty( $img ) ) {
+            $img = function_exists( 'kayan_home_term_image_url' ) ? kayan_home_term_image_url( $term->term_id, 'Image-Icon' ) : '';
+          }
+          $icon = get_term_meta( $term->term_id, 'icon', true );
+          ?>
+          <a href="<?php echo esc_url( $url ); ?>" class="area rv">
+            <div class="area-img">
+              <?php if ( $img ) : ?>
+                <img src="<?php echo esc_url( $img ); ?>" alt="<?php echo esc_attr( $term->name ); ?>" loading="lazy" />
+              <?php elseif ( $icon ) : ?>
+                <?php echo $icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+              <?php else : ?>
+                <i class="fas fa-map-location-dot"></i>
+              <?php endif; ?>
+            </div>
+            <h3><?php echo esc_html( $term->name ); ?></h3>
+            <p><?php echo esc_html( wp_trim_words( $term->description, 12 ) ); ?></p>
+          </a>
+        <?php endforeach; ?>
+      <?php endif; ?>
     </div>
   </div>
 </section>

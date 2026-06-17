@@ -1,23 +1,44 @@
 <?php
-/** Section: Pricing Guides Hub — defaults from design; overridden via widget fields. */
+/** Section: Pricing — من CPT price */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-$v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$v     = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$plans = function_exists( 'kayan_home_get_price_plans' ) ? kayan_home_get_price_plans( $v ) : array();
 ?>
-<!-- ═══════════════ Pricing Guides Hub ═══════════════ -->
 <section class="sec" id="pricing">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">الأسعار</span>
-      <h2>أدلة الأسعار <span>والتكاليف</span></h2>
-      <p>تقديرات شفافة تساعدك على معرفة التكلفة قبل اتخاذ القرار.</p>
-    </div>
+    <?php kayan_home_render_shead( $v, 'الأسعار', 'أدلة الأسعار <span>والتكاليف</span>', 'تقديرات شفافة تساعدك على معرفة التكلفة قبل اتخاذ القرار.' ); ?>
     <div class="price-grid">
-      <div class="pcard rv"><div class="pic"><i class="fas fa-droplet"></i></div><h3>تكلفة كشف التسربات</h3><p>كشف دقيق بدون تكسير مع تقرير مصور.</p><div class="range"><b>250 – 800</b><small>درهم تقريباً</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
-      <div class="pcard rv"><div class="pic"><i class="fas fa-layer-group"></i></div><h3>تكلفة عزل الأسطح</h3><p>حسب المساحة ونوع العزل المستخدم.</p><div class="range"><b>15 – 35</b><small>درهم / قدم²</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
-      <div class="pcard rv"><div class="pic"><i class="fas fa-water"></i></div><h3>تكلفة عزل الخزانات</h3><p>عزل صحي آمن يطيل عمر الخزان.</p><div class="range"><b>400 – 1200</b><small>درهم تقريباً</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
-      <div class="pcard rv"><div class="pic"><i class="fas fa-spray-can-sparkles"></i></div><h3>تكلفة تنظيف الخزانات</h3><p>تنظيف وتعقيم كامل بمواد معتمدة.</p><div class="range"><b>150 – 500</b><small>درهم تقريباً</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
-      <div class="pcard rv"><div class="pic"><i class="fas fa-bug-slash"></i></div><h3>تكلفة مكافحة الحشرات</h3><p>مواد آمنة مع ضمان عدم العودة.</p><div class="range"><b>120 – 450</b><small>درهم تقريباً</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
-      <div class="pcard rv"><div class="pic"><i class="fas fa-house-chimney"></i></div><h3>تكلفة الصيانة المنزلية</h3><p>صيانة شاملة للتكييف والسباكة والكهرباء.</p><div class="range"><b>100 – 600</b><small>درهم تقريباً</small></div><a class="read" href="#contact">اقرأ الدليل <i class="fas fa-arrow-left"></i></a></div>
+      <?php foreach ( $plans as $row ) :
+        if ( empty( $row['Plane__ID'] ) ) {
+          continue;
+        }
+        $post = get_post( (int) $row['Plane__ID'] );
+        if ( ! $post ) {
+          continue;
+        }
+        $title = ! empty( $row['Title'] ) ? $row['Title'] : get_the_title( $post );
+        $thumb = function_exists( 'kayan_home_post_thumb_url' ) ? kayan_home_post_thumb_url( $post->ID ) : '';
+        $price_text = get_post_meta( $post->ID, 'price_text', true );
+        if ( empty( $price_text ) ) {
+          $price_text = wp_trim_words( strip_tags( $post->post_content ), 8 );
+        }
+        ?>
+        <div class="pcard rv<?php echo ( ! empty( $row['ActivePlan'] ) && $row['ActivePlan'] === 'on' ) ? ' featured' : ''; ?>">
+          <div class="pic">
+            <?php if ( $thumb ) : ?>
+              <img src="<?php echo esc_url( $thumb ); ?>" alt="<?php echo esc_attr( $title ); ?>" loading="lazy" />
+            <?php else : ?>
+              <i class="fas fa-file-invoice-dollar"></i>
+            <?php endif; ?>
+          </div>
+          <h3><?php echo esc_html( $title ); ?></h3>
+          <p><?php echo esc_html( wp_trim_words( $post->post_excerpt ? $post->post_excerpt : $post->post_content, 16 ) ); ?></p>
+          <?php if ( $price_text ) : ?>
+          <div class="range"><b><?php echo esc_html( $price_text ); ?></b></div>
+          <?php endif; ?>
+          <a class="read" href="<?php echo esc_url( get_permalink( $post ) ); ?>">اقرأ الدليل <i class="fas fa-arrow-left"></i></a>
+        </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>

@@ -7,7 +7,6 @@ if ( ! function_exists( 'kayan_home_seed_manifest' ) ) {
 	function kayan_home_seed_manifest() {
 		return array(
 			'kayan_home_loader'      => 'loader',
-			'kayan_home_header'      => 'header',
 			'kayan_home_hero'        => 'hero',
 			'kayan_home_trustbar'    => 'trustbar',
 			'kayan_home_atb'         => 'atb',
@@ -29,8 +28,6 @@ if ( ! function_exists( 'kayan_home_seed_manifest' ) ) {
 			'kayan_home_blog'        => 'blog',
 			'kayan_home_faq'         => 'faq',
 			'kayan_home_cta'         => 'cta',
-			'kayan_home_footer'      => 'footer',
-			'kayan_home_mobile_bar'  => 'mobile-bar',
 		);
 	}
 }
@@ -88,6 +85,16 @@ if ( ! function_exists( 'kayan_home_get_widget_defaults' ) ) {
 		$slug = kayan_home_slug_from_widget_id( $widget_id );
 		if ( $slug === '' ) {
 			return array();
+		}
+		$meta = array(
+			'data_source' => 'wordpress',
+		);
+		if ( function_exists( 'kayan_home_data_driven_slugs' ) && in_array( $slug, kayan_home_data_driven_slugs(), true ) ) {
+			$structured = kayan_home_structured_defaults( $slug );
+			if ( ! empty( $structured ) ) {
+				$meta = array_merge( $meta, $structured );
+			}
+			return $meta;
 		}
 		$html = kayan_home_load_default_html( $slug );
 		$meta = array(

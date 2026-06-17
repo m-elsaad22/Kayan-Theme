@@ -23,6 +23,16 @@ $metaboxes['works__metabox'] = array(
             'type'=>'File',
             'title'=>'البوم الصور',
             'multiple'=>true,
-        )
+        ),
+        array(
+            'id'=> 'before_image',
+            'type'=>'File',
+            'title'=>'صورة قبل',
+        ),
+        array(
+            'id'=> 'after_image',
+            'type'=>'File',
+            'title'=>'صورة بعد',
+        ),
 	)
 );

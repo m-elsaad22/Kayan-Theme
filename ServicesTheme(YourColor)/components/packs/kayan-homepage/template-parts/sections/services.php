@@ -1,89 +1,36 @@
 <?php
-/** Section: Services — defaults from design; overridden via widget fields. */
+/** Section: Services — من تصنيفات category */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-$v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$v     = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$terms = function_exists( 'kayan_home_get_taxonomy_terms' ) ? kayan_home_get_taxonomy_terms( $v, 'category', 6 ) : array();
+$btn   = kayan_home_h( $v, 'but_text', 'طلب الخدمة' );
 ?>
-<!-- ═══════════════ Services ═══════════════ -->
 <section class="sec" id="services">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">خدماتنا</span>
-      <h2>خدماتنا المنزلية <span>المتكاملة</span></h2>
-      <p>حلول احترافية شاملة تغطي كل احتياجات منزلك أو منشأتك بأعلى معايير الجودة والضمان.</p>
-    </div>
+    <?php kayan_home_render_shead( $v, 'خدماتنا', 'خدماتنا المنزلية <span>المتكاملة</span>', 'حلول احترافية شاملة تغطي كل احتياجات منزلك أو منشأتك بأعلى معايير الجودة والضمان.' ); ?>
     <div class="services-grid">
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-droplet"></i></div>
-        <h3>كشف تسربات المياه</h3>
-        <p class="desc">تحديد دقيق لمصدر التسرب بدون أي تكسير.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> كاميرا حرارية متطورة</li>
-          <li><i class="fas fa-check"></i> بدون تكسير 100%</li>
-          <li><i class="fas fa-check"></i> تقرير مصور مفصّل</li>
-          <li><i class="fas fa-check"></i> إصلاح فوري</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-layer-group"></i></div>
-        <h3>عزل الأسطح</h3>
-        <p class="desc">حماية كاملة من الحرارة وتسرب المياه.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> عزل فوم بولي يوريثان</li>
-          <li><i class="fas fa-check"></i> أغشية بيتومينية معدّلة</li>
-          <li><i class="fas fa-check"></i> طلاء عازل للحرارة</li>
-          <li><i class="fas fa-check"></i> ضمان حتى 10 سنوات</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-snowflake"></i></div>
-        <h3>صيانة التكييف</h3>
-        <p class="desc">أداء أفضل وهواء أنقى طوال الصيف.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> تنظيف شامل للفلاتر والكويل</li>
-          <li><i class="fas fa-check"></i> إصلاح جميع الأعطال</li>
-          <li><i class="fas fa-check"></i> شحن الفريون</li>
-          <li><i class="fas fa-check"></i> ضمان على قطع الغيار</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-spray-can-sparkles"></i></div>
-        <h3>التنظيف والتعقيم</h3>
-        <p class="desc">نظافة عميقة وتعقيم آمن لكل المساحات.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> تنظيف عميق شامل</li>
-          <li><i class="fas fa-check"></i> تعقيم بالبخار</li>
-          <li><i class="fas fa-check"></i> إزالة البقع العنيدة</li>
-          <li><i class="fas fa-check"></i> مواد صديقة للبيئة</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-wrench"></i></div>
-        <h3>أعمال السباكة</h3>
-        <p class="desc">إصلاح وتركيب احترافي يدوم طويلاً.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> إصلاح تسربات الأنابيب</li>
-          <li><i class="fas fa-check"></i> تركيب وتوصيل الصنابير</li>
-          <li><i class="fas fa-check"></i> تسليك المجاري</li>
-          <li><i class="fas fa-check"></i> فحص شبكات المياه</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-bug-slash"></i></div>
-        <h3>مكافحة الحشرات</h3>
-        <p class="desc">إبادة آمنة وفعالة مع ضمان عدم العودة.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> مواد آمنة ومرخصة</li>
-          <li><i class="fas fa-check"></i> إبادة فورية وكاملة</li>
-          <li><i class="fas fa-check"></i> ضمان عدم العودة</li>
-          <li><i class="fas fa-check"></i> لا رائحة — آمن للأطفال</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
+      <?php if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) : ?>
+        <?php foreach ( $terms as $term ) :
+          $url   = get_term_link( $term );
+          $img   = function_exists( 'kayan_home_term_image_url' ) ? kayan_home_term_image_url( $term->term_id ) : '';
+          $icon  = get_term_meta( $term->term_id, 'icon', true );
+          ?>
+          <div class="svc rv">
+            <div class="svc-ic">
+              <?php if ( $img ) : ?>
+                <img src="<?php echo esc_url( $img ); ?>" alt="<?php echo esc_attr( $term->name ); ?>" loading="lazy" />
+              <?php elseif ( $icon ) : ?>
+                <?php echo $icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+              <?php else : ?>
+                <i class="fas fa-broom"></i>
+              <?php endif; ?>
+            </div>
+            <h3><?php echo esc_html( $term->name ); ?></h3>
+            <p class="desc"><?php echo esc_html( wp_trim_words( $term->description, 18 ) ); ?></p>
+            <a href="<?php echo esc_url( $url ); ?>" class="svc-cta"><?php echo esc_html( $btn ); ?> <i class="fas fa-arrow-left"></i></a>
+          </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
     </div>
   </div>
 </section>

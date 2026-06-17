@@ -6,6 +6,8 @@ if ( ! class_exists( 'Kayan_Home_Section_Widget' ) ) {
 		protected $widget_title = '';
 		protected $widget_description = '';
 		protected $folder__name = 'Home2026';
+		protected $data_driven = false;
+		protected $layout_widget = false;
 
 		public function __construct() {
 			$this->widget__name = $this->get_widget_id();
@@ -20,6 +22,9 @@ if ( ! class_exists( 'Kayan_Home_Section_Widget' ) ) {
 		}
 
 		public function widget__setup() {
+			if ( $this->layout_widget ) {
+				return;
+			}
 			global $yc__widgets__center;
 			$fields = array_merge( $this->base_content_fields(), $this->section_fields() );
 			if ( function_exists( 'kayan_home_widget_visibility_fields' ) ) {
@@ -40,17 +45,19 @@ if ( ! class_exists( 'Kayan_Home_Section_Widget' ) ) {
 		abstract protected function section_fields();
 
 		protected function base_content_fields() {
+			if ( $this->data_driven && function_exists( 'kayan_home_data_source_fields' ) ) {
+				return kayan_home_data_source_fields();
+			}
 			return array(
 				array(
 					'type'  => 'Title',
-					'title' => 'محتوى القسم',
-					'disc'  => 'يُعبَّأ تلقائياً من تصميم index.html. يمكنك تعديل HTML أو الحقول أدناه.',
+					'title' => 'تخصيص متقدم',
+					'disc'  => 'افتراضياً يُعرض تصميم القسم. لتجاوزه بالكامل أدخل HTML.',
 				),
 				array(
 					'id'    => 'content_html',
 					'type'  => 'TextArea',
-					'title' => 'HTML القسم',
-					'disc'  => 'محتوى القسم كاملاً كما في التصميم المعتمد.',
+					'title' => 'استبدال HTML كامل',
 				),
 			);
 		}

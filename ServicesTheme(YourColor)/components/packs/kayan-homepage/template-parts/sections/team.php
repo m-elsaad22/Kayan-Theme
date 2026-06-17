@@ -1,52 +1,39 @@
 <?php
-/** Section: Expert Team — defaults from design; overridden via widget fields. */
+/** Section: Team — من CPT team */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-$v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$v     = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$posts = function_exists( 'kayan_home_get_posts_query' ) ? kayan_home_get_posts_query( $v, 'team', 5 ) : array();
 ?>
-<!-- ═══════════════ Expert Team ═══════════════ -->
 <section class="sec" id="team" style="background:var(--bg)">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">فريقنا</span>
-      <h2>خبراؤنا في <span>خدمتكم</span></h2>
-      <p>فريق معتمد من المتخصصين بخبرة عملية طويلة في السوق الإماراتي.</p>
-    </div>
+    <?php kayan_home_render_shead( $v, 'فريقنا', 'خبراؤنا في <span>خدمتكم</span>', 'فريق معتمد من المتخصصين بخبرة عملية طويلة في السوق الإماراتي.' ); ?>
     <div class="team-grid">
-      <div class="tcard rv">
-        <div class="tav">أ.م</div>
-        <h3>أحمد المنصوري</h3>
-        <div class="role">مدير العمليات</div>
-        <p class="spec">قيادة الفرق وضمان جودة التنفيذ في كل المشاريع.</p>
-        <div class="tbadges"><span class="tbadge"><i class="fas fa-award"></i> 15+ سنة</span><span class="tbadge"><i class="fas fa-circle-check"></i> خبير معتمد</span></div>
-      </div>
-      <div class="tcard rv">
-        <div class="tav">س.ع</div>
-        <h3>سعيد العامري</h3>
-        <div class="role">خبير كشف التسربات</div>
-        <p class="spec">كشف دقيق بالكاميرا الحرارية بدون أي تكسير.</p>
-        <div class="tbadges"><span class="tbadge"><i class="fas fa-award"></i> 12+ سنة</span><span class="tbadge"><i class="fas fa-certificate"></i> شهادة معتمدة</span></div>
-      </div>
-      <div class="tcard rv">
-        <div class="tav">خ.ب</div>
-        <h3>خالد البلوشي</h3>
-        <div class="role">مشرف العزل</div>
-        <p class="spec">عزل حراري ومائي بأحدث المواد العالمية.</p>
-        <div class="tbadges"><span class="tbadge"><i class="fas fa-award"></i> 10+ سنوات</span><span class="tbadge"><i class="fas fa-circle-check"></i> خبير معتمد</span></div>
-      </div>
-      <div class="tcard rv">
-        <div class="tav">م.ش</div>
-        <h3>محمد الشحي</h3>
-        <div class="role">مشرف الصيانة</div>
-        <p class="spec">صيانة شاملة للتكييف والسباكة والكهرباء.</p>
-        <div class="tbadges"><span class="tbadge"><i class="fas fa-award"></i> 11+ سنة</span><span class="tbadge"><i class="fas fa-certificate"></i> شهادة معتمدة</span></div>
-      </div>
-      <div class="tcard rv">
-        <div class="tav">ع.ك</div>
-        <h3>عبدالله الكعبي</h3>
-        <div class="role">خبير الخزانات</div>
-        <p class="spec">عزل وتنظيف الخزانات بمعايير صحية آمنة.</p>
-        <div class="tbadges"><span class="tbadge"><i class="fas fa-award"></i> 9+ سنوات</span><span class="tbadge"><i class="fas fa-circle-check"></i> خبير معتمد</span></div>
-      </div>
+      <?php foreach ( $posts as $post ) :
+        $thumb = function_exists( 'kayan_home_post_thumb_url' ) ? kayan_home_post_thumb_url( $post->ID, 'medium' ) : '';
+        $role  = get_post_meta( $post->ID, 'team_role', true );
+        $exp   = get_post_meta( $post->ID, 'team_experience', true );
+        $b1    = get_post_meta( $post->ID, 'team_badge_1', true );
+        $b2    = get_post_meta( $post->ID, 'team_badge_2', true );
+        $initials = mb_substr( get_the_title( $post ), 0, 3 );
+        ?>
+        <div class="tcard rv">
+          <div class="tav">
+            <?php if ( $thumb ) : ?>
+              <img src="<?php echo esc_url( $thumb ); ?>" alt="<?php echo esc_attr( get_the_title( $post ) ); ?>" loading="lazy" />
+            <?php else : ?>
+              <?php echo esc_html( $initials ); ?>
+            <?php endif; ?>
+          </div>
+          <h3><?php echo esc_html( get_the_title( $post ) ); ?></h3>
+          <?php if ( $role ) : ?><div class="role"><?php echo esc_html( $role ); ?></div><?php endif; ?>
+          <p class="spec"><?php echo esc_html( wp_trim_words( $post->post_content, 15 ) ); ?></p>
+          <div class="tbadges">
+            <?php if ( $exp ) : ?><span class="tbadge"><i class="fas fa-award"></i> <?php echo esc_html( $exp ); ?></span><?php endif; ?>
+            <?php if ( $b1 ) : ?><span class="tbadge"><i class="fas fa-circle-check"></i> <?php echo esc_html( $b1 ); ?></span><?php endif; ?>
+            <?php if ( $b2 ) : ?><span class="tbadge"><i class="fas fa-certificate"></i> <?php echo esc_html( $b2 ); ?></span><?php endif; ?>
+          </div>
+        </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>

@@ -1,36 +1,16 @@
 <?/**
- * Homepage 2026 — مناطق الخدمة
+ * Homepage 2026 — المناطق
  */
 class kayan_home_areas extends Kayan_Home_Section_Widget {
 
 	protected $section_slug = 'areas';
 	protected $widget_title = 'مناطق الخدمة';
-	protected $widget_description = 'المدن والخريطة';
+	protected $widget_description = 'مدن الخدمة من تصنيف city مع الصور';
+	protected $data_driven = true;
 
 	protected function section_fields() {
-		$fields = array(
-			array(
-				'type'  => 'Title',
-				'title' => 'محتوى القسم',
-				'disc'  => 'اترك الحقول فارغة لاستخدام التصميم الافتراضي لركن التطور. التعديلات المتقدمة لكل حقل ستُضاف تدريجياً — يمكنك إخفاء القسم أو إعادة ترتيبه من تبويب الرئيسية ونظام التصميم.',
-			),
-		);
-		if ( function_exists( 'kayan_home_section_header_fields' ) && ! in_array( 'areas', array( 'loader', 'header', 'footer', 'mobile-bar', 'trustbar', 'atb' ), true ) ) {
-			$fields = array_merge( $fields, kayan_home_section_header_fields() );
-		}
-		if ( function_exists( 'kayan_home_items_group_field' ) ) {
-			$fields[] = kayan_home_items_group_field(
-				'items',
-				'عناصر القسم (اختياري)',
-				array(
-					array( 'id' => 'icon', 'type' => 'Text', 'title' => 'أيقونة FA', 'disc' => 'مثال: fas fa-star' ),
-					array( 'id' => 'title', 'type' => 'Text', 'title' => 'العنوان' ),
-					array( 'id' => 'content', 'type' => 'TextArea', 'title' => 'النص / الوصف' ),
-					array( 'id' => 'url', 'type' => 'Text', 'title' => 'الرابط' ),
-				)
-			);
-		}
-		return $fields;
+		$fields = kayan_home_section_header_fields( 'مناطق الخدمة', 'خدماتنا في جميع <span>إمارات الدولة</span>', 'أينما كنت في الإمارات، فريقنا قريب منك.' );
+		return array_merge( $fields, kayan_home_city_query_fields() );
 	}
 }
 (new kayan_home_areas)->Setup();
