@@ -1,16 +1,16 @@
 <?php
-/** Section: Advanced Trust Bar (animated counters) — defaults from design; overridden via widget fields. */
+/** ATB counters */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 $v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$items = kayan_home_sorted_group( $v, 'counter_items' );
 ?>
-<!-- ═══════════════ Advanced Trust Bar (animated counters) ═══════════════ -->
 <div class="wrap atb-wrap">
   <div class="atb rv">
-    <div class="atb-item"><i class="fas fa-briefcase"></i><div><b data-count="30000" data-suffix="+">0</b><small>خدمة منجزة</small></div></div>
-    <div class="atb-item"><i class="fas fa-users"></i><div><b data-count="15000" data-suffix="+">0</b><small>عميل سعيد</small></div></div>
-    <div class="atb-item"><i class="fas fa-star"></i><div><b data-count="4.9" data-dec="1">0</b><small>تقييم Google</small></div></div>
-    <div class="atb-item"><i class="fas fa-award"></i><div><b data-count="12" data-suffix="+">0</b><small>سنة خبرة</small></div></div>
-    <div class="atb-item"><i class="fas fa-map-location-dot"></i><div><b>كل الإمارات</b><small>تغطية شاملة</small></div></div>
-    <div class="atb-item"><i class="fas fa-headset"></i><div><b>24/7</b><small>دعم الطوارئ</small></div></div>
+    <?php foreach ( $items as $item ) :
+      $attr = kayan_home_render_counter_attr( $item );
+      $display = ( $attr !== '' ) ? '0' : esc_html( $item['value'] );
+      ?>
+    <div class="atb-item"><i class="<?php echo esc_attr( $item['icon'] ); ?>"></i><div><b<?php echo $attr; // phpcs:ignore ?>><?php echo $display; ?></b><small><?php echo esc_html( $item['label'] ); ?></small></div></div>
+    <?php endforeach; ?>
   </div>
 </div>

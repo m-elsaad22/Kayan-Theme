@@ -1,10 +1,11 @@
 <?php
-/** Section: Loader — defaults from design; overridden via widget fields. */
+/** Loader */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 $v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$title = kayan_home_h( $v, 'loader_title', 'ركن' );
+$hi    = kayan_home_h( $v, 'loader_highlight', 'التطور' );
 ?>
-<!-- ═══════════════ Loader ═══════════════ -->
 <div id="loader">
-  <div class="ld-logo">ركن <span>التطور</span></div>
+  <div class="ld-logo"><?php echo esc_html( $title ); ?> <span><?php echo esc_html( $hi ); ?></span></div>
   <div class="ld-bar"><i></i></div>
 </div>

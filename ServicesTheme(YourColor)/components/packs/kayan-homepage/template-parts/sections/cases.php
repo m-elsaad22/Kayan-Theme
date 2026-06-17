@@ -1,50 +1,49 @@
 <?php
-/** Section: Case Studies / Success Stories — defaults from design; overridden via widget fields. */
+/** Case studies */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 $v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$source = isset( $v['cases_source'] ) ? $v['cases_source'] : 'manual';
+$cases  = array();
+if ( $source === 'works' && function_exists( 'kayan_home_get_works_posts' ) ) {
+	foreach ( kayan_home_get_works_posts( $v ) as $post ) {
+		$cases[] = array(
+			'title'    => get_the_title( $post ),
+			'subtitle' => get_post_meta( $post->ID, 'client__name', true ),
+			'problem'  => wp_trim_words( $post->post_content, 25 ),
+			'result'   => get_post_meta( $post->ID, 'services__type', true ),
+			'url'      => get_permalink( $post ),
+			'icon'     => 'fas fa-briefcase',
+		);
+	}
+} else {
+	$cases = kayan_home_sorted_group( $v, 'case_studies' );
+}
 ?>
-<!-- ═══════════════ Case Studies / Success Stories ═══════════════ -->
 <section class="sec" id="cases">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">قصص النجاح</span>
-      <h2>قصص نجاح حقيقية من <span>مشاريعنا</span></h2>
-      <p>تعرف على كيفية حل المشكلات المعقدة وتحقيق نتائج مميزة لعملائنا في مختلف إمارات الإمارات.</p>
-    </div>
+    <?php kayan_home_render_shead( $v, 'قصص النجاح', 'قصص نجاح حقيقية من <span>مشاريعنا</span>', 'تعرف على كيفية حل المشكلات وتحقيق نتائج مميزة.' ); ?>
     <div class="cs-grid">
+      <?php foreach ( $cases as $cs ) :
+        $style = ! empty( $cs['header_style'] ) ? ' style="' . esc_attr( $cs['header_style'] ) . '"' : '';
+        $url   = ! empty( $cs['url'] ) ? $cs['url'] : '#contact';
+        ?>
       <div class="cs rv">
-        <div class="cs-top"><i class="fas fa-droplet"></i><div><b>تسرب مياه خفي</b><small>فيلا — دبي مارينا</small></div></div>
+        <div class="cs-top"<?php echo $style; ?>><i class="<?php echo esc_attr( isset( $cs['icon'] ) ? $cs['icon'] : 'fas fa-star' ); ?>"></i><div><b><?php echo esc_html( $cs['title'] ); ?></b><small><?php echo esc_html( isset( $cs['subtitle'] ) ? $cs['subtitle'] : '' ); ?></small></div></div>
         <div class="cs-body">
-          <div class="cs-block"><div class="k"><i class="fas fa-triangle-exclamation"></i> المشكلة</div><p>تسرب مياه مستمر تسبب في رطوبة وتلف الجدران دون مصدر ظاهر.</p></div>
-          <div class="cs-block"><div class="k"><i class="fas fa-magnifying-glass"></i> التشخيص</div><p>فحص بالكاميرا الحرارية وأجهزة الكشف الصوتي لتحديد موقع التسرب بدقة.</p></div>
-          <div class="cs-block"><div class="k"><i class="fas fa-screwdriver-wrench"></i> الحل</div><p>إصلاح الموقع المحدد فقط بدون تكسير وإعادة العزل الموضعي.</p></div>
-          <div class="cs-result"><i class="fas fa-circle-check"></i> حل التسرب بنسبة 100%</div>
-          <div class="cs-meta"><span><i class="fas fa-location-dot"></i> دبي مارينا</span><span><i class="fas fa-screwdriver-wrench"></i> كشف تسربات</span><span><i class="fas fa-clock"></i> يوم واحد</span><span><i class="fas fa-calendar-check"></i> مايو 2026</span></div>
-          <a href="#contact" class="btn btn-soft">عرض القصة كاملة</a>
+          <?php if ( ! empty( $cs['problem'] ) ) : ?><div class="cs-block"><div class="k"><i class="fas fa-triangle-exclamation"></i> المشكلة</div><p><?php echo esc_html( $cs['problem'] ); ?></p></div><?php endif; ?>
+          <?php if ( ! empty( $cs['diagnosis'] ) ) : ?><div class="cs-block"><div class="k"><i class="fas fa-magnifying-glass"></i> التشخيص</div><p><?php echo esc_html( $cs['diagnosis'] ); ?></p></div><?php endif; ?>
+          <?php if ( ! empty( $cs['solution'] ) ) : ?><div class="cs-block"><div class="k"><i class="fas fa-screwdriver-wrench"></i> الحل</div><p><?php echo esc_html( $cs['solution'] ); ?></p></div><?php endif; ?>
+          <?php if ( ! empty( $cs['result'] ) ) : ?><div class="cs-result"><i class="fas fa-circle-check"></i> <?php echo esc_html( $cs['result'] ); ?></div><?php endif; ?>
+          <div class="cs-meta">
+            <?php if ( ! empty( $cs['location'] ) ) : ?><span><i class="fas fa-location-dot"></i> <?php echo esc_html( $cs['location'] ); ?></span><?php endif; ?>
+            <?php if ( ! empty( $cs['service'] ) ) : ?><span><i class="fas fa-screwdriver-wrench"></i> <?php echo esc_html( $cs['service'] ); ?></span><?php endif; ?>
+            <?php if ( ! empty( $cs['duration'] ) ) : ?><span><i class="fas fa-clock"></i> <?php echo esc_html( $cs['duration'] ); ?></span><?php endif; ?>
+            <?php if ( ! empty( $cs['date'] ) ) : ?><span><i class="fas fa-calendar-check"></i> <?php echo esc_html( $cs['date'] ); ?></span><?php endif; ?>
+          </div>
+          <a href="<?php echo esc_url( $url ); ?>" class="btn btn-soft">عرض القصة كاملة</a>
         </div>
       </div>
-      <div class="cs rv">
-        <div class="cs-top" style="background:linear-gradient(135deg,var(--gold),#d98b15)"><i class="fas fa-layer-group"></i><div><b>فشل عزل السطح</b><small>فيلا — البرشاء</small></div></div>
-        <div class="cs-body">
-          <div class="cs-block"><div class="k"><i class="fas fa-triangle-exclamation"></i> المشكلة</div><p>ارتفاع حرارة المنزل وفواتير كهرباء مرتفعة بسبب عزل قديم متضرر.</p></div>
-          <div class="cs-block"><div class="k"><i class="fas fa-magnifying-glass"></i> التشخيص</div><p>قياس انتقال الحرارة على السطح وكشف نقاط ضعف العزل القديم.</p></div>
-          <div class="cs-block"><div class="k"><i class="fas fa-screwdriver-wrench"></i> الحل</div><p>تركيب عزل فوم بولي يوريثان وطلاء عاكس للحرارة بضمان 10 سنوات.</p></div>
-          <div class="cs-result"><i class="fas fa-circle-check"></i> خفض انتقال الحرارة 40%</div>
-          <div class="cs-meta"><span><i class="fas fa-location-dot"></i> البرشاء</span><span><i class="fas fa-screwdriver-wrench"></i> عزل أسطح</span><span><i class="fas fa-clock"></i> 3 أيام</span><span><i class="fas fa-calendar-check"></i> أبريل 2026</span></div>
-          <a href="#contact" class="btn btn-soft">عرض القصة كاملة</a>
-        </div>
-      </div>
-      <div class="cs rv">
-        <div class="cs-top" style="background:linear-gradient(135deg,var(--turq),var(--aqua))"><i class="fas fa-water"></i><div><b>تلوث خزان المياه</b><small>مبنى — الشارقة</small></div></div>
-        <div class="cs-body">
-          <div class="cs-block"><div class="k"><i class="fas fa-triangle-exclamation"></i> المشكلة</div><p>تغير لون المياه وروائح بسبب ترسبات وتلوث داخل الخزان.</p></div>
-          <div class="cs-block"><div class="k"><i class="fas fa-magnifying-glass"></i> التشخيص</div><p>فحص داخلي للخزان وتحديد مصادر الترسبات والتسرب الجانبي.</p></div>
-          <div class="cs-block"><div class="k"><i class="fas fa-screwdriver-wrench"></i> الحل</div><p>تنظيف وتعقيم كامل وإعادة عزل الخزان بمواد صحية معتمدة.</p></div>
-          <div class="cs-result"><i class="fas fa-circle-check"></i> تقليل فقد المياه وتحسين الجودة</div>
-          <div class="cs-meta"><span><i class="fas fa-location-dot"></i> الشارقة</span><span><i class="fas fa-screwdriver-wrench"></i> خزانات</span><span><i class="fas fa-clock"></i> يومان</span><span><i class="fas fa-calendar-check"></i> مارس 2026</span></div>
-          <a href="#contact" class="btn btn-soft">عرض القصة كاملة</a>
-        </div>
-      </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>

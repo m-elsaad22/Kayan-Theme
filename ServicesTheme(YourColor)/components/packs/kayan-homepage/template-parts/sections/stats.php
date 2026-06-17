@@ -1,23 +1,19 @@
 <?php
-/** Section: Stats — defaults from design; overridden via widget fields. */
+/** Section: Stats */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 $v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$items = kayan_home_sorted_group( $v, 'stat_items' );
 ?>
-<!-- ═══════════════ Stats ═══════════════ -->
 <section class="sec stats">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">أرقامنا</span>
-      <h2>أرقام تتحدث عن جودتنا</h2>
-      <p>ثقة الآلاف من العملاء في جميع أنحاء الإمارات.</p>
-    </div>
+    <?php kayan_home_render_shead( $v, 'أرقامنا', 'أرقام تتحدث عن جودتنا', 'ثقة الآلاف من العملاء في جميع أنحاء الإمارات.' ); ?>
     <div class="stats-grid">
-      <div class="stat rv"><i class="fas fa-users"></i><div class="num" data-count="15000" data-suffix="+">0</div><div class="lbl">عميل راضٍ</div></div>
-      <div class="stat rv"><i class="fas fa-briefcase"></i><div class="num" data-count="30000" data-suffix="+">0</div><div class="lbl">خدمة منجزة</div></div>
-      <div class="stat rv"><i class="fas fa-award"></i><div class="num" data-count="12" data-suffix="+">0</div><div class="lbl">سنة خبرة</div></div>
-      <div class="stat rv"><i class="fas fa-user-gear"></i><div class="num" data-count="50" data-suffix="+">0</div><div class="lbl">فني معتمد</div></div>
-      <div class="stat rv"><i class="fas fa-face-smile"></i><div class="num" data-count="98" data-suffix="%">0</div><div class="lbl">رضا العملاء</div></div>
-      <div class="stat rv"><i class="fas fa-headset"></i><div class="num">24/7</div><div class="lbl">دعم فوري</div></div>
+      <?php foreach ( $items as $item ) :
+        $attr = kayan_home_render_counter_attr( $item );
+        $display = ( $attr !== '' ) ? '0' : esc_html( $item['value'] );
+        ?>
+      <div class="stat rv"><i class="<?php echo esc_attr( $item['icon'] ); ?>"></i><div class="num"<?php echo $attr; // phpcs:ignore ?>><?php echo $display; ?></div><div class="lbl"><?php echo esc_html( $item['label'] ); ?></div></div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>

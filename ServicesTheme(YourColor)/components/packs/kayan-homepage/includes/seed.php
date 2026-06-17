@@ -11,7 +11,7 @@ if ( ! function_exists( 'kayan_home_seed_is_done' ) ) {
 
 if ( ! function_exists( 'kayan_home_seed_version' ) ) {
 	function kayan_home_seed_version() {
-		return '2027.4.0';
+		return '2027.4.1';
 	}
 }
 
@@ -30,7 +30,7 @@ if ( ! function_exists( 'kayan_home_count_seeded_widgets' ) ) {
 				continue;
 			}
 			$meta = get_post_meta( (int) $widget_row['widget_post__id'], 'widget_post_meta', true );
-			if ( is_array( $meta ) && ( ! empty( $meta['content_html'] ) || ( isset( $meta['data_source'] ) && $meta['data_source'] === 'wordpress' ) ) ) {
+			if ( is_array( $meta ) && count( array_filter( $meta ) ) > 0 ) {
 				$count++;
 			}
 		}

@@ -86,13 +86,19 @@ if ( ! function_exists( 'kayan_home_get_widget_defaults' ) ) {
 		if ( $slug === '' ) {
 			return array();
 		}
-		$meta = array(
-			'data_source' => 'wordpress',
-		);
 		if ( function_exists( 'kayan_home_data_driven_slugs' ) && in_array( $slug, kayan_home_data_driven_slugs(), true ) ) {
+			$meta = array( 'data_source' => 'wordpress' );
 			$structured = kayan_home_structured_defaults( $slug );
 			if ( ! empty( $structured ) ) {
 				$meta = array_merge( $meta, $structured );
+			}
+			return $meta;
+		}
+		if ( function_exists( 'kayan_home_structured_section_slugs' ) && in_array( $slug, kayan_home_structured_section_slugs(), true ) ) {
+			$meta = function_exists( 'kayan_home_get_structured_defaults' ) ? kayan_home_get_structured_defaults( $slug ) : array();
+			$headers = kayan_home_structured_defaults( $slug );
+			if ( ! empty( $headers ) ) {
+				$meta = array_merge( $headers, $meta );
 			}
 			return $meta;
 		}

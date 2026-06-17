@@ -1,67 +1,49 @@
 <?php
-/** Section: SEO Content Hub — defaults from design; overridden via widget fields. */
+/** SEO hub */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 $v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$source = isset( $v['hub_source'] ) ? $v['hub_source'] : 'manual';
+$cols   = array();
+if ( $source === 'category' && ! empty( $v['hub_categories'] ) ) {
+	foreach ( $v['hub_categories'] as $tid ) {
+		$term = get_term_by( 'id', (int) $tid, 'category' );
+		if ( ! $term || is_wp_error( $term ) ) {
+			continue;
+		}
+		$cols[] = array(
+			'icon'           => get_term_meta( $term->term_id, 'icon', true ) ?: 'fas fa-folder',
+			'title'          => $term->name,
+			'featured_label' => 'دليل ' . $term->name,
+			'featured_url'   => get_term_link( $term ),
+			'links'          => '',
+		);
+	}
+} else {
+	$cols = kayan_home_sorted_group( $v, 'hub_columns' );
+}
 ?>
-<!-- ═══════════════ SEO Content Hub ═══════════════ -->
 <section class="sec" id="hub">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">مركز المعرفة</span>
-      <h2>دليل الخدمات <span>المنزلية</span></h2>
-      <p>محتوى متخصص ومنظم يساعدك على فهم خدماتنا واتخاذ القرار الصحيح.</p>
-    </div>
+    <?php kayan_home_render_shead( $v, 'مركز المعرفة', 'دليل الخدمات <span>المنزلية</span>', 'محتوى متخصص يساعدك على فهم خدماتنا.' ); ?>
     <div class="hub-grid">
+      <?php foreach ( $cols as $col ) :
+        $links = ! empty( $col['links'] ) ? kayan_home_parse_link_lines( $col['links'] ) : array();
+        ?>
       <div class="hub rv">
-        <div class="hub-ic"><i class="fas fa-droplet"></i></div>
-        <h3>كشف التسربات</h3>
-        <a class="feat-guide" href="#blog"><i class="fas fa-star" style="color:var(--gold)"></i> الدليل الشامل لكشف التسربات</a>
+        <div class="hub-ic"><i class="<?php echo esc_attr( $col['icon'] ); ?>"></i></div>
+        <h3><?php echo esc_html( $col['title'] ); ?></h3>
+        <?php if ( ! empty( $col['featured_label'] ) ) : ?>
+        <a class="feat-guide" href="<?php echo esc_url( ! empty( $col['featured_url'] ) ? $col['featured_url'] : '#blog' ); ?>"><i class="fas fa-star" style="color:var(--gold)"></i> <?php echo esc_html( $col['featured_label'] ); ?></a>
+        <?php endif; ?>
+        <?php if ( ! empty( $links ) ) : ?>
         <ul>
-          <li><a href="#blog"><i class="fas fa-chevron-left"></i> علامات تسرب المياه المبكرة</a></li>
-          <li><a href="#blog"><i class="fas fa-chevron-left"></i> الكشف بدون تكسير</a></li>
-          <li><a href="#pricing"><i class="fas fa-chevron-left"></i> تكلفة كشف التسربات</a></li>
+          <?php foreach ( $links as $lnk ) : ?>
+          <li><a href="<?php echo esc_url( $lnk['url'] ); ?>"><i class="fas fa-chevron-left"></i> <?php echo esc_html( $lnk['title'] ); ?></a></li>
+          <?php endforeach; ?>
         </ul>
+        <?php endif; ?>
       </div>
-      <div class="hub rv">
-        <div class="hub-ic"><i class="fas fa-layer-group"></i></div>
-        <h3>العزل</h3>
-        <a class="feat-guide" href="#blog"><i class="fas fa-star" style="color:var(--gold)"></i> أنواع عزل الأسطح</a>
-        <ul>
-          <li><a href="#blog"><i class="fas fa-chevron-left"></i> عزل الفوم مقابل البيتومين</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-left"></i> العزل الحراري والمائي</a></li>
-          <li><a href="#pricing"><i class="fas fa-chevron-left"></i> تكلفة عزل الأسطح</a></li>
-        </ul>
-      </div>
-      <div class="hub rv">
-        <div class="hub-ic"><i class="fas fa-water"></i></div>
-        <h3>الخزانات</h3>
-        <a class="feat-guide" href="#blog"><i class="fas fa-star" style="color:var(--gold)"></i> العناية بخزانات المياه</a>
-        <ul>
-          <li><a href="#blog"><i class="fas fa-chevron-left"></i> أهمية تنظيف الخزانات</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-left"></i> عزل الخزانات الصحي</a></li>
-          <li><a href="#pricing"><i class="fas fa-chevron-left"></i> تكلفة تنظيف الخزانات</a></li>
-        </ul>
-      </div>
-      <div class="hub rv">
-        <div class="hub-ic"><i class="fas fa-snowflake"></i></div>
-        <h3>الصيانة</h3>
-        <a class="feat-guide" href="#blog"><i class="fas fa-star" style="color:var(--gold)"></i> صيانة التكييف الموسمية</a>
-        <ul>
-          <li><a href="#blog"><i class="fas fa-chevron-left"></i> صيانة المكيف في الصيف</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-left"></i> السباكة والكهرباء</a></li>
-          <li><a href="#pricing"><i class="fas fa-chevron-left"></i> تكلفة الصيانة المنزلية</a></li>
-        </ul>
-      </div>
-      <div class="hub rv">
-        <div class="hub-ic"><i class="fas fa-bug-slash"></i></div>
-        <h3>مكافحة الحشرات</h3>
-        <a class="feat-guide" href="#blog"><i class="fas fa-star" style="color:var(--gold)"></i> دليل مكافحة الحشرات الآمنة</a>
-        <ul>
-          <li><a href="#blog"><i class="fas fa-chevron-left"></i> مواد آمنة للأطفال</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-left"></i> ضمان عدم العودة</a></li>
-          <li><a href="#pricing"><i class="fas fa-chevron-left"></i> تكلفة مكافحة الحشرات</a></li>
-        </ul>
-      </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>

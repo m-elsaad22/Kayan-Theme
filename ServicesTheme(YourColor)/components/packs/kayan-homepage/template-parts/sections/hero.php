@@ -1,30 +1,21 @@
 <?php
 /**
- * Section: Hero — fields from widget admin override defaults.
+ * Section: Hero
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-$vars = isset( $vars ) && is_array( $vars ) ? $vars : array();
-$h1       = kayan_home_h( $vars, 'section_title', 'ركن التطور — منصة <em>الخدمات المنزلية المتكاملة</em> الأولى في الإمارات' );
-$sub      = kayan_home_h( $vars, 'section_subtitle', 'من عزل الأسطح وكشف التسربات إلى صيانة التكييف والتنظيف الاحترافي — فريق معتمد، أجهزة حديثة، وضمان مكتوب يصل إلى 10 سنوات.' );
-$dash_ttl = kayan_home_h( $vars, 'dash_title', 'لوحة خدمات ركن التطور' );
-$chips    = array();
-if ( ! empty( $vars['items'] ) && is_array( $vars['items'] ) ) {
-	$chips = $vars['items'];
-}
-if ( empty( $chips ) ) {
-	$chips = array(
-		array( 'icon' => 'fas fa-star star', 'title' => '4.9/5 (1,247+ تقييم Google)' ),
-		array( 'icon' => 'fas fa-users', 'title' => '15,000+ عميل راضٍ' ),
-		array( 'icon' => 'fas fa-award', 'title' => '12+ سنة خبرة' ),
-		array( 'icon' => 'fas fa-shield-halved', 'title' => 'ضمان 10 سنوات مكتوب' ),
-		array( 'icon' => 'fas fa-headset', 'title' => 'طوارئ 24/7' ),
-		array( 'icon' => 'fas fa-map-location-dot', 'title' => 'جميع الإمارات' ),
-	);
-}
-$wa  = 'https://wa.me/971586634710';
-$tel = 'tel:+971586634710';
+$v        = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$h1       = kayan_home_h( $v, 'section_title', 'ركن التطور — منصة <em>الخدمات المنزلية المتكاملة</em> الأولى في الإمارات' );
+$sub      = kayan_home_h( $v, 'section_subtitle', '' );
+$dash_ttl = kayan_home_h( $v, 'dash_title', 'لوحة خدمات ركن التطور' );
+$chips    = kayan_home_sorted_group( $v, 'hero_chips' );
+$minis    = kayan_home_sorted_group( $v, 'dash_mini' );
+$dstats   = kayan_home_sorted_group( $v, 'dash_stats' );
+$dtrust   = kayan_home_sorted_group( $v, 'dash_trust' );
+$wa       = kayan_home_h( $v, 'whatsapp_url', 'https://wa.me/971586634710' );
+$tel      = kayan_home_h( $v, 'phone_url', 'tel:+971586634710' );
+$quote    = kayan_home_h( $v, 'quote_anchor', '#contact' );
 ?>
 <section class="hero" id="home">
   <div class="hero-grid-bg"></div>
@@ -32,21 +23,17 @@ $tel = 'tel:+971586634710';
   <div class="wrap">
     <div class="hero-copy">
       <h1><?php echo wp_kses_post( $h1 ); ?></h1>
-      <p class="sub"><?php echo esc_html( $sub ); ?></p>
+      <?php if ( $sub ) : ?><p class="sub"><?php echo esc_html( $sub ); ?></p><?php endif; ?>
       <div class="hero-ctas">
         <a href="<?php echo esc_url( $wa ); ?>" class="btn btn-wa"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
         <a href="<?php echo esc_attr( $tel ); ?>" class="btn btn-call"><i class="fas fa-phone"></i> اتصل الآن</a>
-        <a href="#contact" class="btn btn-quote"><i class="fas fa-file-invoice-dollar"></i> طلب عرض سعر</a>
+        <a href="<?php echo esc_attr( $quote ); ?>" class="btn btn-quote"><i class="fas fa-file-invoice-dollar"></i> طلب عرض سعر</a>
       </div>
       <div class="hero-proof">
         <?php foreach ( $chips as $chip ) :
-			$icon = isset( $chip['icon'] ) ? $chip['icon'] : 'fas fa-circle-check';
-			$text = isset( $chip['title'] ) ? $chip['title'] : '';
-			if ( $text === '' ) {
-				continue;
-			}
-			?>
-        <span class="chip"><i class="<?php echo esc_attr( $icon ); ?>"></i> <?php echo esc_html( $text ); ?></span>
+          if ( empty( $chip['title'] ) ) { continue; }
+          ?>
+        <span class="chip"><i class="<?php echo esc_attr( $chip['icon'] ); ?>"></i> <?php echo esc_html( $chip['title'] ); ?></span>
         <?php endforeach; ?>
       </div>
     </div>
@@ -56,25 +43,24 @@ $tel = 'tel:+971586634710';
         <span class="live"><b></b> مباشر</span>
       </div>
       <div class="dash-mini">
-        <div class="mini"><i class="fas fa-droplet"></i><span>كشف تسربات</span></div>
-        <div class="mini"><i class="fas fa-layer-group"></i><span>عزل أسطح</span></div>
-        <div class="mini"><i class="fas fa-snowflake"></i><span>صيانة تكييف</span></div>
-        <div class="mini"><i class="fas fa-spray-can-sparkles"></i><span>تنظيف وتعقيم</span></div>
-        <div class="mini"><i class="fas fa-wrench"></i><span>سباكة</span></div>
-        <div class="mini"><i class="fas fa-bug-slash"></i><span>مكافحة حشرات</span></div>
+        <?php foreach ( $minis as $m ) : ?><div class="mini"><i class="<?php echo esc_attr( $m['icon'] ); ?>"></i><span><?php echo esc_html( $m['title'] ); ?></span></div><?php endforeach; ?>
       </div>
       <div class="dash-stats">
-        <div class="dstat"><b data-count="15000" data-suffix="+">0</b><small>عميل</small></div>
-        <div class="dstat"><b data-count="30000" data-suffix="+">0</b><small>خدمة</small></div>
-        <div class="dstat"><b data-count="4.9" data-dec="1">0</b><small>تقييم</small></div>
+        <?php foreach ( $dstats as $ds ) :
+          $attr = kayan_home_render_counter_attr( $ds );
+          $display = ( $attr !== '' ) ? '0' : esc_html( $ds['value'] );
+          ?>
+        <div class="dstat"><b<?php echo $attr; // phpcs:ignore ?>><?php echo $display; ?></b><small><?php echo esc_html( $ds['label'] ); ?></small></div>
+        <?php endforeach; ?>
       </div>
+      <?php if ( kayan_home_h( $v, 'warranty_title', '' ) ) : ?>
       <div class="warranty">
         <i class="fas fa-shield-halved"></i>
-        <div><b>ضمان مكتوب يصل إلى 10 سنوات</b><small>على أعمال العزل المائي والحراري</small></div>
+        <div><b><?php echo esc_html( kayan_home_h( $v, 'warranty_title', '' ) ); ?></b><small><?php echo esc_html( kayan_home_h( $v, 'warranty_sub', '' ) ); ?></small></div>
       </div>
+      <?php endif; ?>
       <div class="dash-trust">
-        <span class="dt"><i class="fas fa-circle-check"></i> معتمد من بلدية دبي</span>
-        <span class="dt"><i class="fas fa-circle-check"></i> فنيون معتمدون</span>
+        <?php foreach ( $dtrust as $dt ) : ?><span class="dt"><i class="<?php echo esc_attr( $dt['icon'] ); ?>"></i> <?php echo esc_html( $dt['title'] ); ?></span><?php endforeach; ?>
       </div>
     </div>
   </div>

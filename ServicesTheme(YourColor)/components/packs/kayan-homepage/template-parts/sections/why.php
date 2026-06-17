@@ -1,38 +1,29 @@
 <?php
-/** Section: Why choose us — defaults from design; overridden via widget fields. */
+/** Section: Why */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 $v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$steps = kayan_home_sorted_group( $v, 'timeline_steps' );
+$cards = kayan_home_sorted_group( $v, 'feature_cards' );
 ?>
-<!-- ═══════════════ Why choose us ═══════════════ -->
 <section class="sec" id="why" style="background:var(--white)">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">لماذا نحن</span>
-      <h2>لماذا يختار الآلاف <span>ركن التطور؟</span></h2>
-      <p>نجمع بين التقنية المتطورة والخبرة العميقة والضمان الحقيقي لنمنحك راحة بال كاملة.</p>
-    </div>
+    <?php kayan_home_render_shead( $v, 'لماذا نحن', 'لماذا يختار الآلاف <span>ركن التطور؟</span>', 'نجمع بين التقنية المتطورة والخبرة العميقة والضمان الحقيقي.' ); ?>
     <div class="why">
       <div class="why-time rv">
         <div class="inner">
-          <h2>رحلتك معنا بسيطة وواضحة</h2>
-          <p>من أول اتصال إلى تسليم العمل بضمان مكتوب.</p>
+          <h2><?php echo esc_html( kayan_home_h( $v, 'journey_title', 'رحلتك معنا بسيطة وواضحة' ) ); ?></h2>
+          <p><?php echo esc_html( kayan_home_h( $v, 'journey_subtitle', '' ) ); ?></p>
           <div class="tline">
-            <div class="tl"><span class="dot">1</span><div><b>تواصل ومعاينة مجانية</b><small>نصل إليك ونعاين الموقع بدون أي رسوم.</small></div></div>
-            <div class="tl"><span class="dot">2</span><div><b>عرض سعر شفاف</b><small>تكلفة واضحة بدون رسوم خفية.</small></div></div>
-            <div class="tl"><span class="dot">3</span><div><b>تنفيذ احترافي</b><small>فريق معتمد بأحدث الأجهزة.</small></div></div>
-            <div class="tl"><span class="dot">4</span><div><b>ضمان مكتوب ومتابعة</b><small>ضمان موثق ودعم مستمر بعد الخدمة.</small></div></div>
+            <?php $i = 0; foreach ( $steps as $step ) : $i++; ?>
+            <div class="tl"><span class="dot"><?php echo esc_html( ! empty( $step['number'] ) ? $step['number'] : $i ); ?></span><div><b><?php echo esc_html( $step['title'] ); ?></b><small><?php echo esc_html( $step['content'] ); ?></small></div></div>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
       <div class="why-cards">
-        <div class="feat rv"><div class="fic"><i class="fas fa-microchip"></i></div><h3>تقنية متطورة</h3><p>أجهزة الكشف الحراري والصوتي الأحدث في السوق.</p></div>
-        <div class="feat rv"><div class="fic"><i class="fas fa-user-shield"></i></div><h3>فريق معتمد</h3><p>جميع فنيينا حاصلون على شهادات اعتماد دولية.</p></div>
-        <div class="feat rv"><div class="fic"><i class="fas fa-bolt"></i></div><h3>استجابة سريعة</h3><p>نصل إليك خلال ساعة في حالات الطوارئ.</p></div>
-        <div class="feat rv"><div class="fic"><i class="fas fa-file-contract"></i></div><h3>ضمان حقيقي</h3><p>ضمان مكتوب وموثّق لجميع الأعمال.</p></div>
-        <div class="feat rv"><div class="fic"><i class="fas fa-tags"></i></div><h3>أسعار تنافسية</h3><p>أفضل جودة بأفضل سعر وبدون رسوم خفية.</p></div>
-        <div class="feat rv"><div class="fic"><i class="fas fa-map-location-dot"></i></div><h3>تغطية شاملة</h3><p>جميع إمارات الدولة السبع بلا استثناء.</p></div>
-        <div class="feat rv"><div class="fic"><i class="fas fa-award"></i></div><h3>خبرة 12 عاماً</h3><p>سجل حافل في السوق الإماراتي.</p></div>
-        <div class="feat rv"><div class="fic"><i class="fas fa-headset"></i></div><h3>دعم مستمر</h3><p>خدمة عملاء على مدار الساعة 24/7.</p></div>
+        <?php foreach ( $cards as $card ) : ?>
+        <div class="feat rv"><div class="fic"><i class="<?php echo esc_attr( $card['icon'] ); ?>"></i></div><h3><?php echo esc_html( $card['title'] ); ?></h3><p><?php echo esc_html( $card['content'] ); ?></p></div>
+        <?php endforeach; ?>
       </div>
     </div>
   </div>

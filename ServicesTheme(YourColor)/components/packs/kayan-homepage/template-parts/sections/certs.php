@@ -1,23 +1,26 @@
 <?php
-/** Section: Certifications & Licenses — defaults from design; overridden via widget fields. */
+/** Certs */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 $v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$items = kayan_home_sorted_group( $v, 'cert_items' );
 ?>
-<!-- ═══════════════ Certifications & Licenses ═══════════════ -->
 <section class="sec" id="certs" style="background:var(--white)">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">الموثوقية</span>
-      <h2>التراخيص والشهادات <span>والاعتمادات</span></h2>
-      <p>نعمل بشفافية كاملة وفق التراخيص والمعايير المعتمدة في دولة الإمارات.</p>
-    </div>
+    <?php kayan_home_render_shead( $v, 'الموثوقية', 'التراخيص والشهادات <span>والاعتمادات</span>', 'نعمل بشفافية كاملة وفق التراخيص المعتمدة.' ); ?>
     <div class="cert-grid">
-      <div class="cert rv"><div class="cert-ic"><i class="fas fa-file-signature"></i></div><h3>رخصة تجارية</h3><p>رخصة سارية لمزاولة نشاط الخدمات المنزلية.</p><span class="vbadge"><i class="fas fa-circle-check"></i> موثّق</span><div class="doc"><i class="fas fa-file-pdf"></i> مستند الرخصة</div></div>
-      <div class="cert rv"><div class="cert-ic"><i class="fas fa-building-columns"></i></div><h3>سجل تجاري</h3><p>سجل تجاري معتمد لدى الجهات الرسمية.</p><span class="vbadge"><i class="fas fa-circle-check"></i> موثّق</span><div class="doc"><i class="fas fa-file-pdf"></i> مستند السجل</div></div>
-      <div class="cert rv"><div class="cert-ic"><i class="fas fa-receipt"></i></div><h3>تسجيل ضريبي</h3><p>رقم تسجيل ضريبي (VAT) رسمي وفواتير نظامية.</p><span class="vbadge"><i class="fas fa-circle-check"></i> موثّق</span><div class="doc"><i class="fas fa-file-pdf"></i> شهادة الضريبة</div></div>
-      <div class="cert rv"><div class="cert-ic"><i class="fas fa-medal"></i></div><h3>شهادة جودة</h3><p>التزام بمعايير الجودة في جميع مراحل العمل.</p><span class="vbadge"><i class="fas fa-circle-check"></i> معتمد</span><div class="doc"><i class="fas fa-file-pdf"></i> شهادة الجودة</div></div>
-      <div class="cert rv"><div class="cert-ic"><i class="fas fa-helmet-safety"></i></div><h3>شهادة السلامة</h3><p>اعتماد إجراءات السلامة المهنية للفرق.</p><span class="vbadge"><i class="fas fa-circle-check"></i> معتمد</span><div class="doc"><i class="fas fa-file-pdf"></i> شهادة السلامة</div></div>
-      <div class="cert rv"><div class="cert-ic"><i class="fas fa-shield-halved"></i></div><h3>برنامج الضمان</h3><p>ضمان مكتوب وموثق يصل إلى 10 سنوات.</p><span class="vbadge"><i class="fas fa-circle-check"></i> مضمون</span><div class="doc"><i class="fas fa-file-pdf"></i> وثيقة الضمان</div></div>
+      <?php foreach ( $items as $item ) : ?>
+      <div class="cert rv">
+        <div class="cert-ic">
+          <?php if ( ! empty( $item['image'] ) ) : ?><img src="<?php echo esc_url( $item['image'] ); ?>" alt="" loading="lazy" /><?php elseif ( ! empty( $item['icon'] ) ) : ?><i class="<?php echo esc_attr( $item['icon'] ); ?>"></i><?php endif; ?>
+        </div>
+        <h3><?php echo esc_html( $item['title'] ); ?></h3>
+        <p><?php echo esc_html( $item['content'] ); ?></p>
+        <?php if ( ! empty( $item['badge'] ) ) : ?><span class="vbadge"><i class="fas fa-circle-check"></i> <?php echo esc_html( $item['badge'] ); ?></span><?php endif; ?>
+        <?php if ( ! empty( $item['doc_label'] ) ) : ?>
+        <div class="doc"><?php if ( ! empty( $item['doc_url'] ) ) : ?><a href="<?php echo esc_url( $item['doc_url'] ); ?>"><?php endif; ?><i class="fas fa-file-pdf"></i> <?php echo esc_html( $item['doc_label'] ); ?><?php if ( ! empty( $item['doc_url'] ) ) : ?></a><?php endif; ?></div>
+        <?php endif; ?>
+      </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>

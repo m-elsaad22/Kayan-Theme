@@ -1,29 +1,31 @@
 <?php
-/** Section: Reviews — defaults from design; overridden via widget fields. */
+/** Reviews */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 $v = isset( $vars ) && is_array( $vars ) ? $vars : array();
+$cards = kayan_home_sorted_group( $v, 'review_cards' );
+$title = kayan_home_h( $v, 'section_title', 'آراء عملائنا — <span>تقييم 4.9 من 5</span>' );
 ?>
-<!-- ═══════════════ Reviews ═══════════════ -->
 <section class="sec reviews">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">آراء العملاء</span>
-      <h2>آراء عملائنا — <span>تقييم 4.9 من 5</span></h2>
-      <p>تقييمات حقيقية موثقة من عملاء Google.</p>
-    </div>
+    <?php kayan_home_render_shead( $v, 'آراء العملاء', $title, 'تقييمات حقيقية موثقة من عملاء Google.' ); ?>
     <div class="rv-slider rv">
       <div class="rv-track" id="rvTrack">
-        <div class="rcard"><div class="gtop"><span class="gver"><i class="fab fa-google"></i> موثّق عبر Google</span><span class="rstars">★★★★★</span></div><p class="txt">"خدمة ممتازة جداً! الفريق جاء في الموعد تماماً وحدّد مكان التسرب بدقة بدون أي تكسير. احترافية عالية وأسعار عادلة."</p><div class="rclient"><span class="rav">م</span><div><b>محمد الشمري</b><small>دبي مارينا</small></div></div></div>
-        <div class="rcard"><div class="gtop"><span class="gver"><i class="fab fa-google"></i> موثّق عبر Google</span><span class="rstars">★★★★★</span></div><p class="txt">"عزلنا السطح معهم منذ 3 سنوات ولم نواجه أي مشكلة حتى الآن رغم حرارة الصيف. ضمان حقيقي وعمل متقن."</p><div class="rclient"><span class="rav">س</span><div><b>سارة البلوشي</b><small>البرشاء</small></div></div></div>
-        <div class="rcard"><div class="gtop"><span class="gver"><i class="fab fa-google"></i> موثّق عبر Google</span><span class="rstars">★★★★★</span></div><p class="txt">"اتصلت بهم مساءً بسبب تسرب طارئ ووصلوا خلال أقل من ساعة. سرعة استجابة مذهلة وخدمة 24 ساعة فعلاً."</p><div class="rclient"><span class="rav">ع</span><div><b>عبدالله الكعبي</b><small>جميرا</small></div></div></div>
-        <div class="rcard"><div class="gtop"><span class="gver"><i class="fab fa-google"></i> موثّق عبر Google</span><span class="rstars">★★★★★</span></div><p class="txt">"صيانة التكييف كانت دقيقة جداً وأصبح المنزل أبرد بكثير. فريق مؤدب ونظيف في عمله. أنصح بهم بشدة."</p><div class="rclient"><span class="rav">ف</span><div><b>فاطمة المنصوري</b><small>أبوظبي</small></div></div></div>
-        <div class="rcard"><div class="gtop"><span class="gver"><i class="fab fa-google"></i> موثّق عبر Google</span><span class="rstars">★★★★★</span></div><p class="txt">"أفضل شركة تعاملت معها للتنظيف والتعقيم. النتيجة فاقت التوقعات والمواد آمنة على الأطفال."</p><div class="rclient"><span class="rav">خ</span><div><b>خالد النعيمي</b><small>الشارقة</small></div></div></div>
-        <div class="rcard"><div class="gtop"><span class="gver"><i class="fab fa-google"></i> موثّق عبر Google</span><span class="rstars">★★★★★</span></div><p class="txt">"تعامل راقٍ من أول مكالمة. عرض السعر كان شفافاً بدون أي مفاجآت، والعمل سُلّم في الوقت المحدد."</p><div class="rclient"><span class="rav">ر</span><div><b>ريم الحمادي</b><small>عجمان</small></div></div></div>
+        <?php foreach ( $cards as $card ) :
+          $stars = isset( $card['stars'] ) ? (int) $card['stars'] : 5;
+          $stars_str = str_repeat( '★', $stars ) . str_repeat( '☆', 5 - $stars );
+          $initial = ! empty( $card['initial'] ) ? $card['initial'] : mb_substr( $card['title'], 0, 1 );
+          ?>
+        <div class="rcard">
+          <div class="gtop"><span class="gver"><i class="fab fa-google"></i> موثّق عبر Google</span><span class="rstars"><?php echo esc_html( $stars_str ); ?></span></div>
+          <p class="txt">"<?php echo esc_html( $card['content'] ); ?>"</p>
+          <div class="rclient"><span class="rav"><?php echo esc_html( $initial ); ?></span><div><b><?php echo esc_html( $card['title'] ); ?></b><small><?php echo esc_html( isset( $card['subtitle'] ) ? $card['subtitle'] : '' ); ?></small></div></div>
+        </div>
+        <?php endforeach; ?>
       </div>
     </div>
     <div class="rv-nav">
-      <button onclick="rvMove(-1)" aria-label="السابق"><i class="fas fa-chevron-right"></i></button>
-      <button onclick="rvMove(1)" aria-label="التالي"><i class="fas fa-chevron-left"></i></button>
+      <button type="button" onclick="rvMove(-1)" aria-label="السابق"><i class="fas fa-chevron-right"></i></button>
+      <button type="button" onclick="rvMove(1)" aria-label="التالي"><i class="fas fa-chevron-left"></i></button>
     </div>
   </div>
 </section>

@@ -8,6 +8,7 @@ if ( ! class_exists( 'Kayan_Home_Section_Widget' ) ) {
 		protected $folder__name = 'Home2026';
 		protected $data_driven = false;
 		protected $layout_widget = false;
+		protected $structured_section = false;
 
 		public function __construct() {
 			$this->widget__name = $this->get_widget_id();
@@ -47,6 +48,20 @@ if ( ! class_exists( 'Kayan_Home_Section_Widget' ) ) {
 		protected function base_content_fields() {
 			if ( $this->data_driven && function_exists( 'kayan_home_data_source_fields' ) ) {
 				return kayan_home_data_source_fields();
+			}
+			if ( $this->structured_section || $this->layout_widget ) {
+				return array(
+					array(
+						'type'  => 'Title',
+						'title' => 'تخصيص متقدم',
+						'disc'  => 'اختياري — لاستبدال القسم بالكامل بـ HTML.',
+					),
+				array(
+					'id'    => 'content_html',
+					'type'  => 'TextArea',
+					'title' => 'استبدال HTML كامل',
+				),
+			);
 			}
 			return array(
 				array(

@@ -185,6 +185,63 @@ if ( ! function_exists( 'kayan_home_get_price_plans' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_home_get_finder_services' ) ) {
+	function kayan_home_get_finder_services( $vars ) {
+		$vars   = is_array( $vars ) ? $vars : array();
+		$source = isset( $vars['finder_services_source'] ) ? $vars['finder_services_source'] : 'category';
+		if ( $source === 'manual' ) {
+			$list = kayan_home_sorted_group( $vars, 'finder_services_manual' );
+			$out  = array();
+			foreach ( $list as $row ) {
+				if ( ! empty( $row['title'] ) ) {
+					$out[] = $row['title'];
+				}
+			}
+			return $out;
+		}
+		$terms = array();
+		if ( ! empty( $vars['finder_categories'] ) && is_array( $vars['finder_categories'] ) ) {
+			foreach ( $vars['finder_categories'] as $id ) {
+				$t = get_term_by( 'id', (int) $id, 'category' );
+				if ( $t && ! is_wp_error( $t ) ) {
+					$terms[] = $t->name;
+				}
+			}
+		} else {
+			$got = get_terms( array( 'taxonomy' => 'category', 'number' => 12, 'hide_empty' => false ) );
+			if ( is_array( $got ) ) {
+				foreach ( $got as $t ) {
+					$terms[] = $t->name;
+				}
+			}
+		}
+		return $terms;
+	}
+}
+
+if ( ! function_exists( 'kayan_home_get_finder_cities' ) ) {
+	function kayan_home_get_finder_cities( $vars ) {
+		$vars = is_array( $vars ) ? $vars : array();
+		$out  = array();
+		if ( ! empty( $vars['finder_cities'] ) && is_array( $vars['finder_cities'] ) ) {
+			foreach ( $vars['finder_cities'] as $id ) {
+				$t = get_term_by( 'id', (int) $id, 'city' );
+				if ( $t && ! is_wp_error( $t ) ) {
+					$out[] = $t->name;
+				}
+			}
+			return $out;
+		}
+		$got = get_terms( array( 'taxonomy' => 'city', 'number' => 20, 'hide_empty' => false ) );
+		if ( is_array( $got ) ) {
+			foreach ( $got as $t ) {
+				$out[] = $t->name;
+			}
+		}
+		return $out;
+	}
+}
+
 if ( ! function_exists( 'kayan_home_term_image_url' ) ) {
 	function kayan_home_term_image_url( $term_id, $meta_key = 'Image-Icon' ) {
 		$url = get_term_meta( $term_id, $meta_key, true );
