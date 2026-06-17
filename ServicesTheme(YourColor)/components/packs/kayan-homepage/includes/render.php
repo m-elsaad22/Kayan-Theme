@@ -28,11 +28,17 @@ if ( ! function_exists( 'kayan_home_v2026_active' ) ) {
 
 if ( ! function_exists( 'kayan_home_render_section' ) ) {
 	function kayan_home_render_section( $slug, $vars ) {
+		$vars = kayan_home_merge_section_vars( $slug, is_array( $vars ) ? $vars : array() );
+
+		if ( ! empty( $vars['content_html'] ) ) {
+			kayan_home_echo_section_html( $vars['content_html'] );
+			return;
+		}
+
 		$file = get_template_directory() . '/components/packs/kayan-homepage/template-parts/sections/' . $slug . '.php';
 		if ( ! file_exists( $file ) ) {
 			return;
 		}
-		$vars = is_array( $vars ) ? $vars : array();
 		include $file;
 	}
 }

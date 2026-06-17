@@ -21,7 +21,7 @@ if ( ! class_exists( 'Kayan_Home_Section_Widget' ) ) {
 
 		public function widget__setup() {
 			global $yc__widgets__center;
-			$fields = $this->section_fields();
+			$fields = array_merge( $this->base_content_fields(), $this->section_fields() );
 			if ( function_exists( 'kayan_home_widget_visibility_fields' ) ) {
 				$fields = array_merge( $fields, kayan_home_widget_visibility_fields() );
 			}
@@ -38,5 +38,21 @@ if ( ! class_exists( 'Kayan_Home_Section_Widget' ) ) {
 		}
 
 		abstract protected function section_fields();
+
+		protected function base_content_fields() {
+			return array(
+				array(
+					'type'  => 'Title',
+					'title' => 'محتوى القسم',
+					'disc'  => 'يُعبَّأ تلقائياً من تصميم index.html. يمكنك تعديل HTML أو الحقول أدناه.',
+				),
+				array(
+					'id'    => 'content_html',
+					'type'  => 'TextArea',
+					'title' => 'HTML القسم',
+					'disc'  => 'محتوى القسم كاملاً كما في التصميم المعتمد.',
+				),
+			);
+		}
 	}
 }

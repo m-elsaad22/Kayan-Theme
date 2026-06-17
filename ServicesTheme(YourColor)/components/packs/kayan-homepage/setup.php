@@ -1,9 +1,11 @@
 <?
 require_once __DIR__ . '/includes/fields-common.php';
+require_once __DIR__ . '/includes/defaults-data.php';
+require_once __DIR__ . '/includes/seed.php';
 require_once __DIR__ . '/includes/render.php';
 
 function kayan_homepage_v3_asset_version() {
-	return '2027.3.1';
+	return '2027.3.2';
 }
 
 function kayan_homepage_enqueue_v2026_assets() {
