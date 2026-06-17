@@ -4,35 +4,12 @@ $metaboxes = array(
 	'en_title'  => 'HOME OPTIONS',
 	'icon'    => '<i class="fa-solid fa-house-chimney"></i>',
 	'number'=>4,
-	'disc'=>'اعدادات شكل الصفحة الرئيسية ',
+	'disc'=>'الصفحة الرئيسية تستخدم تصميم ركن التطور 2026 تلقائياً (بدلاً من Intro والودجات القديمة).',
 	'fields'  => array(
 		array(
-			'title'  => 'تفعيل الصفحة الرئيسية الجديدة — ركن التطور فقط',
-			'en_title' => 'Rukn Homepage v3',
-			'type'   => 'SwitchBox',
-			'id'     => 'kayan_homepage_v3',
-			'disc'   => 'حصري لموقع ركن التطور (النطاق أو اسم الموقع). يعرض التصميم المعتمد 2026 كما هو — هوية ركن التطور وأرقام التواصل ثابتة من التصميم. لا يُستخدم لعملاء آخرين.',
+			'type'  => 'Title',
+			'title' => 'تصميم الصفحة الرئيسية 2026',
+			'disc'  => 'التصميم الجديد مفعّل افتراضياً على الصفحة الرئيسية. إعدادات Intro وودجات الرئيسية القديمة لم تعد مستخدمة. لتعديل المحتوى لاحقاً سيتم إضافة لوحة مخصصة في إصدارات قادمة.',
 		),
-		array(
-			'id'=>'HomeIntro',
-			'type'=>'Widget-Selector',
-			'ModelCenter'=>'intro-models',
-			'create_fields'=>true,
-			'select_field'=>array(
-				'type'=>'Select',
-				'id' => 'SelectedModel',
-				'parent_id'=>'HomeIntro',
-				'title' =>'إعدادات Intro',
-				'selected_shows'=>true,
-			)
-		),
-
-		array(
-			'id'=>'widgets_home__meta',
-			'type'=>'Widgets',
-			'title'=>'محتوي الصفحة الرئيسية ',
-			'ModelCenter'=>'Standard',
-			'update__type'=>'option',
-		)
 	)
 );

@@ -2,11 +2,11 @@
 require_once __DIR__ . '/helpers.php';
 
 function kayan_homepage_v3_active_request() {
-	return kayan_homepage_v3_is_enabled() && is_front_page();
+	return is_front_page();
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '2027.2.1';
+	return '2027.2.2';
 }
 
 function kayan_homepage_v3_enqueue_assets() {

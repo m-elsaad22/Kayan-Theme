@@ -1,39 +1,12 @@
 <?
 /**
- * KAYAN Homepage v3 — حصراً لموقع ركن التطور (Rukn Eltatawer).
- * المحتوى والهوية والأرقام ثابتة من التصميم المعتمد؛ لا يُستبدل بإعدادات قالب عامة.
+ * الصفحة الرئيسية — تصميم ركن التطور 2026 (افتراضي).
+ * يُحمَّل عبر حزمة kayan-homepage ويستبدل Intro والودجات القديمة تلقائياً.
  */
 
-if ( ! function_exists( 'kayan_homepage_v3_is_rukn_site' ) ) {
-	function kayan_homepage_v3_is_rukn_site() {
-		$host = strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
-		if ( $host !== '' ) {
-			if ( strpos( $host, 'rukn-eltatawer' ) !== false || strpos( $host, 'ruknelatawer' ) !== false ) {
-				return true;
-			}
-		}
-
-		$name = trim( wp_strip_all_tags( get_bloginfo( 'name' ) ) );
-		if ( $name !== '' && mb_stripos( $name, 'ركن التطور' ) !== false ) {
-			return true;
-		}
-
-		$opt_name = yc_get_option( 'sitename' );
-		$opt_name = trim( wp_strip_all_tags( (string) $opt_name ) );
-		if ( $opt_name !== '' && mb_stripos( $opt_name, 'ركن التطور' ) !== false ) {
-			return true;
-		}
-
-		return false;
-	}
-}
-
-if ( ! function_exists( 'kayan_homepage_v3_is_enabled' ) ) {
-	function kayan_homepage_v3_is_enabled() {
-		if ( ! kayan_homepage_v3_is_rukn_site() ) {
-			return false;
-		}
-		return ! empty( yc_get_option( 'kayan_homepage_v3' ) );
+if ( ! function_exists( 'kayan_homepage_uses_new_design' ) ) {
+	function kayan_homepage_uses_new_design() {
+		return true;
 	}
 }
 
@@ -60,10 +33,6 @@ if ( ! function_exists( 'kayan_homepage_v3_filter_html' ) ) {
 
 if ( ! function_exists( 'kayan_homepage_v3_render' ) ) {
 	function kayan_homepage_v3_render() {
-		if ( ! kayan_homepage_v3_is_rukn_site() ) {
-			return;
-		}
-
 		$body_file = __DIR__ . '/template-parts/body.html.php';
 		if ( ! file_exists( $body_file ) ) {
 			return;
