@@ -144,18 +144,27 @@ HTML يجب أن يحتوي: `kayan-homepage-v3`, `kayan-home.js` — **بدون
 
 ---
 
-## TASK 6 — Production Audit (Before — من Phase 1.5)
+## TASK 6 — Production Audit (Before — 2026-06-18)
+
+**مصدر:** `curl` + Lighthouse CLI mobile + `docs/validation-scripts/analyze-head-seo.php`  
+**لقطة HTML:** `docs/validation-artifacts/html-www.rukn-eltatawer.com-2026-06-18.html`
 
 | المقياس | الرئيسية `/` |
 |---------|--------------|
-| Lighthouse Perf | **79** |
-| LCP | **4.4s** |
+| Lighthouse Perf | **75** |
+| Lighthouse SEO | **92** (penalized by duplicates) |
+| LCP | **5.3s** |
 | CLS | **0** |
-| TBT | **0ms** |
-| TTFB | **660ms** |
-| meta description | **2** |
-| canonical | **2** |
-| JSON-LD blocks | **3** |
+| TBT | **50ms** |
+| INP | غير متاح (Lighthouse 12) |
+| TTFB | **570ms** |
+| meta description | **2** (سطر 5 + 21) |
+| canonical | **2** (سطر 6 + 23) |
+| OG title/desc/url | **2** لكل |
+| JSON-LD blocks | **3** (Rank Math + snippet + KAYAN) |
+| Homepage markup | **legacy** `intro-model-slider_intro_v1` |
+| Tracking inline | **3** (`kayan-tracking-js`, `rukn_track_*`, `_rsa_sid`) |
+| LiteSpeed | `X-LiteSpeed-Cache-Control: public,max-age=604800` |
 
 ### After (متوقع بعد نشر `2027.3.7` + purge)
 
