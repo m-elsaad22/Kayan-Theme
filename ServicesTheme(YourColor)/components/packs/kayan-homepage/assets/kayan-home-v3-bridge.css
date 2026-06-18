@@ -1,0 +1,169 @@
+/**
+ * الرئيسية 2026 — هيدر ذكي + إصلاحات موبايل (بدون تغيير ألوان التصميم بطبقات شفافة).
+ */
+
+/* ── عربية: لا كسر داخل الكلمة ── */
+body.kayan-homepage-v3,
+body.kayan-homepage-v3 .kayan-home-2026-main {
+	word-break: normal;
+	overflow-wrap: normal;
+	hyphens: manual;
+}
+
+body.kayan-homepage-v3 .live,
+body.kayan-homepage-v3 .chip,
+body.kayan-homepage-v3 .dash-top .ttl,
+body.kayan-homepage-v3 .atb-item b,
+body.kayan-homepage-v3 .tb {
+	word-break: keep-all;
+	overflow-wrap: normal;
+}
+
+body.kayan-homepage-v3 .live {
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+/* ── هيدر: شفاف فوق الهيرو → أبيض صلب عند التمرير (بدون blur) ── */
+body.kayan-homepage-v3 > root > header.fixedintro,
+body.kayan-homepage-v3 header.fixedintro {
+	position: fixed;
+	top: 0;
+	inset-inline: 0;
+	z-index: 1000;
+	transition: background 0.3s ease, box-shadow 0.3s ease;
+	background: transparent !important;
+	border-bottom: 1px solid transparent;
+	box-shadow: none !important;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro::before,
+body.kayan-homepage-v3 header.fixedintro::before {
+	opacity: 0 !important;
+	visibility: hidden !important;
+	display: none !important;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled,
+body.kayan-homepage-v3 header.fixedintro.scrolled {
+	background: var(--kayan-header-scrolled-bg, #ffffff) !important;
+	box-shadow: 0 4px 20px rgba(10, 31, 78, 0.08);
+	border-bottom: 1px solid #e2eaf5;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .-site-logo a,
+body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .--Site--Menu > ul > li > a,
+body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .--MH--header-contact--,
+body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .--open--searching {
+	color: var(--kayan-header-hero-text, #ffffff) !important;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled .-site-logo a,
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled .--Site--Menu > ul > li > a,
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled .--MH--header-contact-- {
+	color: var(--primary-text, #1c2e44) !important;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro.scrolled .--open--searching {
+	color: #fff !important;
+}
+
+/* مسافة الهيرو تحت الهيدر الثابت */
+body.kayan-homepage-v3 .kayan-home-2026-main .hero {
+	padding-top: 110px;
+}
+
+body.kayan-homepage-v3 .kayan-home-2026-main .wrap {
+	padding-inline: 18px;
+}
+
+/* شعار الهيدر لا يتداخل مع عنوان الهيرو */
+body.kayan-homepage-v3 > root > header.fixedintro .-site-logo {
+	max-width: 42%;
+	flex-shrink: 1;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro .-site-logo a {
+	font-size: clamp(14px, 4vw, 22px);
+	line-height: 1.2;
+}
+
+body.kayan-homepage-v3 > root > header.fixedintro .-site-logo img {
+	max-height: 44px;
+	width: auto;
+}
+
+/* ── جدول المقارنة على الموبايل ── */
+@media (max-width: 640px) {
+	body.kayan-homepage-v3 .kayan-home-2026-main .hero {
+		padding-top: 130px;
+	}
+
+	body.kayan-homepage-v3 .kayan-home-2026-main .hero-copy h1 {
+		font-size: clamp(26px, 7vw, 36px);
+		line-height: 1.35;
+	}
+
+	body.kayan-homepage-v3 .cmp {
+		border-radius: 16px;
+		margin-inline: 0;
+	}
+
+	body.kayan-homepage-v3 .cmp-row {
+		grid-template-columns: minmax(0, 1.6fr) 52px 52px;
+	}
+
+	body.kayan-homepage-v3 .cmp-head .ch,
+	body.kayan-homepage-v3 .cmp-row .cc {
+		padding: 12px 10px;
+		font-size: 13px;
+		min-width: 0;
+	}
+
+	body.kayan-homepage-v3 .cmp-row .cc.lbl {
+		padding-inline-end: 14px;
+		line-height: 1.45;
+	}
+
+	body.kayan-homepage-v3 .cmp-row .cc.val {
+		font-size: 16px;
+		padding-inline: 6px;
+	}
+
+	body.kayan-homepage-v3 .trustbar .inner {
+		grid-template-columns: 1fr;
+		gap: 12px;
+	}
+
+	body.kayan-homepage-v3 .faq-wrap,
+	body.kayan-homepage-v3 .shead,
+	body.kayan-homepage-v3 .sec {
+		padding-inline: 4px;
+	}
+
+	body.kayan-homepage-v3 .faq-q {
+		font-size: 15px;
+		padding: 16px 14px;
+		line-height: 1.5;
+	}
+
+	body.kayan-homepage-v3 .faq-a p {
+		padding: 0 14px 18px;
+	}
+
+	/* مسافة فوق أزرار الواتساب العائمة */
+	body.kayan-homepage-v3 .kayan-home-2026-main {
+		padding-bottom: 100px;
+	}
+}
+
+@media (max-width: 400px) {
+	body.kayan-homepage-v3 .cmp-row {
+		grid-template-columns: minmax(0, 1fr) 46px 46px;
+	}
+
+	body.kayan-homepage-v3 .cmp-head .ch:first-child,
+	body.kayan-homepage-v3 .cmp-row .cc.lbl {
+		font-size: 12px;
+	}
+}

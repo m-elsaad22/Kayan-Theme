@@ -11,5 +11,9 @@ ob_start();
 
 	update_post_meta($post_id,'widget_type',$Ajax__data['widget_type']);
 
+	if ( function_exists( 'kayan_home_seed_new_widget_post' ) ) {
+		kayan_home_seed_new_widget_post( $post_id, $Ajax__data['widget_type'] );
+	}
+
 $json['post_id'] = $post_id;
 echo json_encode($json);

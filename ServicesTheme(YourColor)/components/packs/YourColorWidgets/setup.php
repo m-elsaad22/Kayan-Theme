@@ -13,17 +13,17 @@ class YC__WidgetsMachine {
 			$this->YC__WidgetsMachine_URL = explode(get_template_directory(), trailingslashit( dirname( __FILE__ ) ))[1];
 			$this->YC__WidgetsMachine_URL = get_template_directory_uri().$this->YC__WidgetsMachine_URL;
 
-		# FIELDS FOLDERS .	
-			$this->widgets_folders__List_path = $this->YC__WidgetsMachine_Path.'model-widgets/*/';
-			$this->widgets_folders__Packages = array_filter( glob( $this->widgets_folders__List_path ),'is_dir');
+		# FIELDS FOLDERS .
+			$this->widgets_model_folders__List_path = $this->YC__WidgetsMachine_Path . 'model-widgets/*/';
+			$this->widgets_model_folders__Packages   = array_filter( glob( $this->widgets_model_folders__List_path ), 'is_dir' );
 
-		# FIELDS EXTRACT.	
-			$this->widgets_files__List_path = $this->YC__WidgetsMachine_Path.'model-widgets/*/*';
-			$this->widgets_files__Packages = array_filter( glob( $this->widgets_files__List_path ));
+		# FIELDS EXTRACT.
+			$this->widgets_files__List_path = $this->YC__WidgetsMachine_Path . 'model-widgets/*/*';
+			$this->widgets_files__Packages   = array_filter( glob( $this->widgets_files__List_path ) );
 
 		# SELECTOR EXTRACT .
-			$this->selector_folders__List_path = $this->YC__WidgetsMachine_Path.'model-selector/*/';
-			$this->widgets_folders__Packages = array_filter( glob( $this->selector_folders__List_path ),'is_dir');
+			$this->selector_folders__List_path = $this->YC__WidgetsMachine_Path . 'model-selector/*/';
+			$this->selector_folders__Packages  = array_filter( glob( $this->selector_folders__List_path ), 'is_dir' );
 
 		# SELECTOR FILES EXTRACT.	
 			$this->selector_files__List_path = $this->YC__WidgetsMachine_Path.'model-selector/*/*';
@@ -193,7 +193,7 @@ class YC__WidgetsMachine {
 			# SETUP WIDGETS CENTER .
 				global $yc__widgets__center;
 				$yc__widgets__center = array();
-				foreach ( $this->widgets_folders__Packages as $folder ) {
+				foreach ( $this->widgets_model_folders__Packages as $folder ) {
 					$folder__name = basename($folder);
 					$yc__widgets__center[ $folder__name ]['path'] = $folder;
 					$yc__widgets__center[ $folder__name ]['name'] = $folder__name;
@@ -213,7 +213,7 @@ class YC__WidgetsMachine {
 			# SETUP WIDGETS SELECTOR .
 				global $yc__widgets__selector;
 				$yc__widgets__selector = array();
-				foreach ( $this->widgets_folders__Packages as $folder ) {
+				foreach ( $this->selector_folders__Packages as $folder ) {
 					$folder__name = basename($folder);
 					$yc__widgets__selector[ $folder__name ]['path'] = $folder;
 					$yc__widgets__selector[ $folder__name ]['name'] = $folder__name;
@@ -237,6 +237,12 @@ class YC__WidgetsMachine {
 
 			# INIT FIELDS HOOK 
 				add_action('after_setup_theme',array($this,'SetupHooks'),1);
+
+			# KAYAN Homepage 2026 widget base (Home2026 packs extend this).
+				$kayan_widget_base = get_template_directory() . '/components/packs/kayan-homepage/includes/class-section-widget.php';
+				if ( file_exists( $kayan_widget_base ) ) {
+					require_once $kayan_widget_base;
+				}
 			
 			# SETUP WIDGETS FILES .
 				foreach ( $this->require__setup as $file ) {

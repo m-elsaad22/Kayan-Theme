@@ -118,10 +118,11 @@ jQuery(function($){
 	    });
 		}
 
-		// # WIDGETS RESPONSIVE.
+		// # WIDGETS RESPONSIVE (هاتف أولاً — عرض كامل تحت 900px).
 		if( $('.Master-Widgets_selected').length > 0 ){
+			var isNarrow = window.matchMedia('(max-width: 899px)').matches;
 			var WidgetBarWidth = $('.Master-Widgets_selected').outerWidth();
-			if( WidgetBarWidth < 1200 ) {
+			if( isNarrow || WidgetBarWidth < 900 ) {
 				$('.Master-Widgets_selected').addClass('-fullbar-showsin');
 			}else{
 				$('.Master-Widgets_selected').removeClass('-fullbar-showsin');

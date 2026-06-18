@@ -1,6 +1,9 @@
 <?php global $yc__widgets__center;
 $widget_type = get_post_meta( $widget__post,'widget_type' ,true);
 $widget_post_meta = ( is_array( get_post_meta( $widget__post, 'widget_post_meta',true ) ) ) ? get_post_meta( $widget__post, 'widget_post_meta',true ) : array();
+if ( function_exists( 'kayan_home_merge_widget_admin_meta' ) ) {
+	$widget_post_meta = kayan_home_merge_widget_admin_meta( $widget_type, $widget_post_meta );
+}
 
 # FOUND WIDGET ID IN VALUES .	
 	$Widget__Key = '';
