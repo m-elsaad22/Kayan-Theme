@@ -445,12 +445,18 @@ if ( ! function_exists( 'kayan_seo_output_breadcrumb_schema' ) ) {
 
 if ( ! function_exists( 'kayan_seo_output_schema_graph' ) ) {
 	function kayan_seo_output_schema_graph() {
+		static $rendered = false;
+		if ( $rendered ) {
+			return;
+		}
 		if ( ! kayan_seo_uses_modern_schema() ) {
 			return;
 		}
 		if ( get_option( 'validate__schema' ) ) {
 			return;
 		}
+
+		$rendered = true;
 
 		kayan_seo_output_home_schema();
 		kayan_seo_output_single_schema();

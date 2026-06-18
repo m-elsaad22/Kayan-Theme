@@ -408,7 +408,11 @@ class YourColor__Schema{
 	}
 
 	public function Setup(){
-		add_action('wp_head', array( $this,'insert__schema') );
+		if ( function_exists( 'kayan_seo_uses_modern_schema' ) && kayan_seo_uses_modern_schema() ) {
+			return;
+		}
+		add_action( 'wp_head', array( $this, 'insert__schema' ) );
 	}
 }
-(new YourColor__Schema)->Setup();
+$YourColor__Schema_instance = new YourColor__Schema();
+$YourColor__Schema_instance->Setup();

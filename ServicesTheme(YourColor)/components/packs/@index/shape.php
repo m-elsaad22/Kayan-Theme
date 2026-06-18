@@ -1,6 +1,11 @@
 <?php
 $Styles = array();
 $Widgets__list = array();
+
+if ( function_exists( 'kayan_homepage_v3_active_request' ) && kayan_homepage_v3_active_request() ) {
+	return;
+}
+
 #
 $YC__WidgetsMachine = new YC__WidgetsMachine;
 # INTRO SETUP
