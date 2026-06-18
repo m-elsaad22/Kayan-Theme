@@ -359,7 +359,7 @@ h3{font-size:clamp(22px,2.4vw,28px);font-weight:700}
 .fcta-trust i{color:var(--aqua)}
 
 /* ═══════════════ Footer ═══════════════ */
-footer{background:var(--kayan-footer-bg,var(--navy));color:rgba(255,255,255,.74);padding:70px 0 0}
+footer{background:var(--navy);color:rgba(255,255,255,.74);padding:70px 0 0}
 .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px}
 .fcol h4{color:#fff;font-size:18px;margin-bottom:20px}
 .fcol p{font-size:14.5px;margin-bottom:18px}
@@ -557,9 +557,10 @@ footer{background:var(--kayan-footer-bg,var(--navy));color:rgba(255,255,255,.74)
   .finder{grid-template-columns:1fr}
   .finder-result{grid-template-columns:1fr}
   .team-grid,.hub-grid,.cs-grid,.cert-grid,.price-grid{grid-template-columns:1fr}
-  .cmp-row{grid-template-columns:1.4fr .8fr .8fr}
-  .cmp-head .ch{padding:14px 10px;font-size:13.5px}
-  .cmp-row .cc{padding:13px 12px;font-size:13.5px}
+  .cmp-row{grid-template-columns:minmax(0,1.6fr) 52px 52px}
+  .cmp-head .ch,.cmp-row .cc{padding:12px 10px;font-size:13px;min-width:0}
+  .cmp-row .cc.lbl{padding-inline-end:14px;line-height:1.45}
+  .cmp-row .cc.val{font-size:16px;padding-inline:6px}
 }
 .svc-ic img{width:48px;height:48px;object-fit:contain;border-radius:8px}
 .area-img img{width:100%;height:100%;object-fit:cover;border-radius:inherit}

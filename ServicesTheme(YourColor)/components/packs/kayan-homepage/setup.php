@@ -11,8 +11,20 @@ require_once __DIR__ . '/includes/color-bridge.php';
 require_once __DIR__ . '/includes/render.php';
 
 function kayan_homepage_v3_asset_version() {
-	return '2027.4.3';
+	return '2027.4.4';
 }
+
+function kayan_theme_enqueue_palette() {
+	if ( is_admin() ) {
+		return;
+	}
+	$base = get_template_directory_uri() . '/components/packs/kayan-homepage/assets/';
+	$ver  = kayan_homepage_v3_asset_version();
+	wp_enqueue_style( 'kayan-theme-palette', $base . 'kayan-theme-palette.css', array(), $ver );
+	$primary = function_exists( 'kayan_theme_primary_color' ) ? kayan_theme_primary_color() : '#1AB8B8';
+	wp_add_inline_style( 'kayan-theme-palette', 'body{--uicolor:' . esc_attr( $primary ) . ';}' );
+}
+add_action( 'wp_enqueue_scripts', 'kayan_theme_enqueue_palette', 2 );
 
 function kayan_homepage_enqueue_v2026_assets() {
 	if ( ! function_exists( 'kayan_home_v2026_active' ) || ! kayan_home_v2026_active() ) {
@@ -39,11 +51,6 @@ function kayan_homepage_enqueue_v2026_assets() {
 	wp_enqueue_style( 'kayan-home', $base . 'kayan-home.css', array( 'kayan-home-fonts', 'kayan-home-fa' ), $ver );
 	wp_enqueue_style( 'kayan-home-v3-bridge', $base . 'kayan-home-v3-bridge.css', array( 'kayan-home' ), $ver );
 	wp_enqueue_script( 'kayan-home', $base . 'kayan-home.js', array(), $ver, true );
-
-	$bridge_css = function_exists( 'kayan_home_color_bridge_css' ) ? kayan_home_color_bridge_css() : '';
-	if ( $bridge_css !== '' ) {
-		wp_add_inline_style( 'kayan-home-v3-bridge', $bridge_css );
-	}
 
 	$inline = '
 .fa:not(.fa-brands):not(.fab),.fas,.fa-solid,.fa-regular,.far,i[class^="fa-"]:not(.fa-brands):not(.fab),i[class*=" fa-"]:not(.fa-brands):not(.fab){font-family:"Font Awesome 6 Free" !important;font-weight:900 !important;}
