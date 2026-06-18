@@ -8,7 +8,6 @@ $metaboxes = array(
 	'en_title'  => 'Footer Options',
 	'icon'    => '<i class="fa-solid fa-arrow-down"></i>',
 	'number'=>3,
-	'disc'  => 'خلفية الفوتر أزرق داكن (#071226) متناسق مع تصميم 2026. لون الأزرار من الإعدادات العامة.',
 	'fields'  => array(
 
    		array(

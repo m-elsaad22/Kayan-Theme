@@ -359,7 +359,7 @@ h3{font-size:clamp(22px,2.4vw,28px);font-weight:700}
 .fcta-trust i{color:var(--aqua)}
 
 /* ═══════════════ Footer ═══════════════ */
-footer{background:var(--navy);color:rgba(255,255,255,.74);padding:70px 0 0}
+footer{background:var(--kayan-home-footer-bg,var(--navy));color:rgba(255,255,255,.74);padding:70px 0 0}
 .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px}
 .fcol h4{color:#fff;font-size:18px;margin-bottom:20px}
 .fcol p{font-size:14.5px;margin-bottom:18px}

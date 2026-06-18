@@ -46,7 +46,7 @@ body.kayan-homepage-v3 header.fixedintro::before {
 
 body.kayan-homepage-v3 > root > header.fixedintro.scrolled,
 body.kayan-homepage-v3 header.fixedintro.scrolled {
-	background: #ffffff !important;
+	background: var(--kayan-header-scrolled-bg, #ffffff) !important;
 	box-shadow: 0 4px 20px rgba(10, 31, 78, 0.08);
 	border-bottom: 1px solid #e2eaf5;
 }
@@ -55,7 +55,7 @@ body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .-site-logo a,
 body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .--Site--Menu > ul > li > a,
 body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .--MH--header-contact--,
 body.kayan-homepage-v3 > root > header.fixedintro:not(.scrolled) .--open--searching {
-	color: #fff !important;
+	color: var(--kayan-header-hero-text, #ffffff) !important;
 }
 
 body.kayan-homepage-v3 > root > header.fixedintro.scrolled .-site-logo a,

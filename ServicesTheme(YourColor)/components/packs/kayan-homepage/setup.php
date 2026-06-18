@@ -7,24 +7,14 @@ require_once __DIR__ . '/includes/section-defaults.php';
 require_once __DIR__ . '/includes/section-helpers.php';
 require_once __DIR__ . '/includes/defaults-data.php';
 require_once __DIR__ . '/includes/seed.php';
-require_once __DIR__ . '/includes/color-bridge.php';
+require_once __DIR__ . '/includes/theme-colors.php';
 require_once __DIR__ . '/includes/render.php';
 
 function kayan_homepage_v3_asset_version() {
-	return '2027.4.4';
+	return '2027.4.5';
 }
 
-function kayan_theme_enqueue_palette() {
-	if ( is_admin() ) {
-		return;
-	}
-	$base = get_template_directory_uri() . '/components/packs/kayan-homepage/assets/';
-	$ver  = kayan_homepage_v3_asset_version();
-	wp_enqueue_style( 'kayan-theme-palette', $base . 'kayan-theme-palette.css', array(), $ver );
-	$primary = function_exists( 'kayan_theme_primary_color' ) ? kayan_theme_primary_color() : '#1AB8B8';
-	wp_add_inline_style( 'kayan-theme-palette', 'body{--uicolor:' . esc_attr( $primary ) . ';}' );
-}
-add_action( 'wp_enqueue_scripts', 'kayan_theme_enqueue_palette', 2 );
+add_action( 'wp_enqueue_scripts', 'kayan_theme_enqueue_colors', 3 );
 
 function kayan_homepage_enqueue_v2026_assets() {
 	if ( ! function_exists( 'kayan_home_v2026_active' ) || ! kayan_home_v2026_active() ) {

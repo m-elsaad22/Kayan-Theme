@@ -8,7 +8,6 @@ $metaboxes = array(
     'en_title' => 'Header Options',
     'icon'     => '<i class="fa-solid fa-arrow-up"></i>',
     'number'   => 2,
-	'disc'     => 'شفاف فوق الهيرو → أبيض عند التمرير. لون الأزرار من «لون الموقع» في الإعدادات العامة.',
     'fields'   => array(
     	#
     	array(

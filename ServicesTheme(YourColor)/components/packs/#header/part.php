@@ -4,14 +4,8 @@ ob_start();
 if( !isset( $bodyClass ) ) $bodyClass = '';
 # INTRO OPTIONS .
 
-$site_color = yc_get_option('site_color');
-if ( empty( $site_color ) ) {
-	$site_color = '#1AB8B8';
-}
+$site_color = yc_get_option('site_color'); 
 $text_Color = yc_get_option('text_Color');
-if ( empty( $text_Color ) ) {
-	$text_Color = '#1C2E44';
-}
 $kayan_global_gradient = function_exists( 'kayan_get_global_gradient_css' ) ? kayan_get_global_gradient_css() : '';
 $kayan_global_shadow = function_exists( 'kayan_global_shadows_to_css' ) ? kayan_global_shadows_to_css( kayan_get_global_shadows_option() ) : '';
 
@@ -114,11 +108,8 @@ if( !isset($_GET['ajax']) ) {
 		//
 		echo '<style>';
 			echo 'body { ';
-				echo '--uicolor:' . esc_attr( $site_color ) . ';';
-				echo '--primary-text:' . esc_attr( $text_Color ) . ';';
-				echo '--kayan-navy:#0A1F4E;';
-				echo '--kayan-footer-bg:#071226;';
-				echo '--kayan-aqua:#00D4D4;';
+				echo ( ( !empty( $site_color ) ) ) ? '--uicolor:'.$site_color.';' : '';
+				echo ( ( !empty( $text_Color ) ) ) ? '--primary-text:'.$text_Color.';' : '';
 				echo ( ( !empty( $kayan_global_gradient ) ) ) ? '--kayan-global-gradient:'.$kayan_global_gradient.';' : '';
 				echo ( ( !empty( $kayan_global_shadow ) ) ) ? '--kayan-global-shadow:'.$kayan_global_shadow.';' : '';
 			echo '}';
