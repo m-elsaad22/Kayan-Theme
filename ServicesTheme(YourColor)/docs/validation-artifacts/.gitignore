@@ -1,0 +1,7 @@
+# Large raw HTML snapshots — regenerate with curl during validation runs
+html-*.html
+
+# Keep only named screenshots; ignore bulk copies
+*.webp
+!mobile-home-390px.webp
+!mobile-services-390px.webp

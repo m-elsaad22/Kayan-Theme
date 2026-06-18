@@ -1,0 +1,68 @@
+{
+    "file": "/workspace/ServicesTheme(YourColor)/docs/validation-artifacts/html-www.rukn-eltatawer.com_services.html",
+    "counts": {
+        "title": 1,
+        "meta_description": 2,
+        "canonical": 2,
+        "og_title": 2,
+        "og_description": 2,
+        "og_url": 2,
+        "twitter_card": 2,
+        "hreflang": 0,
+        "json_ld": 7,
+        "breadcrumb_micro": 1,
+        "rank_math": 1
+    },
+    "schema_types": [
+        {
+            "@type": "Place",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "HomeAndConstructionBusiness,Organization",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "WebSite",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "WebPage",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Article",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "WebPage",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Article",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@context": "https://schema.org"
+        }
+    ],
+    "issues": [
+        "Expected exactly 1 meta_description, found 2",
+        "Expected exactly 1 canonical, found 2",
+        "Duplicate Open Graph tags detected",
+        "Breadcrumb may be duplicated (microdata + JSON-LD)"
+    ]
+}
