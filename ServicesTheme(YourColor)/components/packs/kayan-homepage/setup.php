@@ -6,8 +6,20 @@ function kayan_homepage_v3_active_request() {
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '2027.2.2';
+	return '2027.3.0';
 }
+
+function kayan_homepage_v3_resource_hints() {
+	if ( ! kayan_homepage_v3_active_request() ) {
+		return;
+	}
+	echo '<link rel="preconnect" href="https://fonts.googleapis.com" />' . "\n";
+	echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />' . "\n";
+	echo '<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />' . "\n";
+	echo '<link rel="dns-prefetch" href="//fonts.googleapis.com" />' . "\n";
+	echo '<link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />' . "\n";
+}
+add_action( 'wp_head', 'kayan_homepage_v3_resource_hints', 0 );
 
 function kayan_homepage_v3_enqueue_assets() {
 	if ( ! kayan_homepage_v3_active_request() ) {
@@ -19,7 +31,7 @@ function kayan_homepage_v3_enqueue_assets() {
 
 	wp_enqueue_style(
 		'kayan-home-fonts',
-		'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap',
+		'https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;700;800&display=swap',
 		array(),
 		null
 	);

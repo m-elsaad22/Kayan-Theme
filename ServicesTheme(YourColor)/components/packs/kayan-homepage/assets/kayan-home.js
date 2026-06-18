@@ -1,5 +1,5 @@
 /* ═══════════════ Loader ═══════════════ */
-window.addEventListener('load',()=>{const ld=document.getElementById('loader');if(ld)setTimeout(()=>ld.classList.add('out'),900)});
+window.addEventListener('load',()=>{const ld=document.getElementById('loader');if(ld)setTimeout(()=>ld.classList.add('out'),350)});
 
 /* ═══════════════ Sticky header + FAB ═══════════════ */
 const hdr=document.getElementById('hdr'),fab=document.getElementById('fab');
@@ -16,7 +16,7 @@ function toggleMob(open){document.getElementById('mob').classList.toggle('open',
 /* ═══════════════ Hero particles ═══════════════ */
 (function(){
   const box=document.getElementById('particles');if(!box)return;
-  for(let i=0;i<26;i++){
+  for(let i=0;i<12;i++){
     const p=document.createElement('span');p.className='particle';
     const s=Math.random()*4+2;
     p.style.width=p.style.height=s+'px';

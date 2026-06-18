@@ -8,7 +8,7 @@ function kayan_perf_defer_noncritical_scripts( $tag, $handle, $src ) {
 		return $tag;
 	}
 
-	$defer_handles = array( 'photoswipe', 'owl-carousel' );
+	$defer_handles = array( 'photoswipe', 'owl-carousel', 'yourcolor-owlcarousel', 'yourcolor-setup-carousel', 'yourcolor-setup-lazy' );
 	foreach ( $defer_handles as $needle ) {
 		if ( false !== strpos( $handle, $needle ) || false !== strpos( $src, $needle ) ) {
 			if ( false === strpos( $tag, ' defer' ) ) {

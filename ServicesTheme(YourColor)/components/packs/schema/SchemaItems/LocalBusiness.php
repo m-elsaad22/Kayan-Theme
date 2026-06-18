@@ -14,7 +14,7 @@ class Schema__LocalBusiness extends YourColor__Schema {
 
 		        echo '<script type="application/ld+json">';
 			        echo '{';
-			          	echo '"@context": "http://schema.org",';
+			          	echo '"@context": "https://schema.org",';
 			          	echo '"@type": "LocalBusiness",';
 			          	echo '"name": "'.( ( isset( $YourColoe_Schema_business['Business_Name'] ) && !empty( $YourColoe_Schema_business['Business_Name'] ) ) ? $YourColoe_Schema_business['Business_Name'] : '' ).'",';
 			          	echo '"description": "'.( ( isset( $YourColoe_Schema_business['description'] ) && !empty( $YourColoe_Schema_business['description'] ) ) ? $YourColoe_Schema_business['description'] : '' ).'",';

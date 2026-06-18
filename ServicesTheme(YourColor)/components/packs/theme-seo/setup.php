@@ -10,6 +10,9 @@ class ThemeSeo {
 		$this->LastWord = $this->seo__site_name;
 	}
 	public function Title(){
+		if ( function_exists( 'kayan_seo_theme_seo_delegates_to_kayan' ) && kayan_seo_theme_seo_delegates_to_kayan() ) {
+			return;
+		}
 
 		if( $this->seo__title_showsin == 'theme_seo' ){
 			$title = '';

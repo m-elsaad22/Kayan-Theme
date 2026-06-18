@@ -50,7 +50,8 @@ if ( ! function_exists( 'kayan_perf_render_resource_hints' ) ) {
 		}
 
 		echo '<link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />' . "\n";
-		echo '<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />' . "\n";
+		echo '<link rel="preconnect" href="https://fonts.googleapis.com" />' . "\n";
+		echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />' . "\n";
 
 		if ( empty( yc_get_option( 'kayan_perf_disable_preload' ) ) ) {
 			$lcp = kayan_perf_get_lcp_image_url();

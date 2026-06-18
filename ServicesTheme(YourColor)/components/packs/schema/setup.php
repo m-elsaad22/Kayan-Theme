@@ -43,7 +43,7 @@ class YourColor__Schema{
 							$thumbnail_url = get_the_post_thumbnail_url( $post->ID );
 							if( !empty( $thumbnail_url ) ){
 					            echo '{';
-					                echo '"@context": "http://schema.org",';
+					                echo '"@context": "https://schema.org",';
 					                echo '"@type": "ImageObject",';
 					                echo '"url": "'.$Permalink.'",';
 					                echo '"datePublished": "'.$publish_date.'",';
@@ -116,7 +116,7 @@ class YourColor__Schema{
 
 							if( !empty( $thumbnail_url ) ){
 				                echo '{';
-				                  	echo '"@context": "http://schema.org",';
+				                  	echo '"@context": "https://schema.org",';
 				                  	echo '"@type": "Service",';
 				                  	echo '"serviceType": "'.$post->post_title.'",';
 				                  	echo '"provider": {';
@@ -180,7 +180,7 @@ class YourColor__Schema{
 
 							if( !empty( $thumbnail_url ) ){
 						        echo '{';
-						          	echo '"@context": "http://schema.org",';
+						          	echo '"@context": "https://schema.org",';
 						          	echo '"@type": "Article",';
 						          	echo '"author": {';
 						                echo '"@type": "Person",';
@@ -280,7 +280,7 @@ class YourColor__Schema{
 
 							if( !empty( $YourColor__Rating['Rating_Value'] ) ){
 						        echo '{';
-						          	echo '"@context": "http://schema.org",';
+						          	echo '"@context": "https://schema.org",';
 						          	echo '"@type": "CreativeWorkSeries",';
 								    echo '"name": "'.$post->post_title.'",';
 								    echo '"aggregateRating": {';
@@ -323,7 +323,7 @@ class YourColor__Schema{
 
 		        echo '<script type="application/ld+json">';
 			        echo '{';
-			          	echo '"@context": "http://schema.org",';
+			          	echo '"@context": "https://schema.org",';
 			          	echo '"@type": "LocalBusiness",';
 			          	echo '"name": "'.( ( isset( $YourColor_Schema_business['Business_Name'] ) && !empty( $YourColor_Schema_business['Business_Name'] ) ) ? $YourColor_Schema_business['Business_Name'] : '' ).'",';
 			          	echo '"description": "'.( ( isset( $YourColor_Schema_business['description'] ) && !empty( $YourColor_Schema_business['description'] ) ) ? $YourColor_Schema_business['description'] : '' ).'",';
@@ -372,7 +372,7 @@ class YourColor__Schema{
 		 	if( !isset( $YourColor_Schema_websites['hide_schema_websites'] ) || ( isset( $YourColor_Schema_websites['hide_schema_websites'] ) && empty( $YourColor_Schema_websites['hide_schema_websites'] ) ) ) {
             	echo '<script type="application/ld+json">';
 					echo '{';
-						echo '"@context": "http://schema.org",';
+						echo '"@context": "https://schema.org",';
 						echo '"@type": "WebSite",';
 						echo '"url": "'.home_url().'",';
 						echo '"potentialAction": {';

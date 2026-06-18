@@ -40,14 +40,10 @@ if ( ! function_exists( 'kayan_seo_build_local_business_node' ) ) {
 		}
 
 		if ( ! empty( $settings['openingHours'] ) ) {
-			$node['openingHoursSpecification'] = array(
-				array(
-					'@type' => 'OpeningHoursSpecification',
-					'dayOfWeek' => array( 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ),
-					'opens' => '00:00',
-					'closes' => '23:59',
-				),
-			);
+			$hours = kayan_seo_parse_opening_hours( $settings['openingHours'] );
+			if ( ! empty( $hours ) ) {
+				$node['openingHoursSpecification'] = $hours;
+			}
 		}
 
 		return $node;
@@ -91,6 +87,13 @@ if ( ! function_exists( 'kayan_seo_output_home_schema' ) ) {
 			kayan_seo_build_local_business_node( $business, $business_id ),
 		);
 
+		if ( function_exists( 'kayan_seo_build_review_schema_nodes' ) ) {
+			$graph = array_merge( $graph, kayan_seo_build_review_schema_nodes( $business ) );
+		}
+		if ( function_exists( 'kayan_seo_build_team_schema_nodes' ) ) {
+			$graph = array_merge( $graph, kayan_seo_build_team_schema_nodes() );
+		}
+
 		kayan_seo_print_json_ld( $graph );
 	}
 }
@@ -117,10 +120,7 @@ if ( ! function_exists( 'kayan_seo_output_single_schema' ) ) {
 			'dateModified' => get_the_modified_date( 'c', $post ),
 			'mainEntityOfPage' => $permalink,
 			'inLanguage' => 'ar',
-			'author' => array(
-				'@type' => 'Person',
-				'name' => $author ? $author->display_name : kayan_seo_get_site_name(),
-			),
+			'author' => kayan_seo_build_author_person_node( $author ),
 			'publisher' => array(
 				'@type' => 'Organization',
 				'name' => $business['name'],
