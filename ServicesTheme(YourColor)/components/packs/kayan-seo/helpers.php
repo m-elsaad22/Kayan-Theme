@@ -35,6 +35,26 @@ if ( ! function_exists( 'kayan_seo_get_site_name' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_seo_render_hreflang_links' ) ) {
+	function kayan_seo_render_hreflang_links() {
+		if ( empty( yc_get_option( 'kayan_seo_hreflang_enabled' ) ) ) {
+			return;
+		}
+
+		$alternates = yc_get_option( 'kayan_seo_hreflang_alternates' );
+		if ( ! is_array( $alternates ) || count( $alternates ) < 2 ) {
+			return;
+		}
+
+		foreach ( $alternates as $row ) {
+			if ( ! is_array( $row ) || empty( $row['locale'] ) || empty( $row['url'] ) ) {
+				continue;
+			}
+			echo '<link rel="alternate" hreflang="' . esc_attr( sanitize_text_field( $row['locale'] ) ) . '" href="' . esc_url( $row['url'] ) . '" />' . "\n";
+		}
+	}
+}
+
 if ( ! function_exists( 'kayan_seo_get_title' ) ) {
 	function kayan_seo_get_title() {
 		if ( is_singular() ) {
@@ -139,17 +159,42 @@ if ( ! function_exists( 'kayan_seo_get_canonical_url' ) ) {
 			return '';
 		}
 		if ( is_singular() ) {
-			return get_permalink();
+			$url = get_permalink();
+			$paged = get_query_var( 'page' );
+			if ( $paged && $paged > 1 ) {
+				$url = trailingslashit( $url ) . user_trailingslashit( $paged, 'single_paged' );
+			}
+			return $url;
 		}
-		if ( is_home() || is_front_page() ) {
+		if ( is_front_page() ) {
+			return home_url( '/' );
+		}
+		if ( is_home() ) {
+			$posts_page = (int) get_option( 'page_for_posts' );
+			if ( $posts_page ) {
+				return get_pagenum_link( max( 1, (int) get_query_var( 'paged' ) ) );
+			}
 			return home_url( '/' );
 		}
 		if ( is_category() || is_tax() || is_tag() ) {
 			$link = get_term_link( get_queried_object() );
-			return is_wp_error( $link ) ? '' : $link;
+			if ( is_wp_error( $link ) ) {
+				return '';
+			}
+			$paged = max( 1, (int) get_query_var( 'paged' ) );
+			if ( $paged > 1 ) {
+				return get_pagenum_link( $paged );
+			}
+			return $link;
 		}
 		if ( is_author() ) {
 			return get_author_posts_url( get_queried_object_id() );
+		}
+		if ( is_post_type_archive() ) {
+			return get_pagenum_link( max( 1, (int) get_query_var( 'paged' ) ) );
+		}
+		if ( is_archive() ) {
+			return get_pagenum_link( max( 1, (int) get_query_var( 'paged' ) ) );
 		}
 		return '';
 	}
@@ -387,7 +432,7 @@ if ( ! function_exists( 'kayan_seo_render_head_meta' ) ) {
 		}
 
 		echo '<meta property="og:locale" content="' . esc_attr( $locale ) . '" />' . "\n";
-		echo '<meta property="og:type" content="' . esc_attr( is_singular() ? 'article' : 'website' ) . '" />' . "\n";
+		echo '<meta property="og:type" content="' . esc_attr( kayan_seo_get_og_type() ) . '" />' . "\n";
 		echo '<meta property="og:title" content="' . esc_attr( $title ) . '" />' . "\n";
 		echo '<meta property="og:site_name" content="' . esc_attr( $site_name ) . '" />' . "\n";
 		if ( ! empty( $description ) ) {
@@ -409,11 +454,7 @@ if ( ! function_exists( 'kayan_seo_render_head_meta' ) ) {
 			echo '<meta name="twitter:image" content="' . esc_url( $image ) . '" />' . "\n";
 		}
 
-		if ( ! empty( yc_get_option( 'kayan_seo_hreflang_enabled' ) ) && ( is_home() || is_front_page() ) ) {
-			$home = home_url( '/' );
-			echo '<link rel="alternate" hreflang="ar" href="' . esc_url( $home ) . '" />' . "\n";
-			echo '<link rel="alternate" hreflang="x-default" href="' . esc_url( $home ) . '" />' . "\n";
-		}
+		kayan_seo_render_hreflang_links();
 
 		if ( ! kayan_seo_should_noindex() && get_option( 'blog_public' ) ) {
 			echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="' . esc_url( home_url( '/wp-sitemap.xml' ) ) . '" />' . "\n";

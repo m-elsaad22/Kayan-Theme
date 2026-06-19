@@ -121,6 +121,9 @@ if( !isset( $AjaxPart ) ) $AjaxPart = false;
 
     # FOUND TOTAL COUNT .
         if( $object__type == 'posts' ){
+            $PostsArguments['no_found_rows'] = false;
+            $PostsArguments['update_post_meta_cache'] = true;
+            $PostsArguments['update_post_term_cache'] = true;
             $Founder = new WP_Query($PostsArguments);
             $CountQuery = $Founder->found_posts;
         }
@@ -163,10 +166,16 @@ if( !isset( $AjaxPart ) ) $AjaxPart = false;
                 # SEND OBJECT TO PART $YOUR_NAME .
                     if( !isset( $part_object__name ) ) $part_object__name = 'post';
 
-                    #print_r($PostsArguments);
-                # EACH OBJECTS .    
-                    foreach ( get_posts( $PostsArguments ) as $post ) {$current__result__count++;
-                        $object____lists[ $post->ID ] = $post;
+                # EACH OBJECTS — reuse count query when on first page.
+                    if( isset( $Founder ) && $Founder instanceof WP_Query ) {
+                        if ( $paged > 1 ) {
+                            $Founder = new WP_Query( $PostsArguments );
+                        }
+                        foreach ( $Founder->posts as $post ) {
+                            $current__result__count++;
+                            $object____lists[ $post->ID ] = $post;
+                        }
+                        wp_reset_postdata();
                     }
             }
 

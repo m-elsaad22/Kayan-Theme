@@ -1,13 +1,39 @@
 <?
 require_once __DIR__ . '/helpers.php';
 
-function kayan_homepage_v3_active_request() {
-	return is_front_page();
+if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
+	function kayan_homepage_v3_active_request() {
+		if ( ! empty( yc_get_option( 'kayan_homepage_v3_disable' ) ) ) {
+			return false;
+		}
+		if ( function_exists( 'kayan_homepage_uses_new_design' ) && ! kayan_homepage_uses_new_design() ) {
+			return false;
+		}
+		if ( is_front_page() ) {
+			return true;
+		}
+		if ( is_home() && 'posts' === get_option( 'show_on_front' ) ) {
+			return true;
+		}
+		return false;
+	}
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '2027.2.2';
+	return '2027.3.9';
 }
+
+function kayan_homepage_v3_resource_hints() {
+	if ( ! kayan_homepage_v3_active_request() ) {
+		return;
+	}
+	echo '<link rel="preconnect" href="https://fonts.googleapis.com" />' . "\n";
+	echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />' . "\n";
+	echo '<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />' . "\n";
+	echo '<link rel="dns-prefetch" href="//fonts.googleapis.com" />' . "\n";
+	echo '<link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />' . "\n";
+}
+add_action( 'wp_head', 'kayan_homepage_v3_resource_hints', 0 );
 
 function kayan_homepage_v3_enqueue_assets() {
 	if ( ! kayan_homepage_v3_active_request() ) {
@@ -19,7 +45,7 @@ function kayan_homepage_v3_enqueue_assets() {
 
 	wp_enqueue_style(
 		'kayan-home-fonts',
-		'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap',
+		'https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;700;800&display=swap',
 		array(),
 		null
 	);
@@ -47,9 +73,6 @@ function kayan_homepage_v3_enqueue_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'kayan_homepage_v3_enqueue_assets', 5 );
 
-/**
- * Theme Enqueues pack strips all queued assets at priority 999999; re-attach homepage v3 assets after.
- */
 function kayan_homepage_v3_reenqueue_assets() {
 	if ( ! kayan_homepage_v3_active_request() ) {
 		return;
@@ -62,7 +85,7 @@ function kayan_homepage_v3_dequeue_legacy_assets() {
 	if ( ! kayan_homepage_v3_active_request() ) {
 		return;
 	}
-	$handles = array( 'yourcolor-init', 'yourcolor-script', 'yourcolor-owlcarousel', 'kayan-ui-fixes' );
+	$handles = array( 'yourcolor-init', 'yourcolor-script', 'yourcolor-owlcarousel', 'kayan-ui-fixes', 'yourcolor-setup-carousel', 'yourcolor-setup-lazy' );
 	foreach ( $handles as $handle ) {
 		wp_dequeue_script( $handle );
 		wp_deregister_script( $handle );

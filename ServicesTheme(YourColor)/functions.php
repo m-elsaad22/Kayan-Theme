@@ -91,13 +91,24 @@ function yc_option_key( $key ) {
     return $key;
 }
 function yc_get_option( $key, $default = false ) {
-    return get_option( yc_option_key( $key ), $default );
+    static $cache = array();
+    $opt_key = yc_option_key( $key );
+    if ( ! array_key_exists( $opt_key, $cache ) ) {
+        $cache[ $opt_key ] = get_option( $opt_key, $default );
+    }
+    return $cache[ $opt_key ];
 }
 function yc_update_option( $key, $value ) {
-    return update_option( yc_option_key( $key ), $value );
+    static $cache = array();
+    $opt_key = yc_option_key( $key );
+    $cache[ $opt_key ] = $value;
+    return update_option( $opt_key, $value );
 }
 function yc_delete_option( $key ) {
-    return delete_option( yc_option_key( $key ) );
+    static $cache = array();
+    $opt_key = yc_option_key( $key );
+    unset( $cache[ $opt_key ] );
+    return delete_option( $opt_key );
 }
 // ============================================================
 

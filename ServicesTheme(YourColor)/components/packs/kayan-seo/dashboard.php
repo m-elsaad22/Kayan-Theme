@@ -33,45 +33,20 @@ if ( ! function_exists( 'kayan_seo_get_dashboard_data' ) ) {
 		$posts_with_meta = 0;
 		$posts_with_city = 0;
 		if ( $total_posts > 0 ) {
-			$posts_with_meta = (int) count(
-				get_posts(
-					array(
-						'post_type' => 'post',
-						'post_status' => 'publish',
-						'posts_per_page' => -1,
-						'fields' => 'ids',
-						'meta_query' => array(
-							'relation' => 'OR',
-							array(
-								'key' => 'rank_math_description',
-								'value' => '',
-								'compare' => '!=',
-							),
-							array(
-								'key' => 'kayan_meta_description',
-								'value' => '',
-								'compare' => '!=',
-							),
-						),
-					)
-				)
+			global $wpdb;
+			$posts_with_meta = (int) $wpdb->get_var(
+				"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
+				INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+				WHERE p.post_type = 'post' AND p.post_status = 'publish'
+				AND pm.meta_key IN ('rank_math_description','kayan_meta_description')
+				AND pm.meta_value != ''"
 			);
-
-			$posts_with_city = (int) count(
-				get_posts(
-					array(
-						'post_type' => 'post',
-						'post_status' => 'publish',
-						'posts_per_page' => -1,
-						'fields' => 'ids',
-						'tax_query' => array(
-							array(
-								'taxonomy' => 'city',
-								'operator' => 'EXISTS',
-							),
-						),
-					)
-				)
+			$posts_with_city = (int) $wpdb->get_var(
+				"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p
+				INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+				INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+				WHERE p.post_type = 'post' AND p.post_status = 'publish'
+				AND tt.taxonomy = 'city'"
 			);
 		}
 

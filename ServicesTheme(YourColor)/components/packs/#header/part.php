@@ -6,6 +6,8 @@ if( !isset( $bodyClass ) ) $bodyClass = '';
 
 $site_color = yc_get_option('site_color'); 
 $text_Color = yc_get_option('text_Color');
+$kayan_skip_legacy_assets = function_exists( 'kayan_homepage_v3_active_request' ) && kayan_homepage_v3_active_request();
+$kayan_seo_active = function_exists( 'kayan_seo_is_enabled' ) && kayan_seo_is_enabled();
 $kayan_global_gradient = function_exists( 'kayan_get_global_gradient_css' ) ? kayan_get_global_gradient_css() : '';
 $kayan_global_shadow = function_exists( 'kayan_global_shadows_to_css' ) ? kayan_global_shadows_to_css( kayan_get_global_shadows_option() ) : '';
 
@@ -18,22 +20,26 @@ if( !isset($_GET['ajax']) ) {
 		if ( function_exists( 'kayan_perf_render_resource_hints' ) ) {
 			kayan_perf_render_resource_hints();
 		}
-		if ( function_exists( 'kayan_seo_render_verification_meta' ) ) {
-			kayan_seo_render_verification_meta();
-		}
-		if ( function_exists( 'kayan_seo_render_head_meta' ) && kayan_seo_is_enabled() ) {
-			kayan_seo_render_head_meta();
+		if ( $kayan_seo_active ) {
+			// Title + meta emitted via kayan-seo/frontend.php on wp_head.
 		} else {
-			$hide__description_show = yc_get_option('hide__description_show');
-			if( empty( $hide__description_show ) || empty( $hide__description_show ) ) {
-				echo'<meta name="description" content="'.esc_attr( get_bloginfo("name") ).'">';
+			if ( function_exists( 'kayan_seo_render_verification_meta' ) ) {
+				kayan_seo_render_verification_meta();
+			}
+			if ( function_exists( 'kayan_seo_render_head_meta' ) && kayan_seo_is_enabled() ) {
+				kayan_seo_render_head_meta();
+			} else {
+				$hide__description_show = yc_get_option('hide__description_show');
+				if( empty( $hide__description_show ) || empty( $hide__description_show ) ) {
+					echo'<meta name="description" content="'.esc_attr( get_bloginfo("name") ).'">';
+				}
 			}
 		}
 
 
 		//
 		$hide__theme_seo = yc_get_option('hide__theme_seo');
-		if( empty( $hide__theme_seo ) ) (new ThemeSeo)->Title();
+		if( empty( $hide__theme_seo ) && ! $kayan_seo_active ) (new ThemeSeo)->Title();
 
 		do_action('BeforeWPHead');
 		// KAYAN hotfix: force Font Awesome Free solid icons to render on frontend.
@@ -45,14 +51,22 @@ if( !isset($_GET['ajax']) ) {
 		echo '</style>';
 
 
-		// 1. استخدام رابط Font Awesome 6 Free المجاني
-		echo ( ( IsSpeed() == false ) ) ? '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">' : '';
+		// Font Awesome — skip on v3 homepage (enqueued by kayan-homepage pack).
+		if ( ! $kayan_skip_legacy_assets && ( IsSpeed() == false ) ) {
+			echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">';
+		}
 		echo ( ( IsSpeed() == false && ( is_single() || is_page() || ( isset( $Widgets__list ) && in_array( 'works_v1',$Widgets__list ) ) ) ) ) ? '<link rel="stylesheet" data-loader-href="https://unpkg.com/photoswipe@5.2.2/dist/photoswipe.css">' : '';
 
 		if( isset( $HeadCode ) && !empty( $HeadCode ) ){
-			echo $HeadCode;
+			$kayan_head_injection = $HeadCode;
 		}else{
-			echo yc_get_option('header___codes');
+			$kayan_head_injection = yc_get_option('header___codes');
+		}
+		if ( function_exists( 'kayan_lockdown_filter_header_injection' ) ) {
+			$kayan_head_injection = kayan_lockdown_filter_header_injection( $kayan_head_injection );
+		}
+		if ( ! empty( $kayan_head_injection ) ) {
+			echo $kayan_head_injection;
 		}
 		
 		wp_head();
@@ -67,7 +81,9 @@ if( !isset($_GET['ajax']) ) {
 
 		if( isset( $ips[ $_SERVER['REMOTE_ADDR'] ]) ) {
 			echo '<style>';
-				$this->Part('fonts');
+				if ( ! $kayan_skip_legacy_assets ) {
+					$this->Part('fonts');
+				}
 			echo '</style>';
 			if(isset($Styles)){
 				foreach ($Styles as $skey => $meky) {
@@ -75,20 +91,24 @@ if( !isset($_GET['ajax']) ) {
 				}
 			}
 
-			echo '<link rel="stylesheet" data-style-ajax="main" type="text/css" href="'.$this->StylesURL.'main.css?v='.rand().'" />';
-			echo '<link rel="stylesheet" data-style-ajax="hover" type="text/css" href="'.$this->StylesURL.'hover.css?v='.rand().'" />';
-			echo '<link rel="stylesheet" data-style-ajax="responsive" type="text/css" href="'.$this->StylesURL.'responsive.css?v='.rand().'" />';
+			if ( ! $kayan_skip_legacy_assets ) {
+				echo '<link rel="stylesheet" data-style-ajax="main" type="text/css" href="'.$this->StylesURL.'main.css?v='.rand().'" />';
+				echo '<link rel="stylesheet" data-style-ajax="hover" type="text/css" href="'.$this->StylesURL.'hover.css?v='.rand().'" />';
+				echo '<link rel="stylesheet" data-style-ajax="responsive" type="text/css" href="'.$this->StylesURL.'responsive.css?v='.rand().'" />';
+			}
 		}else{
 		    echo '<style>';
-				$this->Part('fonts');
-				if(isset($Styles)){
-					foreach ($Styles as $skey => $meky) {
-		    			require ($this->StylesPath.$meky);
+				if ( ! $kayan_skip_legacy_assets ) {
+					$this->Part('fonts');
+					if(isset($Styles)){
+						foreach ($Styles as $skey => $meky) {
+			    			require ($this->StylesPath.$meky);
+						}
 					}
+			    	require ($this->StylesPath."/main.css");
+			    	require ($this->StylesPath."/hover.css");
+			    	require ($this->StylesPath."/responsive.css");
 				}
-		    	require ($this->StylesPath."/main.css");
-		    	require ($this->StylesPath."/hover.css");
-		    	require ($this->StylesPath."/responsive.css");
 		    echo '</style>';			
 		}
 
