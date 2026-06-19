@@ -58,9 +58,15 @@ if( !isset($_GET['ajax']) ) {
 		echo ( ( IsSpeed() == false && ( is_single() || is_page() || ( isset( $Widgets__list ) && in_array( 'works_v1',$Widgets__list ) ) ) ) ) ? '<link rel="stylesheet" data-loader-href="https://unpkg.com/photoswipe@5.2.2/dist/photoswipe.css">' : '';
 
 		if( isset( $HeadCode ) && !empty( $HeadCode ) ){
-			echo $HeadCode;
+			$kayan_head_injection = $HeadCode;
 		}else{
-			echo yc_get_option('header___codes');
+			$kayan_head_injection = yc_get_option('header___codes');
+		}
+		if ( function_exists( 'kayan_lockdown_filter_header_injection' ) ) {
+			$kayan_head_injection = kayan_lockdown_filter_header_injection( $kayan_head_injection );
+		}
+		if ( ! empty( $kayan_head_injection ) ) {
+			echo $kayan_head_injection;
 		}
 		
 		wp_head();
