@@ -427,7 +427,7 @@ if ( ! function_exists( 'kayan_seo_merge_breadcrumb_into_graph' ) ) {
 
 if ( ! function_exists( 'kayan_seo_output_breadcrumb_schema' ) ) {
 	function kayan_seo_output_breadcrumb_schema() {
-		if ( is_singular( 'post' ) || is_page() ) {
+		if ( is_singular() ) {
 			return;
 		}
 
