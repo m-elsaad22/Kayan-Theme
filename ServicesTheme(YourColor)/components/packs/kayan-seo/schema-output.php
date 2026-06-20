@@ -132,47 +132,7 @@ if ( ! function_exists( 'kayan_seo_output_single_schema' ) ) {
 			'image' => $thumbnail ? array( $thumbnail ) : array(),
 		);
 
-		$graph[] = array(
-			'@type' => 'Service',
-			'@id' => $permalink . '#service',
-			'name' => kayan_seo_text( get_the_title( $post ) ),
-			'description' => kayan_seo_get_description(),
-			'url' => $permalink,
-			'provider' => kayan_seo_build_local_business_node( $business, home_url( '/#business' ) ),
-			'areaServed' => kayan_seo_get_post_area_served( $post->ID ),
-		);
-
-		$questions = get_post_meta( $post->ID, 'yourcolor__faqs', true );
-		if ( is_array( $questions ) && ! empty( $questions ) ) {
-			$entities = array();
-			foreach ( $questions as $faq ) {
-				if ( empty( $faq['question'] ) || empty( $faq['answer'] ) ) {
-					continue;
-				}
-				$entities[] = array(
-					'@type' => 'Question',
-					'name' => kayan_seo_text( $faq['question'] ),
-					'acceptedAnswer' => array(
-						'@type' => 'Answer',
-						'text' => kayan_seo_text( $faq['answer'] ),
-					),
-				);
-			}
-			if ( ! empty( $entities ) ) {
-				$graph[] = array(
-					'@type' => 'FAQPage',
-					'@id' => $permalink . '#faq',
-					'mainEntity' => $entities,
-				);
-			}
-		}
-
-		$breadcrumb = kayan_seo_get_breadcrumb_list_node();
-		if ( ! empty( $breadcrumb ) ) {
-			$graph[] = $breadcrumb;
-		}
-
-		kayan_seo_print_json_ld( $graph );
+		kayan_seo_print_json_ld( kayan_seo_merge_breadcrumb_into_graph( $graph ) );
 	}
 }
 
@@ -221,12 +181,7 @@ if ( ! function_exists( 'kayan_seo_output_page_schema' ) ) {
 			);
 		}
 
-		$breadcrumb = kayan_seo_get_breadcrumb_list_node();
-		if ( ! empty( $breadcrumb ) ) {
-			$graph[] = $breadcrumb;
-		}
-
-		kayan_seo_print_json_ld( $graph );
+		kayan_seo_print_json_ld( kayan_seo_merge_breadcrumb_into_graph( $graph ) );
 	}
 }
 
@@ -379,11 +334,13 @@ if ( ! function_exists( 'kayan_seo_output_city_archive_schema' ) ) {
 	}
 }
 
-if ( ! function_exists( 'kayan_seo_get_breadcrumb_list_node' ) ) {
+if ( ! function_exists( 'kayan_seo_get_breadcrumb' ) ) {
 	/**
-	 * Build a single BreadcrumbList node for @graph merge (no HTML output).
+	 * BreadcrumbList schema node only — no HTML output.
+	 *
+	 * @return array|null
 	 */
-	function kayan_seo_get_breadcrumb_list_node() {
+	function kayan_seo_get_breadcrumb() {
 		if ( ! kayan_seo_uses_modern_schema() || is_front_page() || is_home() ) {
 			return null;
 		}
@@ -452,13 +409,29 @@ if ( ! function_exists( 'kayan_seo_get_breadcrumb_list_node' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_seo_merge_breadcrumb_into_graph' ) ) {
+	/**
+	 * Append BreadcrumbList node to @graph array (no script output).
+	 *
+	 * @param array $graph
+	 * @return array
+	 */
+	function kayan_seo_merge_breadcrumb_into_graph( array $graph ) {
+		$breadcrumb = kayan_seo_get_breadcrumb();
+		if ( ! empty( $breadcrumb ) ) {
+			$graph[] = $breadcrumb;
+		}
+		return $graph;
+	}
+}
+
 if ( ! function_exists( 'kayan_seo_output_breadcrumb_schema' ) ) {
 	function kayan_seo_output_breadcrumb_schema() {
-		if ( is_singular() || is_page() ) {
+		if ( is_singular( 'post' ) || is_page() ) {
 			return;
 		}
 
-		$node = kayan_seo_get_breadcrumb_list_node();
+		$node = kayan_seo_get_breadcrumb();
 		if ( empty( $node ) ) {
 			return;
 		}
