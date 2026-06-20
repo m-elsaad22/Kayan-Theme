@@ -4,6 +4,7 @@ require_once __DIR__ . '/schema-extensions.php';
 require_once __DIR__ . '/rank-math-bridge.php';
 require_once __DIR__ . '/frontend.php';
 require_once __DIR__ . '/compatibility.php';
+require_once __DIR__ . '/routes.php';
 require_once __DIR__ . '/dashboard.php';
 require_once __DIR__ . '/schema-output.php';
 
@@ -21,6 +22,6 @@ function kayan_seo_register_core_sitemaps() {
 	if ( ! kayan_seo_is_enabled() ) {
 		return;
 	}
-	add_filter( 'wp_sitemaps_enabled', '__return_true' );
+	add_filter( 'wp_sitemaps_enabled', '__return_false' );
 }
 add_action( 'init', 'kayan_seo_register_core_sitemaps', 5 );

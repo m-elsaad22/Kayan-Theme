@@ -106,7 +106,7 @@ if ( ! function_exists( 'kayan_seo_get_dashboard_data' ) ) {
 			'score_passed' => $score,
 			'score_total' => count( $checks ),
 			'checks' => $checks,
-			'sitemap_url' => home_url( '/wp-sitemap.xml' ),
+			'sitemap_url' => home_url( '/sitemap_index.xml' ),
 			'home_url' => home_url( '/' ),
 			'gsc_url' => 'https://search.google.com/search-console',
 			'stats' => array(

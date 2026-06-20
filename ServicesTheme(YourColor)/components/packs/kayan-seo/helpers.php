@@ -457,7 +457,7 @@ if ( ! function_exists( 'kayan_seo_render_head_meta' ) ) {
 		kayan_seo_render_hreflang_links();
 
 		if ( ! kayan_seo_should_noindex() && get_option( 'blog_public' ) ) {
-			echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="' . esc_url( home_url( '/wp-sitemap.xml' ) ) . '" />' . "\n";
+			echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="' . esc_url( home_url( '/sitemap_index.xml' ) ) . '" />' . "\n";
 		}
 	}
 }

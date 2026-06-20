@@ -167,6 +167,11 @@ if ( ! function_exists( 'kayan_seo_output_single_schema' ) ) {
 			}
 		}
 
+		$breadcrumb = kayan_seo_get_breadcrumb_list_node();
+		if ( ! empty( $breadcrumb ) ) {
+			$graph[] = $breadcrumb;
+		}
+
 		kayan_seo_print_json_ld( $graph );
 	}
 }
@@ -214,6 +219,11 @@ if ( ! function_exists( 'kayan_seo_output_page_schema' ) ) {
 				'@type' => 'ImageObject',
 				'url' => $thumbnail,
 			);
+		}
+
+		$breadcrumb = kayan_seo_get_breadcrumb_list_node();
+		if ( ! empty( $breadcrumb ) ) {
+			$graph[] = $breadcrumb;
 		}
 
 		kayan_seo_print_json_ld( $graph );
@@ -369,10 +379,13 @@ if ( ! function_exists( 'kayan_seo_output_city_archive_schema' ) ) {
 	}
 }
 
-if ( ! function_exists( 'kayan_seo_output_breadcrumb_schema' ) ) {
-	function kayan_seo_output_breadcrumb_schema() {
+if ( ! function_exists( 'kayan_seo_get_breadcrumb_list_node' ) ) {
+	/**
+	 * Build a single BreadcrumbList node for @graph merge (no HTML output).
+	 */
+	function kayan_seo_get_breadcrumb_list_node() {
 		if ( ! kayan_seo_uses_modern_schema() || is_front_page() || is_home() ) {
-			return;
+			return null;
 		}
 
 		$items = array();
@@ -428,18 +441,29 @@ if ( ! function_exists( 'kayan_seo_output_breadcrumb_schema' ) ) {
 		}
 
 		if ( count( $items ) < 2 ) {
+			return null;
+		}
+
+		return array(
+			'@type' => 'BreadcrumbList',
+			'@id' => kayan_seo_get_canonical_url() . '#breadcrumb',
+			'itemListElement' => $items,
+		);
+	}
+}
+
+if ( ! function_exists( 'kayan_seo_output_breadcrumb_schema' ) ) {
+	function kayan_seo_output_breadcrumb_schema() {
+		if ( is_singular() || is_page() ) {
 			return;
 		}
 
-		kayan_seo_print_json_ld(
-			array(
-				array(
-					'@type' => 'BreadcrumbList',
-					'@id' => kayan_seo_get_canonical_url() . '#breadcrumb',
-					'itemListElement' => $items,
-				),
-			)
-		);
+		$node = kayan_seo_get_breadcrumb_list_node();
+		if ( empty( $node ) ) {
+			return;
+		}
+
+		kayan_seo_print_json_ld( array( $node ) );
 	}
 }
 
