@@ -10,6 +10,18 @@ if ( ! function_exists( 'kayan_perf_is_enabled' ) ) {
 
 if ( ! function_exists( 'kayan_perf_get_lcp_image_url' ) ) {
 	function kayan_perf_get_lcp_image_url() {
+		if ( is_front_page() || is_home() ) {
+			if ( function_exists( 'kayan_seo_get_business_settings' ) ) {
+				$business = kayan_seo_get_business_settings();
+				if ( ! empty( $business['image'] ) ) {
+					return esc_url( $business['image'] );
+				}
+				if ( ! empty( $business['logo'] ) ) {
+					return esc_url( $business['logo'] );
+				}
+			}
+		}
+
 		if ( is_singular() && has_post_thumbnail() ) {
 			$url = get_the_post_thumbnail_url( get_queried_object_id(), 'full' );
 			if ( $url ) {
@@ -57,6 +69,8 @@ if ( ! function_exists( 'kayan_perf_render_resource_hints' ) ) {
 			$lcp = kayan_perf_get_lcp_image_url();
 			if ( ! empty( $lcp ) ) {
 				echo '<link rel="preload" as="image" href="' . esc_url( $lcp ) . '" fetchpriority="high" />' . "\n";
+			} elseif ( is_front_page() || is_home() ) {
+				echo '<link rel="preload" as="font" href="https://fonts.gstatic.com/s/cairo/v28/SLXgc1nY6HkvangtZmpQdkhzfH5lkSs2SgRjCAGMQ1z0hOA-W1ToLQ-HmkAeiQ.woff2" crossorigin />' . "\n";
 			}
 		}
 	}

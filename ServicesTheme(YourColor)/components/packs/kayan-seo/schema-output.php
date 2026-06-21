@@ -484,6 +484,12 @@ if ( ! function_exists( 'kayan_seo_merge_breadcrumb_into_graph' ) ) {
 	 * @return array
 	 */
 	function kayan_seo_merge_breadcrumb_into_graph( array $graph ) {
+		foreach ( $graph as $node ) {
+			if ( is_array( $node ) && isset( $node['@type'] ) && 'BreadcrumbList' === $node['@type'] ) {
+				return $graph;
+			}
+		}
+
 		$breadcrumb = kayan_seo_get_breadcrumb();
 		if ( ! empty( $breadcrumb ) ) {
 			$graph[] = $breadcrumb;
