@@ -200,6 +200,22 @@ if ( ! function_exists( 'kayan_seo_get_canonical_url' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_seo_get_current_url' ) ) {
+	function kayan_seo_get_current_url() {
+		$canonical = kayan_seo_get_canonical_url();
+		if ( ! empty( $canonical ) ) {
+			return $canonical;
+		}
+
+		global $wp;
+		if ( isset( $wp ) && is_object( $wp ) ) {
+			return home_url( add_query_arg( array(), $wp->request ) );
+		}
+
+		return home_url( '/' );
+	}
+}
+
 if ( ! function_exists( 'kayan_seo_get_term_image_url' ) ) {
 	function kayan_seo_get_term_image_url( $term_id ) {
 		$image_id = get_term_meta( $term_id, 'image_blog_id_id', true );
@@ -457,7 +473,7 @@ if ( ! function_exists( 'kayan_seo_render_head_meta' ) ) {
 		kayan_seo_render_hreflang_links();
 
 		if ( ! kayan_seo_should_noindex() && get_option( 'blog_public' ) ) {
-			echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="' . esc_url( home_url( '/sitemap_index.xml' ) ) . '" />' . "\n";
+			echo '<link rel="sitemap" type="application/xml" title="Sitemap" href="' . esc_url( home_url( '/wp-sitemap.xml' ) ) . '" />' . "\n";
 		}
 	}
 }

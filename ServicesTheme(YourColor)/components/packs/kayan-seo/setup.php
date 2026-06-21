@@ -22,6 +22,6 @@ function kayan_seo_register_core_sitemaps() {
 	if ( ! kayan_seo_is_enabled() ) {
 		return;
 	}
-	add_filter( 'wp_sitemaps_enabled', '__return_false' );
+	add_filter( 'wp_sitemaps_enabled', '__return_true' );
 }
 add_action( 'init', 'kayan_seo_register_core_sitemaps', 5 );

@@ -403,7 +403,7 @@ if ( ! function_exists( 'kayan_seo_get_breadcrumb' ) ) {
 
 		return array(
 			'@type' => 'BreadcrumbList',
-			'@id' => kayan_seo_get_canonical_url() . '#breadcrumb',
+			'@id' => kayan_seo_get_current_url() . '#breadcrumb',
 			'itemListElement' => $items,
 		);
 	}

@@ -1,7 +1,7 @@
 <?
 /**
- * Legacy URL redirects — sitemap aliases + AMP remnants.
- * Rank Math sitemap: /sitemap_index.xml (not modified here).
+ * Legacy AMP URL redirects only.
+ * Sitemap: EXTERNAL (Rank Math issue) — not handled by the theme.
  */
 
 if ( ! function_exists( 'kayan_seo_redirect_legacy_urls' ) ) {
@@ -11,13 +11,8 @@ if ( ! function_exists( 'kayan_seo_redirect_legacy_urls' ) ) {
 		}
 
 		global $wp;
-		$current_url = home_url( add_query_arg( array(), $wp->request ) );
+		$current_url = kayan_seo_get_current_url();
 		$path        = trim( (string) $wp->request, '/' );
-
-		if ( in_array( $path, array( 'sitemap.xml', 'wp-sitemap.xml' ), true ) ) {
-			wp_safe_redirect( home_url( '/sitemap_index.xml' ), 301 );
-			exit;
-		}
 
 		if ( $path === 'amp' || strpos( $path, 'amp/' ) === 0 ) {
 			wp_safe_redirect( home_url( '/' ), 301 );
