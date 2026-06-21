@@ -93,6 +93,12 @@ $ShareHastags = array();
 			$Related_Terms[ $t__s->taxonomy ][] = $t__s;
 		}
 
+		$terms_city = get_the_terms( $post->ID, 'city', true );
+		$terms_city = ( is_array( $terms_city ) ) ? $terms_city : array();
+		foreach ( $terms_city as $city_term ) {
+			$Related_Terms[ $city_term->taxonomy ][] = $city_term;
+		}
+
 		$post_tag = get_the_terms( $post->ID,'post_tag',true );
 		$post_tag = ( is_array( $post_tag ) ) ? $post_tag : array();
 

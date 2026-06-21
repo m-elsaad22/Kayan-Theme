@@ -37,6 +37,11 @@ if ( ! function_exists( 'kayan_seo_get_site_name' ) ) {
 
 if ( ! function_exists( 'kayan_seo_render_hreflang_links' ) ) {
 	function kayan_seo_render_hreflang_links() {
+		if ( function_exists( 'kayan_i18n_render_hreflang' ) && kayan_i18n_is_enabled() ) {
+			kayan_i18n_render_hreflang();
+			return;
+		}
+
 		if ( empty( yc_get_option( 'kayan_seo_hreflang_enabled' ) ) ) {
 			return;
 		}
@@ -55,10 +60,31 @@ if ( ! function_exists( 'kayan_seo_render_hreflang_links' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_seo_get_schema_lang' ) ) {
+	function kayan_seo_get_schema_lang() {
+		if ( function_exists( 'kayan_i18n_get_schema_language' ) ) {
+			return kayan_i18n_get_schema_language();
+		}
+		return 'ar';
+	}
+}
+
 if ( ! function_exists( 'kayan_seo_get_title' ) ) {
 	function kayan_seo_get_title() {
+		$title = kayan_seo_resolve_title();
+		return apply_filters( 'kayan_seo_resolved_title', $title );
+	}
+}
+
+if ( ! function_exists( 'kayan_seo_resolve_title' ) ) {
+	function kayan_seo_resolve_title() {
 		if ( is_singular() ) {
-			$seo_title = function_exists( 'kayan_seo_get_post_seo_title' ) ? kayan_seo_get_post_seo_title( get_queried_object_id() ) : '';
+			$post_id = get_queried_object_id();
+			$native = get_post_meta( $post_id, 'kayan_meta_title', true );
+			if ( ! empty( $native ) ) {
+				return kayan_seo_text( $native );
+			}
+			$seo_title = function_exists( 'kayan_seo_get_post_seo_title' ) ? kayan_seo_get_post_seo_title( $post_id ) : '';
 			if ( ! empty( $seo_title ) ) {
 				return $seo_title;
 			}
@@ -96,8 +122,19 @@ if ( ! function_exists( 'kayan_seo_get_title' ) ) {
 
 if ( ! function_exists( 'kayan_seo_get_description' ) ) {
 	function kayan_seo_get_description() {
+		$description = kayan_seo_resolve_description();
+		return apply_filters( 'kayan_seo_resolved_description', $description );
+	}
+}
+
+if ( ! function_exists( 'kayan_seo_resolve_description' ) ) {
+	function kayan_seo_resolve_description() {
 		if ( is_singular() ) {
 			global $post;
+			$native = get_post_meta( $post->ID, 'kayan_meta_description', true );
+			if ( ! empty( $native ) ) {
+				return kayan_seo_text( $native );
+			}
 			$custom = function_exists( 'kayan_seo_get_post_seo_description' ) ? kayan_seo_get_post_seo_description( $post->ID ) : '';
 			if ( ! empty( $custom ) ) {
 				return $custom;

@@ -50,8 +50,49 @@ if ( ! function_exists( 'kayan_seo_build_local_business_node' ) ) {
 	}
 }
 
-if ( ! function_exists( 'kayan_seo_output_home_schema' ) ) {
-	function kayan_seo_output_home_schema() {
+if ( ! function_exists( 'kayan_seo_append_single_service_faq_nodes' ) ) {
+	function kayan_seo_append_single_service_faq_nodes( array &$graph, $post, $permalink, $business ) {
+		$graph[] = array(
+			'@type' => 'Service',
+			'@id' => $permalink . '#service',
+			'name' => kayan_seo_text( get_the_title( $post ) ),
+			'description' => kayan_seo_get_description(),
+			'url' => $permalink,
+			'provider' => kayan_seo_build_local_business_node( $business, home_url( '/#business' ) ),
+			'areaServed' => kayan_seo_get_post_area_served( $post->ID ),
+		);
+
+		$questions = get_post_meta( $post->ID, 'yourcolor__faqs', true );
+		if ( ! is_array( $questions ) || empty( $questions ) ) {
+			return;
+		}
+
+		$entities = array();
+		foreach ( $questions as $faq ) {
+			if ( empty( $faq['question'] ) || empty( $faq['answer'] ) ) {
+				continue;
+			}
+			$entities[] = array(
+				'@type' => 'Question',
+				'name' => kayan_seo_text( $faq['question'] ),
+				'acceptedAnswer' => array(
+					'@type' => 'Answer',
+					'text' => kayan_seo_text( $faq['answer'] ),
+				),
+			);
+		}
+		if ( ! empty( $entities ) ) {
+			$graph[] = array(
+				'@type' => 'FAQPage',
+				'@id' => $permalink . '#faq',
+				'mainEntity' => $entities,
+			);
+		}
+	}
+}
+
+if ( ! function_exists( 'kayan_seo_collect_home_schema_nodes' ) ) {
+	function kayan_seo_collect_home_schema_nodes( array &$graph ) {
 		if ( ! kayan_seo_uses_modern_schema() || ( ! is_front_page() && ! is_home() ) ) {
 			return;
 		}
@@ -61,14 +102,14 @@ if ( ! function_exists( 'kayan_seo_output_home_schema' ) ) {
 		$business_id = home_url( '/#business' );
 		$org_id = home_url( '/#organization' );
 
-		$graph = array(
+		$nodes = array(
 			array(
 				'@type' => 'WebSite',
 				'@id' => $site_id,
 				'url' => home_url( '/' ),
 				'name' => kayan_seo_get_site_name(),
 				'description' => kayan_seo_get_description(),
-				'inLanguage' => 'ar',
+				'inLanguage' => kayan_seo_get_schema_lang(),
 				'publisher' => array( '@id' => $org_id ),
 				'potentialAction' => array(
 					'@type' => 'SearchAction',
@@ -88,18 +129,18 @@ if ( ! function_exists( 'kayan_seo_output_home_schema' ) ) {
 		);
 
 		if ( function_exists( 'kayan_seo_build_review_schema_nodes' ) ) {
-			$graph = array_merge( $graph, kayan_seo_build_review_schema_nodes( $business ) );
+			$nodes = array_merge( $nodes, kayan_seo_build_review_schema_nodes( $business ) );
 		}
 		if ( function_exists( 'kayan_seo_build_team_schema_nodes' ) ) {
-			$graph = array_merge( $graph, kayan_seo_build_team_schema_nodes() );
+			$nodes = array_merge( $nodes, kayan_seo_build_team_schema_nodes() );
 		}
 
-		kayan_seo_print_json_ld( $graph );
+		$graph = array_merge( $graph, $nodes );
 	}
 }
 
-if ( ! function_exists( 'kayan_seo_output_single_schema' ) ) {
-	function kayan_seo_output_single_schema() {
+if ( ! function_exists( 'kayan_seo_collect_single_schema_nodes' ) ) {
+	function kayan_seo_collect_single_schema_nodes( array &$graph ) {
 		if ( ! kayan_seo_uses_modern_schema() || ! is_singular( 'post' ) ) {
 			return;
 		}
@@ -107,37 +148,40 @@ if ( ! function_exists( 'kayan_seo_output_single_schema' ) ) {
 		global $post;
 		$permalink = get_permalink( $post );
 		$business = kayan_seo_get_business_settings();
-		$graph = array();
 		$thumbnail = get_the_post_thumbnail_url( $post, 'full' );
 		$author = get_userdata( $post->post_author );
 
-		$graph[] = array(
-			'@type' => 'Article',
-			'@id' => $permalink . '#article',
-			'headline' => kayan_seo_text( get_the_title( $post ) ),
-			'description' => kayan_seo_get_description(),
-			'datePublished' => get_the_date( 'c', $post ),
-			'dateModified' => get_the_modified_date( 'c', $post ),
-			'mainEntityOfPage' => $permalink,
-			'inLanguage' => 'ar',
-			'author' => kayan_seo_build_author_person_node( $author ),
-			'publisher' => array(
-				'@type' => 'Organization',
-				'name' => $business['name'],
-				'logo' => array(
-					'@type' => 'ImageObject',
-					'url' => $business['logo'] ? $business['logo'] : $business['image'],
+		$nodes = array(
+			array(
+				'@type' => 'Article',
+				'@id' => $permalink . '#article',
+				'headline' => kayan_seo_text( get_the_title( $post ) ),
+				'description' => kayan_seo_get_description(),
+				'datePublished' => get_the_date( 'c', $post ),
+				'dateModified' => get_the_modified_date( 'c', $post ),
+				'mainEntityOfPage' => $permalink,
+				'inLanguage' => kayan_seo_get_schema_lang(),
+				'author' => kayan_seo_build_author_person_node( $author ),
+				'publisher' => array(
+					'@type' => 'Organization',
+					'name' => $business['name'],
+					'logo' => array(
+						'@type' => 'ImageObject',
+						'url' => $business['logo'] ? $business['logo'] : $business['image'],
+					),
 				),
+				'image' => $thumbnail ? array( $thumbnail ) : array(),
 			),
-			'image' => $thumbnail ? array( $thumbnail ) : array(),
 		);
 
-		kayan_seo_print_json_ld( kayan_seo_merge_breadcrumb_into_graph( $graph ) );
+		kayan_seo_append_single_service_faq_nodes( $nodes, $post, $permalink, $business );
+		$nodes = kayan_seo_merge_breadcrumb_into_graph( $nodes );
+		$graph = array_merge( $graph, $nodes );
 	}
 }
 
-if ( ! function_exists( 'kayan_seo_output_page_schema' ) ) {
-	function kayan_seo_output_page_schema() {
+if ( ! function_exists( 'kayan_seo_collect_page_schema_nodes' ) ) {
+	function kayan_seo_collect_page_schema_nodes( array &$graph ) {
 		if ( ! kayan_seo_uses_modern_schema() || ! is_page() ) {
 			return;
 		}
@@ -150,14 +194,14 @@ if ( ! function_exists( 'kayan_seo_output_page_schema' ) ) {
 		$business = kayan_seo_get_business_settings();
 		$thumbnail = get_the_post_thumbnail_url( $post, 'full' );
 
-		$graph = array(
+		$nodes = array(
 			array(
 				'@type' => 'WebPage',
 				'@id' => $permalink . '#webpage',
 				'name' => kayan_seo_text( get_the_title( $post ) ),
 				'description' => kayan_seo_get_description(),
 				'url' => $permalink,
-				'inLanguage' => 'ar',
+				'inLanguage' => kayan_seo_get_schema_lang(),
 				'isPartOf' => array(
 					'@type' => 'WebSite',
 					'@id' => home_url( '/#website' ),
@@ -175,18 +219,19 @@ if ( ! function_exists( 'kayan_seo_output_page_schema' ) ) {
 		);
 
 		if ( $thumbnail ) {
-			$graph[0]['primaryImageOfPage'] = array(
+			$nodes[0]['primaryImageOfPage'] = array(
 				'@type' => 'ImageObject',
 				'url' => $thumbnail,
 			);
 		}
 
-		kayan_seo_print_json_ld( kayan_seo_merge_breadcrumb_into_graph( $graph ) );
+		$nodes = kayan_seo_merge_breadcrumb_into_graph( $nodes );
+		$graph = array_merge( $graph, $nodes );
 	}
 }
 
-if ( ! function_exists( 'kayan_seo_output_cities_index_schema' ) ) {
-	function kayan_seo_output_cities_index_schema() {
+if ( ! function_exists( 'kayan_seo_collect_cities_index_schema_nodes' ) ) {
+	function kayan_seo_collect_cities_index_schema_nodes( array &$graph ) {
 		if ( ! kayan_seo_uses_modern_schema() || ! function_exists( 'kayan_seo_is_cities_index_page' ) || ! kayan_seo_is_cities_index_page() ) {
 			return;
 		}
@@ -220,14 +265,14 @@ if ( ! function_exists( 'kayan_seo_output_cities_index_schema' ) ) {
 			}
 		}
 
-		$graph = array(
+		$nodes = array(
 			array(
 				'@type' => 'CollectionPage',
 				'@id' => $permalink . '#cities-index',
 				'name' => kayan_seo_text( get_the_title( $post ) ),
 				'description' => kayan_seo_get_description(),
 				'url' => $permalink,
-				'inLanguage' => 'ar',
+				'inLanguage' => kayan_seo_get_schema_lang(),
 				'isPartOf' => array(
 					'@type' => 'WebSite',
 					'@id' => home_url( '/#website' ),
@@ -237,7 +282,7 @@ if ( ! function_exists( 'kayan_seo_output_cities_index_schema' ) ) {
 		);
 
 		if ( ! empty( $list_items ) ) {
-			$graph[] = array(
+			$nodes[] = array(
 				'@type' => 'ItemList',
 				'@id' => $permalink . '#city-list',
 				'name' => 'المدن التي نخدمها',
@@ -245,12 +290,13 @@ if ( ! function_exists( 'kayan_seo_output_cities_index_schema' ) ) {
 			);
 		}
 
-		kayan_seo_print_json_ld( $graph );
+		$nodes = kayan_seo_merge_breadcrumb_into_graph( $nodes );
+		$graph = array_merge( $graph, $nodes );
 	}
 }
 
-if ( ! function_exists( 'kayan_seo_output_city_archive_schema' ) ) {
-	function kayan_seo_output_city_archive_schema() {
+if ( ! function_exists( 'kayan_seo_collect_city_archive_schema_nodes' ) ) {
+	function kayan_seo_collect_city_archive_schema_nodes( array &$graph ) {
 		if ( ! kayan_seo_uses_modern_schema() || ! is_tax( 'city' ) ) {
 			return;
 		}
@@ -266,14 +312,14 @@ if ( ! function_exists( 'kayan_seo_output_city_archive_schema' ) ) {
 		}
 
 		$business = kayan_seo_get_business_settings();
-		$graph = array(
+		$nodes = array(
 			array(
 				'@type' => 'CollectionPage',
 				'@id' => $term_link . '#collection',
 				'name' => kayan_seo_text( $term->name ),
 				'description' => kayan_seo_get_description(),
 				'url' => $term_link,
-				'inLanguage' => 'ar',
+				'inLanguage' => kayan_seo_get_schema_lang(),
 				'isPartOf' => array(
 					'@type' => 'WebSite',
 					'@id' => home_url( '/#website' ),
@@ -289,7 +335,7 @@ if ( ! function_exists( 'kayan_seo_output_city_archive_schema' ) ) {
 
 		$term_image = kayan_seo_get_term_image_url( $term->term_id );
 		if ( ! empty( $term_image ) ) {
-			$graph[0]['primaryImageOfPage'] = array(
+			$nodes[0]['primaryImageOfPage'] = array(
 				'@type' => 'ImageObject',
 				'url' => $term_image,
 			);
@@ -322,7 +368,7 @@ if ( ! function_exists( 'kayan_seo_output_city_archive_schema' ) ) {
 		}
 
 		if ( ! empty( $list_items ) ) {
-			$graph[] = array(
+			$nodes[] = array(
 				'@type' => 'ItemList',
 				'@id' => $term_link . '#itemlist',
 				'name' => 'خدمات في ' . kayan_seo_text( $term->name ),
@@ -330,7 +376,28 @@ if ( ! function_exists( 'kayan_seo_output_city_archive_schema' ) ) {
 			);
 		}
 
-		kayan_seo_print_json_ld( $graph );
+		$nodes = kayan_seo_merge_breadcrumb_into_graph( $nodes );
+		$graph = array_merge( $graph, $nodes );
+	}
+}
+
+if ( ! function_exists( 'kayan_seo_build_schema_graph' ) ) {
+	function kayan_seo_build_schema_graph() {
+		$graph = array();
+		kayan_seo_collect_home_schema_nodes( $graph );
+		kayan_seo_collect_single_schema_nodes( $graph );
+		kayan_seo_collect_page_schema_nodes( $graph );
+		kayan_seo_collect_cities_index_schema_nodes( $graph );
+		kayan_seo_collect_city_archive_schema_nodes( $graph );
+
+		if ( empty( $graph ) && ! is_singular() ) {
+			$breadcrumb = kayan_seo_get_breadcrumb();
+			if ( ! empty( $breadcrumb ) ) {
+				$graph[] = $breadcrumb;
+			}
+		}
+
+		return $graph;
 	}
 }
 
@@ -425,21 +492,6 @@ if ( ! function_exists( 'kayan_seo_merge_breadcrumb_into_graph' ) ) {
 	}
 }
 
-if ( ! function_exists( 'kayan_seo_output_breadcrumb_schema' ) ) {
-	function kayan_seo_output_breadcrumb_schema() {
-		if ( is_singular() ) {
-			return;
-		}
-
-		$node = kayan_seo_get_breadcrumb();
-		if ( empty( $node ) ) {
-			return;
-		}
-
-		kayan_seo_print_json_ld( array( $node ) );
-	}
-}
-
 if ( ! function_exists( 'kayan_seo_output_schema_graph' ) ) {
 	function kayan_seo_output_schema_graph() {
 		static $rendered = false;
@@ -454,12 +506,9 @@ if ( ! function_exists( 'kayan_seo_output_schema_graph' ) ) {
 		}
 
 		$rendered = true;
-
-		kayan_seo_output_home_schema();
-		kayan_seo_output_single_schema();
-		kayan_seo_output_page_schema();
-		kayan_seo_output_cities_index_schema();
-		kayan_seo_output_city_archive_schema();
-		kayan_seo_output_breadcrumb_schema();
+		$graph = kayan_seo_build_schema_graph();
+		if ( ! empty( $graph ) ) {
+			kayan_seo_print_json_ld( $graph );
+		}
 	}
 }

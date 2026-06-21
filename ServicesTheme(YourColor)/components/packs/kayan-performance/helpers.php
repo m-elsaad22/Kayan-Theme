@@ -72,6 +72,9 @@ if ( ! function_exists( 'kayan_perf_attachment_image_attributes' ) ) {
 			$attr['fetchpriority'] = 'high';
 			$attr['loading'] = 'eager';
 			$attr['decoding'] = 'async';
+		} elseif ( empty( $attr['loading'] ) ) {
+			$attr['loading'] = 'lazy';
+			$attr['decoding'] = 'async';
 		}
 
 		return $attr;
