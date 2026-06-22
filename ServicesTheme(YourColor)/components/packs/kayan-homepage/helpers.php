@@ -26,7 +26,8 @@ if ( ! function_exists( 'kayan_homepage_get_company_name' ) ) {
 			return is_string( $name ) ? trim( $name ) : $name;
 		}
 
-		return 'ركن التطور';
+		$name = get_bloginfo( 'name' );
+		return is_string( $name ) ? trim( $name ) : '';
 	}
 }
 
