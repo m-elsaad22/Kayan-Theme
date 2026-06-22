@@ -146,12 +146,18 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 (function(){
   const btn=document.getElementById('fnBtn');if(!btn)return;
   const svc=document.getElementById('fnSvc'),city=document.getElementById('fnCity'),res=document.getElementById('fnResult');
-  const times={'دبي':'خلال 60 دقيقة','أبوظبي':'خلال 90 دقيقة','الشارقة':'خلال 75 دقيقة','عجمان':'خلال 90 دقيقة','رأس الخيمة':'خلال ساعتين','الفجيرة':'خلال ساعتين','أم القيوين':'خلال ساعتين'};
+  const times={};
+  if(city){
+    Array.from(city.options).forEach(o=>{
+      if(o.value)times[o.value]=o.dataset.time||'';
+    });
+  }
+  const fallbackTime='خلال ساعتين';
   btn.addEventListener('click',()=>{
     const s=svc.value,c=city.value;
     document.getElementById('frTitle').textContent=s+' — '+c;
-    document.getElementById('frSub').textContent='فريق متخصص جاهز لخدمتك في '+c+' مع معاينة مجانية وعرض سعر شفاف.';
-    document.getElementById('frTime').textContent=times[c]||'خلال ساعتين';
+    document.getElementById('frSub').textContent='فريق متخصص جاهز لخدمتك في '+c;
+    document.getElementById('frTime').textContent=times[c]||fallbackTime;
     res.hidden=false;
     res.scrollIntoView({behavior:'smooth',block:'center'});
   });

@@ -215,42 +215,6 @@ if ( ! function_exists( 'kayan_homepage_build_social_links_html' ) ) {
 	}
 }
 
-if ( ! function_exists( 'kayan_homepage_get_blog_fallback_html' ) ) {
-	function kayan_homepage_get_blog_fallback_html() {
-		ob_start();
-		?>
-      <article class="post rv">
-        <div class="post-img" style="background:linear-gradient(135deg,var(--blue),var(--navy2))"><i class="fas fa-droplet"></i></div>
-        <div class="post-body">
-          <span class="post-cat">كشف تسربات</span><span class="post-date">15 يونيو 2026</span>
-          <h3>دليلك الشامل لكشف تسربات المياه في الإمارات</h3>
-          <p>تعرّف على أحدث تقنيات الكشف بدون تكسير وكيفية اكتشاف التسرب مبكراً.</p>
-          <a class="read" href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ?: home_url( '/' ) ); ?>">اقرأ المقال <i class="fas fa-arrow-left"></i></a>
-        </div>
-      </article>
-      <article class="post rv">
-        <div class="post-img" style="background:linear-gradient(135deg,var(--turq),var(--aqua))"><i class="fas fa-layer-group"></i></div>
-        <div class="post-body">
-          <span class="post-cat">عزل</span><span class="post-date">10 يونيو 2026</span>
-          <h3>أفضل أنواع عزل الأسطح لمناخ الإمارات الحار</h3>
-          <p>مقارنة بين الفوم والأغشية البيتومينية لاختيار الأنسب لمنزلك.</p>
-          <a class="read" href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ?: home_url( '/' ) ); ?>">اقرأ المقال <i class="fas fa-arrow-left"></i></a>
-        </div>
-      </article>
-      <article class="post rv">
-        <div class="post-img" style="background:linear-gradient(135deg,var(--gold),#ffce6b);color:#3a2600"><i class="fas fa-snowflake"></i></div>
-        <div class="post-body">
-          <span class="post-cat">تكييف</span><span class="post-date">2 يونيو 2026</span>
-          <h3>كيف تحافظ على تكييفك طوال فصل الصيف</h3>
-          <p>نصائح عملية للصيانة الدورية تطيل عمر مكيفك وتوفر فاتورة الكهرباء.</p>
-          <a class="read" href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ?: home_url( '/' ) ); ?>">اقرأ المقال <i class="fas fa-arrow-left"></i></a>
-        </div>
-      </article>
-		<?php
-		return ob_get_clean();
-	}
-}
-
 if ( ! function_exists( 'kayan_homepage_build_blog_posts_html' ) ) {
 	function kayan_homepage_build_blog_posts_html() {
 		$limit = (int) kayan_homepage_get_option_text( 'kayan_homepage_blog_count', '3' );
@@ -369,11 +333,43 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 			: '';
 		$projects_grid    = function_exists( 'kayan_homepage_build_projects_grid_html' ) ? kayan_homepage_build_projects_grid_html() : '';
 		$mobile_nav       = function_exists( 'kayan_homepage_build_mobile_nav_html' ) ? kayan_homepage_build_mobile_nav_html() : '';
+		$hero_proof       = function_exists( 'kayan_homepage_build_hero_proof_html' ) ? kayan_homepage_build_hero_proof_html() : '';
+		$hero_dashboard   = function_exists( 'kayan_homepage_build_hero_dashboard_html' ) ? kayan_homepage_build_hero_dashboard_html() : '';
+		$trustbar         = function_exists( 'kayan_homepage_build_trustbar_html' ) ? kayan_homepage_build_trustbar_html() : '';
+		$atb              = function_exists( 'kayan_homepage_build_atb_html' ) ? kayan_homepage_build_atb_html() : '';
+		$finder           = function_exists( 'kayan_homepage_build_finder_html' ) ? kayan_homepage_build_finder_html() : '';
+		$why_body         = function_exists( 'kayan_homepage_build_why_body_html' ) ? kayan_homepage_build_why_body_html() : '';
+		$team_grid        = function_exists( 'kayan_homepage_build_team_grid_html' ) ? kayan_homepage_build_team_grid_html() : '';
+		$team_head        = function_exists( 'kayan_homepage_build_section_head_html' )
+			? kayan_homepage_build_section_head_html( 'team', 'فريقنا', 'خبراؤنا في <span>خدمتكم</span>', 'فريق ' . $company_name . ' المعتمد.', 'Our team', 'Experts at <span>your service</span>', 'The certified ' . $company_name . ' team.' )
+			: '';
+		$stats_section    = function_exists( 'kayan_homepage_build_stats_section_html' ) ? kayan_homepage_build_stats_section_html() : '';
+		$compare_body     = function_exists( 'kayan_homepage_build_compare_body_html' ) ? kayan_homepage_build_compare_body_html() : '';
+		$ba_html          = function_exists( 'kayan_homepage_build_ba_html' ) ? kayan_homepage_build_ba_html() : '';
+		$reviews_html     = function_exists( 'kayan_homepage_build_reviews_html' ) ? kayan_homepage_build_reviews_html() : '';
+		$faq_html         = function_exists( 'kayan_homepage_build_faq_html' ) ? kayan_homepage_build_faq_html() : '';
+		$pricing_html     = function_exists( 'kayan_homepage_build_pricing_html' ) ? kayan_homepage_build_pricing_html() : '';
+		$cta_html         = function_exists( 'kayan_homepage_build_cta_html' ) ? kayan_homepage_build_cta_html() : '';
 
 		$tokens = array(
-			'header_logo_html'     => $header_logo_html,
-			'header_nav_html'      => $header_nav_html,
+			'header_logo_html'       => $header_logo_html,
+			'header_nav_html'        => $header_nav_html,
 			'header_mobile_nav_html' => $mobile_nav,
+			'hero_proof_html'        => $hero_proof,
+			'hero_dashboard_html'    => $hero_dashboard,
+			'trustbar_html'          => $trustbar,
+			'atb_html'               => $atb,
+			'finder_html'            => $finder,
+			'why_body_html'          => $why_body,
+			'team_head_html'         => $team_head,
+			'team_grid_html'         => $team_grid,
+			'stats_section_html'     => $stats_section,
+			'compare_body_html'      => $compare_body,
+			'ba_html'                => $ba_html,
+			'reviews_html'           => $reviews_html,
+			'faq_html'               => $faq_html,
+			'pricing_html'           => $pricing_html,
+			'cta_html'               => $cta_html,
 			'footer_html'          => $footer_html,
 			'services_grid_html'   => $services_grid,
 			'cities_grid_html'     => $cities_grid,
@@ -415,6 +411,8 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 			'ui_nav_blog'          => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_blog' ) : 'المدونة' ),
 			'ui_nav_about'         => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_about' ) : 'من نحن' ),
 			'ui_nav_faq'           => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_faq' ) : 'الأسئلة الشائعة' ),
+			'ui_menu_label'        => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'menu_open', 'القائمة' ) : 'القائمة' ),
+			'ui_close_label'       => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'menu_close', 'إغلاق' ) : 'إغلاق' ),
 		);
 
 		return apply_filters( 'kayan_homepage_tokens', $tokens );
@@ -445,6 +443,9 @@ if ( ! function_exists( 'kayan_homepage_v3_filter_html' ) ) {
 		}
 		if ( function_exists( 'kayan_hp_apply_section_visibility' ) ) {
 			$html = kayan_hp_apply_section_visibility( $html );
+		}
+		if ( function_exists( 'kayan_hp_auto_hide_empty_sections' ) ) {
+			$html = kayan_hp_auto_hide_empty_sections( $html );
 		}
 		return $html;
 	}

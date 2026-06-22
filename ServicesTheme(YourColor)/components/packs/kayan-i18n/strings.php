@@ -14,6 +14,8 @@ if ( ! function_exists( 'kayan_i18n_ui_strings' ) ) {
 			'nav_blog'           => array( 'ar' => 'المدونة', 'en' => 'Blog' ),
 			'nav_about'          => array( 'ar' => 'من نحن', 'en' => 'About' ),
 			'nav_faq'            => array( 'ar' => 'الأسئلة الشائعة', 'en' => 'FAQ' ),
+			'menu_open'          => array( 'ar' => 'القائمة', 'en' => 'Menu' ),
+			'menu_close'         => array( 'ar' => 'إغلاق', 'en' => 'Close' ),
 			'read_article'       => array( 'ar' => 'اقرأ المقال', 'en' => 'Read article' ),
 			'switcher_label'     => array( 'ar' => 'تبديل الدولة واللغة', 'en' => 'Switch country and language' ),
 			'section_country'    => array( 'ar' => 'الدولة', 'en' => 'Country' ),
