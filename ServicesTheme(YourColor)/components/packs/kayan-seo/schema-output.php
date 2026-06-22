@@ -498,6 +498,21 @@ if ( ! function_exists( 'kayan_seo_merge_breadcrumb_into_graph' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_seo_output_breadcrumb_schema' ) ) {
+	function kayan_seo_output_breadcrumb_schema() {
+		if ( is_singular() || is_page() ) {
+			return;
+		}
+
+		$node = kayan_seo_get_breadcrumb();
+		if ( empty( $node ) ) {
+			return;
+		}
+
+		kayan_seo_print_json_ld( array( $node ) );
+	}
+}
+
 if ( ! function_exists( 'kayan_seo_output_schema_graph' ) ) {
 	function kayan_seo_output_schema_graph() {
 		static $rendered = false;
@@ -516,5 +531,6 @@ if ( ! function_exists( 'kayan_seo_output_schema_graph' ) ) {
 		if ( ! empty( $graph ) ) {
 			kayan_seo_print_json_ld( $graph );
 		}
+		kayan_seo_output_breadcrumb_schema();
 	}
 }

@@ -10,6 +10,13 @@ if ( ! function_exists( 'kayan_perf_is_enabled' ) ) {
 
 if ( ! function_exists( 'kayan_perf_get_lcp_image_url' ) ) {
 	function kayan_perf_get_lcp_image_url() {
+		if ( is_singular() && has_post_thumbnail() ) {
+			$url = get_the_post_thumbnail_url( get_queried_object_id(), 'full' );
+			if ( $url ) {
+				return esc_url( $url );
+			}
+		}
+
 		if ( is_front_page() || is_home() ) {
 			if ( function_exists( 'kayan_seo_get_business_settings' ) ) {
 				$business = kayan_seo_get_business_settings();
@@ -19,13 +26,6 @@ if ( ! function_exists( 'kayan_perf_get_lcp_image_url' ) ) {
 				if ( ! empty( $business['logo'] ) ) {
 					return esc_url( $business['logo'] );
 				}
-			}
-		}
-
-		if ( is_singular() && has_post_thumbnail() ) {
-			$url = get_the_post_thumbnail_url( get_queried_object_id(), 'full' );
-			if ( $url ) {
-				return esc_url( $url );
 			}
 		}
 
@@ -57,20 +57,25 @@ if ( ! function_exists( 'kayan_perf_get_lcp_image_url' ) ) {
 
 if ( ! function_exists( 'kayan_perf_render_resource_hints' ) ) {
 	function kayan_perf_render_resource_hints() {
+		static $rendered = false;
+		if ( $rendered ) {
+			return;
+		}
 		if ( ! kayan_perf_is_enabled() || ( function_exists( 'IsSpeed' ) && IsSpeed() ) ) {
 			return;
 		}
+		$rendered = true;
 
 		echo '<link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />' . "\n";
+		echo '<link rel="dns-prefetch" href="//fonts.gstatic.com" />' . "\n";
 		echo '<link rel="preconnect" href="https://fonts.googleapis.com" />' . "\n";
 		echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />' . "\n";
+		echo '<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />' . "\n";
 
 		if ( empty( yc_get_option( 'kayan_perf_disable_preload' ) ) ) {
 			$lcp = kayan_perf_get_lcp_image_url();
 			if ( ! empty( $lcp ) ) {
 				echo '<link rel="preload" as="image" href="' . esc_url( $lcp ) . '" fetchpriority="high" />' . "\n";
-			} elseif ( is_front_page() || is_home() ) {
-				echo '<link rel="preload" as="font" href="https://fonts.gstatic.com/s/cairo/v28/SLXgc1nY6HkvangtZmpQdkhzfH5lkSs2SgRjCAGMQ1z0hOA-W1ToLQ-HmkAeiQ.woff2" crossorigin />' . "\n";
 			}
 		}
 	}
