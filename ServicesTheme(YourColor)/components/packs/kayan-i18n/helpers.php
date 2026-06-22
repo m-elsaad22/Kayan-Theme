@@ -1,7 +1,98 @@
 <?
+require_once __DIR__ . '/countries.php';
+require_once __DIR__ . '/strings.php';
+
 if ( ! function_exists( 'kayan_i18n_is_enabled' ) ) {
 	function kayan_i18n_is_enabled() {
 		return empty( yc_get_option( 'kayan_i18n_disable' ) );
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_get_request_path' ) ) {
+	function kayan_i18n_get_request_path() {
+		$path = wp_parse_url( $_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH );
+		return is_string( $path ) ? $path : '/';
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_detect_country_from_path' ) ) {
+	function kayan_i18n_detect_country_from_path( $path = null ) {
+		$path      = null === $path ? kayan_i18n_get_request_path() : $path;
+		$countries = kayan_i18n_get_countries();
+		$matches   = array();
+
+		foreach ( $countries as $code => $data ) {
+			$prefix = isset( $data['path'] ) ? trim( (string) $data['path'], '/' ) : '';
+			if ( $prefix === '' ) {
+				continue;
+			}
+			if ( $path === '/' . $prefix || strpos( $path, '/' . $prefix . '/' ) === 0 ) {
+				$matches[ strlen( $prefix ) ] = $code;
+			}
+		}
+
+		if ( empty( $matches ) ) {
+			$default = yc_get_option( 'kayan_i18n_default_country' );
+			if ( ! empty( $default ) && isset( $countries[ $default ] ) ) {
+				return $default;
+			}
+			return 'ae';
+		}
+
+		ksort( $matches );
+		return end( $matches );
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_get_country' ) ) {
+	function kayan_i18n_get_country() {
+		$countries = kayan_i18n_get_countries();
+		$country   = get_query_var( 'kayan_country' );
+		if ( ! empty( $country ) && isset( $countries[ $country ] ) ) {
+			return $country;
+		}
+		return kayan_i18n_detect_country_from_path();
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_get_country_data' ) ) {
+	function kayan_i18n_get_country_data( $country = null ) {
+		if ( null === $country ) {
+			$country = kayan_i18n_get_country();
+		}
+		$countries = kayan_i18n_get_countries();
+		return isset( $countries[ $country ] ) ? $countries[ $country ] : $countries['ae'];
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_get_country_path' ) ) {
+	function kayan_i18n_get_country_path( $country = null ) {
+		$data = kayan_i18n_get_country_data( $country );
+		return isset( $data['path'] ) ? (string) $data['path'] : '';
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_detect_lang_from_path' ) ) {
+	function kayan_i18n_detect_lang_from_path( $path = null ) {
+		$path    = null === $path ? kayan_i18n_get_request_path() : $path;
+		$country = kayan_i18n_detect_country_from_path( $path );
+		$base    = kayan_i18n_get_country_path( $country );
+		$rest    = $path;
+
+		if ( $base !== '' ) {
+			$rest = substr( $path, strlen( $base ) );
+			if ( $rest === false || $rest === '' ) {
+				$rest = '/';
+			}
+		}
+
+		if ( $rest === '/en' || $rest === '/en/' || strpos( $rest, '/en/' ) === 0 ) {
+			return 'en';
+		}
+		if ( strpos( $path, '/en' ) === 0 && $base === '' ) {
+			return 'en';
+		}
+		return 'ar';
 	}
 }
 
@@ -14,13 +105,105 @@ if ( ! function_exists( 'kayan_i18n_get_lang' ) ) {
 		if ( 'en' === $lang ) {
 			return 'en';
 		}
-		return 'ar';
+		return kayan_i18n_detect_lang_from_path();
 	}
 }
 
 if ( ! function_exists( 'kayan_i18n_is_english' ) ) {
 	function kayan_i18n_is_english() {
 		return 'en' === kayan_i18n_get_lang();
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_get_html_attrs' ) ) {
+	function kayan_i18n_get_html_attrs() {
+		if ( kayan_i18n_is_english() ) {
+			return 'lang="en" dir="ltr"';
+		}
+		return 'lang="ar" dir="rtl"';
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_country_label' ) ) {
+	function kayan_i18n_country_label( $country = null, $lang = null ) {
+		$data = kayan_i18n_get_country_data( $country );
+		if ( null === $lang ) {
+			$lang = kayan_i18n_get_lang();
+		}
+		$key = 'en' === $lang ? 'label_en' : 'label_ar';
+		return isset( $data[ $key ] ) ? $data[ $key ] : '';
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_country_in_phrase' ) ) {
+	function kayan_i18n_country_in_phrase( $country = null, $lang = null ) {
+		$data = kayan_i18n_get_country_data( $country );
+		if ( null === $lang ) {
+			$lang = kayan_i18n_get_lang();
+		}
+		$key = 'en' === $lang ? 'in_en' : 'in_ar';
+		return isset( $data[ $key ] ) ? $data[ $key ] : '';
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_country_regions' ) ) {
+	function kayan_i18n_country_regions( $country = null, $lang = null ) {
+		$data = kayan_i18n_get_country_data( $country );
+		if ( null === $lang ) {
+			$lang = kayan_i18n_get_lang();
+		}
+		$key = 'en' === $lang ? 'regions_en' : 'regions_ar';
+		return isset( $data[ $key ] ) ? $data[ $key ] : '';
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_country_address' ) ) {
+	function kayan_i18n_country_address( $country = null, $lang = null ) {
+		$data = kayan_i18n_get_country_data( $country );
+		if ( null === $lang ) {
+			$lang = kayan_i18n_get_lang();
+		}
+		$key = 'en' === $lang ? 'address_en' : 'address_ar';
+		return isset( $data[ $key ] ) ? $data[ $key ] : '';
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_get_switcher_config' ) ) {
+	function kayan_i18n_get_switcher_config() {
+		$country_paths = array();
+		$flags         = array();
+		foreach ( kayan_i18n_get_countries() as $code => $data ) {
+			$country_paths[ $code ] = isset( $data['path'] ) ? (string) $data['path'] : '';
+			$flags[ $code ]         = isset( $data['flag'] ) ? (string) $data['flag'] : '🌐';
+		}
+
+		$base_domain = wp_parse_url( home_url( '/' ), PHP_URL_HOST );
+		if ( empty( $base_domain ) ) {
+			$base_domain = isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
+		}
+
+		return array(
+			'baseDomain'   => $base_domain,
+			'countryPaths' => $country_paths,
+			'flags'        => $flags,
+			'storageKey'   => 'kayan_geo_pref',
+		);
+	}
+}
+
+if ( ! function_exists( 'kayan_i18n_build_url' ) ) {
+	function kayan_i18n_build_url( $country, $lang, $slug = '/' ) {
+		$base        = trailingslashit( home_url() );
+		$country_path = kayan_i18n_get_country_path( $country );
+		$slug        = ( $slug && $slug !== '/' ) ? '/' . trim( (string) $slug, '/' ) : '';
+
+		if ( 'en' === $lang ) {
+			return user_trailingslashit( $base . trim( $country_path . '/en' . $slug, '/' ) );
+		}
+		if ( $slug === '' || $slug === '/' ) {
+			return user_trailingslashit( $base . trim( $country_path, '/' ) ?: '' );
+		}
+		return user_trailingslashit( $base . trim( $country_path . $slug, '/' ) );
 	}
 }
 
@@ -33,32 +216,43 @@ if ( ! function_exists( 'kayan_i18n_get_post_en_meta' ) ) {
 
 if ( ! function_exists( 'kayan_i18n_get_localized_url' ) ) {
 	function kayan_i18n_get_localized_url( $lang = 'ar', $post_id = 0 ) {
+		$country = kayan_i18n_get_country();
 		if ( ! $post_id ) {
 			$post_id = get_queried_object_id();
 		}
+
 		if ( is_singular() && $post_id ) {
 			$post = get_post( $post_id );
-			if ( ! $post ) {
-				return home_url( '/' );
+			if ( $post ) {
+				$slug = $post->post_name;
+				return kayan_i18n_build_url( $country, $lang, $slug );
 			}
-			if ( 'en' === $lang ) {
-				return home_url( '/en/' . $post->post_name . '/' );
-			}
-			return get_permalink( $post );
 		}
+
 		if ( is_front_page() || is_home() ) {
-			return 'en' === $lang ? home_url( '/en/' ) : home_url( '/' );
+			return kayan_i18n_build_url( $country, $lang, '/' );
 		}
+
 		if ( function_exists( 'kayan_seo_get_current_url' ) ) {
-			$url = kayan_seo_get_current_url();
-			if ( 'en' === $lang ) {
-				$path = wp_parse_url( $url, PHP_URL_PATH );
-				$path = is_string( $path ) ? trim( $path, '/' ) : '';
-				return home_url( '/en/' . ( $path ? $path . '/' : '' ) );
+			$url  = kayan_seo_get_current_url();
+			$path = wp_parse_url( $url, PHP_URL_PATH );
+			$path = is_string( $path ) ? $path : '/';
+			$base = kayan_i18n_get_country_path( $country );
+			if ( $base !== '' && strpos( $path, $base ) === 0 ) {
+				$path = substr( $path, strlen( $base ) );
 			}
-			return $url;
+			if ( 'en' === $lang ) {
+				$path = preg_replace( '#^/en/?#', '/en/', $path );
+				if ( strpos( $path, '/en' ) !== 0 ) {
+					$path = '/en' . ( $path === '/' ? '' : $path );
+				}
+			} else {
+				$path = preg_replace( '#^/en/?#', '/', $path );
+			}
+			return user_trailingslashit( home_url( trim( $base . $path, '/' ) ) );
 		}
-		return home_url( '/' );
+
+		return kayan_i18n_build_url( $country, $lang, '/' );
 	}
 }
 
@@ -109,9 +303,6 @@ if ( ! function_exists( 'kayan_i18n_filter_language_attributes' ) ) {
 		if ( ! kayan_i18n_is_enabled() ) {
 			return $output;
 		}
-		if ( kayan_i18n_is_english() ) {
-			return 'lang="en" dir="ltr"';
-		}
-		return 'lang="ar" dir="rtl"';
+		return kayan_i18n_get_html_attrs();
 	}
 }

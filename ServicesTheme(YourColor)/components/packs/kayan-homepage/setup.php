@@ -1,5 +1,6 @@
 <?
 require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/section-builders.php';
 
 if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 	function kayan_homepage_v3_active_request() {
@@ -20,7 +21,7 @@ if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '2027.3.9';
+	return '1.0.6';
 }
 
 function kayan_homepage_v3_resource_hints() {
@@ -57,7 +58,7 @@ function kayan_homepage_v3_enqueue_assets() {
 		'6.5.1'
 	);
 
-	wp_enqueue_style( 'kayan-home', $base . 'kayan-home.css', array( 'kayan-home-fonts', 'kayan-home-fa' ), $ver );
+	wp_enqueue_style( 'kayan-home', $base . 'kayan-home.css', array( 'kayan-home-fonts', 'kayan-home-fa', 'kayan-locale' ), $ver );
 	wp_enqueue_script( 'kayan-home', $base . 'kayan-home.js', array(), $ver, true );
 
 	$inline = '
