@@ -272,7 +272,7 @@ if ( ! function_exists( 'kayan_homepage_build_blog_posts_html' ) ) {
 		);
 
 		if ( empty( $posts ) ) {
-			return kayan_homepage_get_blog_fallback_html();
+			return '';
 		}
 
 		$gradients = array(
@@ -348,7 +348,41 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 
 		$switcher_html = function_exists( 'kayan_i18n_get_switcher_html' ) ? kayan_i18n_get_switcher_html( array( 'instance_suffix' => 'Home' ) ) : '';
 
+		$header_logo_html = function_exists( 'kayan_homepage_build_logo_html' ) ? kayan_homepage_build_logo_html( 'header', 'logo' ) : '';
+		$header_nav_html  = function_exists( 'kayan_homepage_build_nav_links_html' ) ? kayan_homepage_build_nav_links_html() : '';
+		$footer_html      = function_exists( 'kayan_homepage_build_footer_html' ) ? kayan_homepage_build_footer_html() : '';
+		$services_grid    = function_exists( 'kayan_homepage_build_services_grid_html' ) ? kayan_homepage_build_services_grid_html() : '';
+		$cities_grid      = function_exists( 'kayan_homepage_build_cities_grid_html' ) ? kayan_homepage_build_cities_grid_html() : '';
+		$services_head    = function_exists( 'kayan_homepage_build_section_head_html' )
+			? kayan_homepage_build_section_head_html( 'services', 'خدماتنا', 'خدماتنا المنزلية <span>المتكاملة</span>', 'حلول احترافية شاملة تغطي كل احتياجات منزلك أو منشأتك بأعلى معايير الجودة والضمان.', 'Our services', 'Integrated <span>home services</span>', 'Professional solutions for your home or business.' )
+			: '';
+
+		$area_cards       = function_exists( 'kayan_homepage_build_area_cards_html' ) ? kayan_homepage_build_area_cards_html() : '';
+		$areas_head       = function_exists( 'kayan_homepage_build_section_head_html' )
+			? kayan_homepage_build_section_head_html( 'areas', 'مناطق الخدمة', 'خدماتنا في جميع <span>{{all_regions}}</span>', $areas_intro_default_ar, 'Service areas', 'We serve <span>{{all_regions}}</span>', $areas_intro_default_en )
+			: '';
+		$projects_head    = function_exists( 'kayan_homepage_build_section_head_html' )
+			? kayan_homepage_build_section_head_html( 'projects', 'أعمالنا', 'مشاريعنا <span>المنجزة</span>', 'نماذج من مشاريعنا المنشورة في الموقع.', 'Our work', 'Completed <span>projects</span>', 'Published portfolio from your site.' )
+			: '';
+		$blog_head        = function_exists( 'kayan_homepage_build_section_head_html' )
+			? kayan_homepage_build_section_head_html( 'blog', 'المدونة', 'مقالات ونصائح <span>مفيدة</span>', 'أحدث المقالات المنشورة في موقعك.', 'Blog', 'Helpful <span>articles</span>', 'Latest posts from your site.' )
+			: '';
+		$projects_grid    = function_exists( 'kayan_homepage_build_projects_grid_html' ) ? kayan_homepage_build_projects_grid_html() : '';
+		$mobile_nav       = function_exists( 'kayan_homepage_build_mobile_nav_html' ) ? kayan_homepage_build_mobile_nav_html() : '';
+
 		$tokens = array(
+			'header_logo_html'     => $header_logo_html,
+			'header_nav_html'      => $header_nav_html,
+			'header_mobile_nav_html' => $mobile_nav,
+			'footer_html'          => $footer_html,
+			'services_grid_html'   => $services_grid,
+			'cities_grid_html'     => $cities_grid,
+			'services_head_html'   => $services_head,
+			'areas_head_html'      => $areas_head,
+			'area_cards_html'      => $area_cards,
+			'projects_head_html'   => $projects_head,
+			'projects_grid_html'   => $projects_grid,
+			'blog_head_html'       => $blog_head,
 			'brand_first'          => esc_html( $brand_first ),
 			'brand_second'         => esc_html( $brand_second ),
 			'company_name'         => esc_html( $company_name ),
@@ -408,6 +442,9 @@ if ( ! function_exists( 'kayan_homepage_v3_filter_html' ) ) {
 		$tokens = kayan_homepage_get_tokens();
 		foreach ( $tokens as $key => $value ) {
 			$html = str_replace( '{{' . $key . '}}', $value, $html );
+		}
+		if ( function_exists( 'kayan_hp_apply_section_visibility' ) ) {
+			$html = kayan_hp_apply_section_visibility( $html );
 		}
 		return $html;
 	}

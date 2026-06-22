@@ -5,15 +5,12 @@
 </div>
 
 <!-- ═══════════════ Header ═══════════════ -->
+<!-- kayan-section:header -->
 <header id="hdr">
   <div class="wrap nav">
-    <a href="#home" class="logo"><span class="mark"><i class="fas fa-shield-halved"></i></span>{{brand_first}} <b>{{brand_second}}</b></a>
+    {{header_logo_html}}
     <nav class="menu">
-      <a href="#services">{{ui_nav_services}}</a>
-      <a href="#areas">{{ui_nav_cities}}</a>
-      <a href="#projects">{{ui_nav_projects}}</a>
-      <a href="#blog">{{ui_nav_blog}}</a>
-      <a href="#why">{{ui_nav_about}}</a>
+      {{header_nav_html}}
     </nav>
     <div class="nav-cta">
       {{locale_switcher_html}}
@@ -22,21 +19,16 @@
     </div>
   </div>
 </header>
+<!-- /kayan-section -->
 
 <!-- Mobile menu -->
 <div class="mob" id="mob">
   <button class="mob-close" onclick="toggleMob(false)" aria-label="إغلاق"><i class="fas fa-xmark"></i></button>
-  <a href="#services" onclick="toggleMob(false)">{{ui_nav_services}}</a>
-  <a href="#areas" onclick="toggleMob(false)">{{ui_nav_cities}}</a>
-  <a href="#projects" onclick="toggleMob(false)">{{ui_nav_projects}}</a>
-  <a href="#blog" onclick="toggleMob(false)">{{ui_nav_blog}}</a>
-  <a href="#why" onclick="toggleMob(false)">{{ui_nav_about}}</a>
-  <a href="#faq" onclick="toggleMob(false)">{{ui_nav_faq}}</a>
-  <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> {{ui_btn_whatsapp_full}}</a>
-  <a href="{{tel_url}}" class="btn btn-call"><i class="fas fa-phone"></i> {{ui_btn_call}}</a>
+  {{header_mobile_nav_html}}
 </div>
 
 <!-- ═══════════════ Hero ═══════════════ -->
+<!-- kayan-section:hero -->
 <section class="hero" id="home">
   <div class="hero-grid-bg"></div>
   <div id="particles"></div>
@@ -89,8 +81,10 @@
     </div>
   </div>
 </section>
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Trust bar ═══════════════ -->
+<!-- kayan-section:trust -->
 <div class="wrap trustbar">
   <div class="inner rv">
     <div class="tb"><i class="fas fa-shield-halved"></i> ضمان مكتوب حتى 10 سنوات</div>
@@ -101,6 +95,7 @@
     <div class="tb"><i class="fas fa-bolt"></i> استجابة خلال ساعة واحدة</div>
   </div>
 </div>
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Advanced Trust Bar (animated counters) ═══════════════ -->
 <div class="wrap atb-wrap">
@@ -172,91 +167,19 @@
 </section>
 
 <!-- ═══════════════ Services ═══════════════ -->
+<!-- kayan-section:services -->
 <section class="sec" id="services">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">خدماتنا</span>
-      <h2>خدماتنا المنزلية <span>المتكاملة</span></h2>
-      <p>حلول احترافية شاملة تغطي كل احتياجات منزلك أو منشأتك بأعلى معايير الجودة والضمان.</p>
-    </div>
+    {{services_head_html}}
     <div class="services-grid">
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-droplet"></i></div>
-        <h3>كشف تسربات المياه</h3>
-        <p class="desc">تحديد دقيق لمصدر التسرب بدون أي تكسير.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> كاميرا حرارية متطورة</li>
-          <li><i class="fas fa-check"></i> بدون تكسير 100%</li>
-          <li><i class="fas fa-check"></i> تقرير مصور مفصّل</li>
-          <li><i class="fas fa-check"></i> إصلاح فوري</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-layer-group"></i></div>
-        <h3>عزل الأسطح</h3>
-        <p class="desc">حماية كاملة من الحرارة وتسرب المياه.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> عزل فوم بولي يوريثان</li>
-          <li><i class="fas fa-check"></i> أغشية بيتومينية معدّلة</li>
-          <li><i class="fas fa-check"></i> طلاء عازل للحرارة</li>
-          <li><i class="fas fa-check"></i> ضمان حتى 10 سنوات</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-snowflake"></i></div>
-        <h3>صيانة التكييف</h3>
-        <p class="desc">أداء أفضل وهواء أنقى طوال الصيف.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> تنظيف شامل للفلاتر والكويل</li>
-          <li><i class="fas fa-check"></i> إصلاح جميع الأعطال</li>
-          <li><i class="fas fa-check"></i> شحن الفريون</li>
-          <li><i class="fas fa-check"></i> ضمان على قطع الغيار</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-spray-can-sparkles"></i></div>
-        <h3>التنظيف والتعقيم</h3>
-        <p class="desc">نظافة عميقة وتعقيم آمن لكل المساحات.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> تنظيف عميق شامل</li>
-          <li><i class="fas fa-check"></i> تعقيم بالبخار</li>
-          <li><i class="fas fa-check"></i> إزالة البقع العنيدة</li>
-          <li><i class="fas fa-check"></i> مواد صديقة للبيئة</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-wrench"></i></div>
-        <h3>أعمال السباكة</h3>
-        <p class="desc">إصلاح وتركيب احترافي يدوم طويلاً.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> إصلاح تسربات الأنابيب</li>
-          <li><i class="fas fa-check"></i> تركيب وتوصيل الصنابير</li>
-          <li><i class="fas fa-check"></i> تسليك المجاري</li>
-          <li><i class="fas fa-check"></i> فحص شبكات المياه</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
-      <div class="svc rv">
-        <div class="svc-ic"><i class="fas fa-bug-slash"></i></div>
-        <h3>مكافحة الحشرات</h3>
-        <p class="desc">إبادة آمنة وفعالة مع ضمان عدم العودة.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> مواد آمنة ومرخصة</li>
-          <li><i class="fas fa-check"></i> إبادة فورية وكاملة</li>
-          <li><i class="fas fa-check"></i> ضمان عدم العودة</li>
-          <li><i class="fas fa-check"></i> لا رائحة — آمن للأطفال</li>
-        </ul>
-        <a href="#contact" class="svc-cta">طلب الخدمة <i class="fas fa-arrow-left"></i></a>
-      </div>
+      {{services_grid_html}}
     </div>
   </div>
 </section>
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Why choose us ═══════════════ -->
+<!-- kayan-section:why -->
 <section class="sec" id="why" style="background:var(--white)">
   <div class="wrap">
     <div class="shead rv">
@@ -290,8 +213,10 @@
     </div>
   </div>
 </section>
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Expert Team ═══════════════ -->
+<!-- kayan-section:team -->
 <section class="sec" id="team" style="background:var(--bg)">
   <div class="wrap">
     <div class="shead rv">
@@ -338,8 +263,10 @@
     </div>
   </div>
 </section>
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Stats ═══════════════ -->
+<!-- kayan-section:stats -->
 <section class="sec stats">
   <div class="wrap">
     <div class="shead rv">
@@ -357,8 +284,10 @@
     </div>
   </div>
 </section>
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Service Comparison ═══════════════ -->
+<!-- kayan-section:compare -->
 <section class="sec" id="compare" style="background:var(--white)">
   <div class="wrap">
     <div class="shead rv">
@@ -385,47 +314,32 @@
     </div>
   </div>
 </section>
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Service areas ═══════════════ -->
+<!-- kayan-section:areas -->
 <section class="sec" id="areas">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">مناطق الخدمة</span>
-      <h2>خدماتنا في جميع <span>إمارات الدولة</span></h2>
-      <p>{{areas_intro}}</p>
-    </div>
+    {{areas_head_html}}
     <div class="areas">
       <div class="area-map rv-l">
-        <div><h3>تغطية كاملة لـ 7 إمارات</h3><p>استجابة سريعة وفريق محلي في كل إمارة.</p></div>
+        <div><h3>{{all_regions}}</h3><p>{{areas_intro}}</p></div>
         <div class="mp">
           <svg class="uae-svg" viewBox="0 0 300 220" aria-hidden="true">
             <path d="M40,70 L90,40 L150,30 L210,45 L260,55 L270,90 L250,130 L235,175 L180,195 L120,185 L70,160 L45,120 Z"/>
           </svg>
-          <span class="pin" style="top:55%;left:42%"></span>
-          <span class="pin" style="top:70%;left:28%"></span>
-          <span class="pin" style="top:40%;left:60%"></span>
-          <span class="pin" style="top:35%;left:48%"></span>
-        </div>
-        <div class="dash-trust" style="margin-top:8px">
-          <span class="dt"><i class="fas fa-location-dot" style="color:var(--aqua)"></i> 7 إمارات</span>
-          <span class="dt"><i class="fas fa-bolt" style="color:var(--aqua)"></i> استجابة خلال ساعة</span>
         </div>
       </div>
       <div class="area-cards">
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>دبي</b><small>6 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span><span>سباكة</span><span>مكافحة حشرات</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>أبوظبي</b><small>6 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span><span>سباكة</span><span>مكافحة حشرات</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>الشارقة</b><small>6 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span><span>سباكة</span><span>مكافحة حشرات</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>عجمان</b><small>5 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span><span>سباكة</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>رأس الخيمة</b><small>5 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span><span>مكافحة حشرات</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>الفجيرة</b><small>4 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span></div></div>
-        <div class="acard rv" onclick="this.classList.toggle('open')"><div class="ah"><i class="fas fa-city"></i><div><b>أم القيوين</b><small>4 خدمات متوفرة</small></div></div><div class="svcs"><span>كشف تسربات</span><span>عزل</span><span>تكييف</span><span>تنظيف</span></div></div>
-        <div class="acard rv" style="display:grid;place-items:center;text-align:center;background:var(--grad);color:#fff;border:none" onclick="location.href='#contact'"><div><i class="fas fa-headset" style="font-size:26px;margin-bottom:8px"></i><b style="color:#fff">لم تجد مدينتك؟</b><small style="color:rgba(255,255,255,.8)">تواصل معنا الآن</small></div></div>
+        {{area_cards_html}}
       </div>
     </div>
   </div>
 </section>
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Before / After ═══════════════ -->
+<!-- kayan-section:ba -->
 <section class="sec" id="results" style="background:var(--white)">
   <div class="wrap">
     <div class="shead rv">
@@ -463,6 +377,7 @@
     </div>
   </div>
 </section>
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Case Studies / Success Stories ═══════════════ -->
 <section class="sec" id="cases">
@@ -511,30 +426,16 @@
 </section>
 
 <!-- ═══════════════ Projects ═══════════════ -->
+<!-- kayan-section:projects -->
 <section class="sec" id="projects">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">أعمالنا</span>
-      <h2>مشاريعنا <span>المنجزة</span></h2>
-      <p>نماذج من مئات المشاريع التي نفذناها بنجاح في جميع الإمارات.</p>
-    </div>
-    <div class="filters rv">
-      <button class="active" data-f="all">الكل</button>
-      <button data-f="insul">عزل</button>
-      <button data-f="leak">كشف تسربات</button>
-      <button data-f="ac">صيانة</button>
-      <button data-f="clean">تنظيف</button>
-    </div>
+    {{projects_head_html}}
     <div class="proj-grid">
-      <div class="proj rv" data-cat="insul"><div class="proj-img" style="background:linear-gradient(135deg,var(--turq),var(--blue))"><i class="fas fa-layer-group"></i><span class="cat">عزل</span></div><div class="proj-body"><h3>عزل سطح فيلا</h3><div class="proj-meta"><span><i class="fas fa-location-dot"></i> دبي مارينا</span><span><i class="fas fa-clock"></i> 3 أيام</span></div><div class="proj-res"><i class="fas fa-circle-check"></i> خفض حرارة السطح بنسبة 40%</div></div></div>
-      <div class="proj rv" data-cat="leak"><div class="proj-img" style="background:linear-gradient(135deg,var(--blue),var(--navy2))"><i class="fas fa-droplet"></i><span class="cat">كشف تسربات</span></div><div class="proj-body"><h3>كشف تسربات</h3><div class="proj-meta"><span><i class="fas fa-location-dot"></i> البرشاء</span><span><i class="fas fa-clock"></i> يوم واحد</span></div><div class="proj-res"><i class="fas fa-circle-check"></i> إصلاح بدون تكسير الجدران</div></div></div>
-      <div class="proj rv" data-cat="ac"><div class="proj-img" style="background:linear-gradient(135deg,var(--aqua),var(--turq))"><i class="fas fa-snowflake"></i><span class="cat">صيانة</span></div><div class="proj-body"><h3>صيانة تكييف شامل</h3><div class="proj-meta"><span><i class="fas fa-location-dot"></i> الشارقة</span><span><i class="fas fa-clock"></i> يومان</span></div><div class="proj-res"><i class="fas fa-circle-check"></i> تحسين كفاءة التبريد</div></div></div>
-      <div class="proj rv" data-cat="clean"><div class="proj-img" style="background:linear-gradient(135deg,var(--success),var(--turq))"><i class="fas fa-spray-can-sparkles"></i><span class="cat">تنظيف</span></div><div class="proj-body"><h3>تنظيف وتعقيم فيلا</h3><div class="proj-meta"><span><i class="fas fa-location-dot"></i> أبوظبي</span><span><i class="fas fa-clock"></i> يوم واحد</span></div><div class="proj-res"><i class="fas fa-circle-check"></i> تعقيم كامل بالبخار</div></div></div>
-      <div class="proj rv" data-cat="insul"><div class="proj-img" style="background:linear-gradient(135deg,var(--gold),#ffce6b)"><i class="fas fa-water"></i><span class="cat">عزل</span></div><div class="proj-body"><h3>عزل خزانات</h3><div class="proj-meta"><span><i class="fas fa-location-dot"></i> عجمان</span><span><i class="fas fa-clock"></i> يومان</span></div><div class="proj-res"><i class="fas fa-circle-check"></i> مياه نظيفة وآمنة</div></div></div>
-      <div class="proj rv" data-cat="clean"><div class="proj-img" style="background:linear-gradient(135deg,var(--navy2),var(--blue))"><i class="fas fa-bug-slash"></i><span class="cat">تنظيف</span></div><div class="proj-body"><h3>مكافحة حشرات</h3><div class="proj-meta"><span><i class="fas fa-location-dot"></i> رأس الخيمة</span><span><i class="fas fa-clock"></i> يوم واحد</span></div><div class="proj-res"><i class="fas fa-circle-check"></i> ضمان عدم العودة</div></div></div>
+      {{projects_grid_html}}
     </div>
   </div>
 </section>
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Certifications & Licenses ═══════════════ -->
 <section class="sec" id="certs" style="background:var(--white)">
@@ -575,6 +476,7 @@
 </section>
 
 <!-- ═══════════════ Reviews ═══════════════ -->
+<!-- kayan-section:reviews -->
 <section class="sec reviews">
   <div class="wrap">
     <div class="shead rv">
@@ -598,6 +500,7 @@
     </div>
   </div>
 </section>
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Brands ═══════════════ -->
 <section class="sec brands">
@@ -688,21 +591,18 @@
   </div>
 </section>
 
-<!-- ═══════════════ Blog ═══════════════ -->
+<!-- kayan-section:blog -->
 <section class="sec" id="blog" style="background:var(--white)">
   <div class="wrap">
-    <div class="shead rv">
-      <span class="tag">المدونة</span>
-      <h2>مقالات ونصائح <span>مفيدة</span></h2>
-      <p>محتوى متخصص يساعدك على العناية بمنزلك واتخاذ القرار الصحيح.</p>
-    </div>
+    {{blog_head_html}}
     <div class="blog-grid">
       {{blog_posts_html}}
     </div>
   </div>
 </section>
+<!-- /kayan-section -->
 
-<!-- ═══════════════ FAQ ═══════════════ -->
+<!-- kayan-section:faq -->
 <section class="sec" id="faq">
   <div class="wrap">
     <div class="shead rv">
@@ -726,8 +626,9 @@
     </div>
   </div>
 </section>
+<!-- /kayan-section:faq -->
 
-<!-- ═══════════════ Final CTA ═══════════════ -->
+<!-- kayan-section:cta -->
 <section class="sec fcta" id="contact">
   <div class="wrap">
     <h2 class="rv">جاهزون لخدمتك في أي وقت — 24/7</h2>
@@ -744,61 +645,12 @@
     </div>
   </div>
 </section>
+<!-- /kayan-section:cta -->
 
 <!-- ═══════════════ Footer ═══════════════ -->
-<footer>
-  <div class="wrap">
-    <div class="fgrid">
-      <div class="fcol">
-        <div class="flogo"><span class="mark"><i class="fas fa-shield-halved"></i></span>{{brand_first}} <b>{{brand_second}}</b></div>
-        <p>{{footer_tagline}}</p>
-        <div class="fcontact">
-          <a href="{{tel_url}}"><i class="fas fa-phone"></i> {{phone_display}}</a>
-          <a href="{{whatsapp_url}}"><i class="fab fa-whatsapp"></i> {{ui_btn_whatsapp_full}}</a>
-          <a href="#"><i class="fas fa-location-dot"></i> {{address}}</a>
-        </div>
-        <div class="fsocial">
-          {{social_links_html}}
-        </div>
-      </div>
-      <div class="fcol">
-        <h4>الخدمات</h4>
-        <ul>
-          <li><a href="#services"><i class="fas fa-chevron-left"></i> كشف تسربات المياه</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-left"></i> عزل الأسطح</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-left"></i> صيانة التكييف</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-left"></i> التنظيف والتعقيم</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-left"></i> أعمال السباكة</a></li>
-          <li><a href="#services"><i class="fas fa-chevron-left"></i> مكافحة الحشرات</a></li>
-        </ul>
-      </div>
-      <div class="fcol">
-        <h4>المدن</h4>
-        <ul>
-          <li><a href="#areas"><i class="fas fa-chevron-left"></i> دبي</a></li>
-          <li><a href="#areas"><i class="fas fa-chevron-left"></i> أبوظبي</a></li>
-          <li><a href="#areas"><i class="fas fa-chevron-left"></i> الشارقة</a></li>
-          <li><a href="#areas"><i class="fas fa-chevron-left"></i> عجمان</a></li>
-          <li><a href="#areas"><i class="fas fa-chevron-left"></i> رأس الخيمة</a></li>
-          <li><a href="#areas"><i class="fas fa-chevron-left"></i> الفجيرة</a></li>
-          <li><a href="#areas"><i class="fas fa-chevron-left"></i> أم القيوين</a></li>
-        </ul>
-      </div>
-      <div class="fcol">
-        <h4>روابط سريعة</h4>
-        <ul>
-          <li><a href="#home"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
-          <li><a href="#why"><i class="fas fa-chevron-left"></i> من نحن</a></li>
-          <li><a href="#blog"><i class="fas fa-chevron-left"></i> المدونة</a></li>
-          <li><a href="#contact"><i class="fas fa-chevron-left"></i> اتصل بنا</a></li>
-          <li><a href="#faq"><i class="fas fa-chevron-left"></i> الأسئلة الشائعة</a></li>
-        </ul>
-        <a href="#contact" class="btn btn-quote" style="margin-top:6px"><i class="fas fa-headset"></i> تحدث مع خبير</a>
-      </div>
-    </div>
-    <div class="fbottom">{{copyright}}</div>
-  </div>
-</footer>
+<!-- kayan-section:footer -->
+{{footer_html}}
+<!-- /kayan-section -->
 
 <!-- ═══════════════ Mobile sticky bar + FAB ═══════════════ -->
 <nav class="mbar">

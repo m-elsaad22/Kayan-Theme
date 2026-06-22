@@ -1,5 +1,6 @@
 <?
 require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/section-builders.php';
 
 if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 	function kayan_homepage_v3_active_request() {
@@ -20,7 +21,7 @@ if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '1.0.5';
+	return '1.0.6';
 }
 
 function kayan_homepage_v3_resource_hints() {
