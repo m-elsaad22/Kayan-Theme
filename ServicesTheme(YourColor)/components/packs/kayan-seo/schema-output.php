@@ -531,6 +531,5 @@ if ( ! function_exists( 'kayan_seo_output_schema_graph' ) ) {
 		if ( ! empty( $graph ) ) {
 			kayan_seo_print_json_ld( $graph );
 		}
-		kayan_seo_output_breadcrumb_schema();
 	}
 }

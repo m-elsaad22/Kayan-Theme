@@ -10,21 +10,29 @@ if ( ! function_exists( 'kayan_perf_is_enabled' ) ) {
 
 if ( ! function_exists( 'kayan_perf_get_lcp_image_url' ) ) {
 	function kayan_perf_get_lcp_image_url() {
-		if ( is_singular() && has_post_thumbnail() ) {
-			$url = get_the_post_thumbnail_url( get_queried_object_id(), 'full' );
-			if ( $url ) {
-				return esc_url( $url );
+		if ( ( is_singular() || is_page() ) && has_post_thumbnail() ) {
+			$thumb_id = get_post_thumbnail_id( get_queried_object_id() );
+			if ( $thumb_id ) {
+				$url = wp_get_attachment_image_url( $thumb_id, 'full' );
+				if ( $url ) {
+					return esc_url( $url );
+				}
 			}
 		}
 
+		if ( ( is_front_page() || is_home() ) && function_exists( 'kayan_homepage_v3_active_request' ) && kayan_homepage_v3_active_request() ) {
+			return '';
+		}
+
 		if ( is_front_page() || is_home() ) {
-			if ( function_exists( 'kayan_seo_get_business_settings' ) ) {
-				$business = kayan_seo_get_business_settings();
-				if ( ! empty( $business['image'] ) ) {
-					return esc_url( $business['image'] );
-				}
-				if ( ! empty( $business['logo'] ) ) {
-					return esc_url( $business['logo'] );
+			$logo_data = yc_get_option( 'logo__data' );
+			if ( is_array( $logo_data ) && isset( $logo_data['logo__mode'] ) && 'Image' === $logo_data['logo__mode'] ) {
+				$logo_id = $logo_data['Image']['image_logo_id'] ?? 0;
+				if ( $logo_id ) {
+					$url = wp_get_attachment_image_url( (int) $logo_id, 'full' );
+					if ( $url ) {
+						return esc_url( $url );
+					}
 				}
 			}
 		}
@@ -37,18 +45,6 @@ if ( ! function_exists( 'kayan_perf_get_lcp_image_url' ) ) {
 					return $url;
 				}
 			}
-		}
-
-		if ( function_exists( 'kayan_seo_get_og_image' ) ) {
-			$url = kayan_seo_get_og_image();
-			if ( $url ) {
-				return $url;
-			}
-		}
-
-		$logo_data = yc_get_option( 'logo__data' );
-		if ( is_array( $logo_data ) && isset( $logo_data['Image']['image_logo'] ) && ! empty( $logo_data['Image']['image_logo'] ) ) {
-			return esc_url( $logo_data['Image']['image_logo'] );
 		}
 
 		return '';
