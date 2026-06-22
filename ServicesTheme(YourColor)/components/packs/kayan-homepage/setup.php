@@ -20,7 +20,7 @@ if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '2027.3.9';
+	return '1.0.4';
 }
 
 function kayan_homepage_v3_resource_hints() {

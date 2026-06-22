@@ -1,13 +1,13 @@
 <!-- ═══════════════ Loader ═══════════════ -->
 <div id="loader">
-  <div class="ld-logo">ركن <span>التطور</span></div>
+  <div class="ld-logo">{{brand_first}} <span>{{brand_second}}</span></div>
   <div class="ld-bar"><i></i></div>
 </div>
 
 <!-- ═══════════════ Header ═══════════════ -->
 <header id="hdr">
   <div class="wrap nav">
-    <a href="#home" class="logo"><span class="mark"><i class="fas fa-shield-halved"></i></span>ركن <b>التطور</b></a>
+    <a href="#home" class="logo"><span class="mark"><i class="fas fa-shield-halved"></i></span>{{brand_first}} <b>{{brand_second}}</b></a>
     <nav class="menu">
       <a href="#services">الخدمات</a>
       <a href="#areas">المدن</a>
@@ -16,7 +16,7 @@
       <a href="#why">من نحن</a>
     </nav>
     <div class="nav-cta">
-      <a href="https://wa.me/971586634710" class="btn btn-wa"><i class="fab fa-whatsapp"></i> واتساب</a>
+      <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> واتساب</a>
       <button class="ham" onclick="toggleMob(true)" aria-label="القائمة"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -31,8 +31,8 @@
   <a href="#blog" onclick="toggleMob(false)">المدونة</a>
   <a href="#why" onclick="toggleMob(false)">من نحن</a>
   <a href="#faq" onclick="toggleMob(false)">الأسئلة الشائعة</a>
-  <a href="https://wa.me/971586634710" class="btn btn-wa"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
-  <a href="tel:+971586634710" class="btn btn-call"><i class="fas fa-phone"></i> اتصل الآن</a>
+  <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
+  <a href="{{tel_url}}" class="btn btn-call"><i class="fas fa-phone"></i> اتصل الآن</a>
 </div>
 
 <!-- ═══════════════ Hero ═══════════════ -->
@@ -41,11 +41,11 @@
   <div id="particles"></div>
   <div class="wrap">
     <div class="hero-copy">
-      <h1>ركن التطور — منصة <em>الخدمات المنزلية المتكاملة</em> الأولى في الإمارات</h1>
-      <p class="sub">من عزل الأسطح وكشف التسربات إلى صيانة التكييف والتنظيف الاحترافي — فريق معتمد، أجهزة حديثة، وضمان مكتوب يصل إلى 10 سنوات.</p>
+      <h1>{{hero_title_html}}</h1>
+      <p class="sub">{{hero_subtitle}}</p>
       <div class="hero-ctas">
-        <a href="https://wa.me/971586634710" class="btn btn-wa"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
-        <a href="tel:+971586634710" class="btn btn-call"><i class="fas fa-phone"></i> اتصل الآن</a>
+        <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
+        <a href="{{tel_url}}" class="btn btn-call"><i class="fas fa-phone"></i> اتصل الآن</a>
         <a href="#contact" class="btn btn-quote"><i class="fas fa-file-invoice-dollar"></i> طلب عرض سعر</a>
       </div>
       <div class="hero-proof">
@@ -61,7 +61,7 @@
     <!-- Interactive dashboard -->
     <div class="dash rv-l">
       <div class="dash-top">
-        <span class="ttl"><i class="fas fa-chart-line" style="color:var(--aqua)"></i> لوحة خدمات ركن التطور</span>
+        <span class="ttl"><i class="fas fa-chart-line" style="color:var(--aqua)"></i> {{dashboard_title}}</span>
         <span class="live"><b></b> مباشر</span>
       </div>
       <div class="dash-mini">
@@ -165,7 +165,7 @@
       <div class="fr-stat"><i class="fas fa-headset"></i><b class="fr-ok">مفعّل 24/7</b><small>دعم الطوارئ</small></div>
     </div>
     <div style="text-align:center;margin-top:18px" class="rv">
-      <a href="https://wa.me/971586634710" class="btn btn-wa"><i class="fab fa-whatsapp"></i> أكمل الطلب عبر واتساب</a>
+      <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> أكمل الطلب عبر واتساب</a>
     </div>
   </div>
 </section>
@@ -260,7 +260,7 @@
   <div class="wrap">
     <div class="shead rv">
       <span class="tag">لماذا نحن</span>
-      <h2>لماذا يختار الآلاف <span>ركن التطور؟</span></h2>
+      <h2>{{why_heading_html}}</h2>
       <p>نجمع بين التقنية المتطورة والخبرة العميقة والضمان الحقيقي لنمنحك راحة بال كاملة.</p>
     </div>
     <div class="why">
@@ -362,13 +362,13 @@
   <div class="wrap">
     <div class="shead rv">
       <span class="tag">مقارنة</span>
-      <h2>لماذا يختار العملاء <span>ركن التطور؟</span></h2>
+      <h2>{{compare_heading_html}}</h2>
       <p>مقارنة واضحة بين خدماتنا والخدمات التقليدية.</p>
     </div>
     <div class="cmp rv">
       <div class="cmp-row cmp-head">
         <div class="ch">المعيار</div>
-        <div class="ch rk">ركن التطور</div>
+        <div class="ch rk">{{company_name}}</div>
         <div class="ch">شركات أخرى</div>
       </div>
       <div class="cmp-row"><div class="cc lbl">ضمان مكتوب</div><div class="cc val rk"><i class="fas fa-circle-check"></i></div><div class="cc val ot"><i class="fas fa-circle-xmark"></i></div></div>
@@ -391,7 +391,7 @@
     <div class="shead rv">
       <span class="tag">مناطق الخدمة</span>
       <h2>خدماتنا في جميع <span>إمارات الدولة</span></h2>
-      <p>أينما كنت في الإمارات، فريق ركن التطور قريب منك وجاهز للخدمة.</p>
+      <p>{{areas_intro}}</p>
     </div>
     <div class="areas">
       <div class="area-map rv-l">
@@ -696,33 +696,7 @@
       <p>محتوى متخصص يساعدك على العناية بمنزلك واتخاذ القرار الصحيح.</p>
     </div>
     <div class="blog-grid">
-      <article class="post rv">
-        <div class="post-img" style="background:linear-gradient(135deg,var(--blue),var(--navy2))"><i class="fas fa-droplet"></i></div>
-        <div class="post-body">
-          <span class="post-cat">كشف تسربات</span><span class="post-date">15 يونيو 2026</span>
-          <h3>دليلك الشامل لكشف تسربات المياه في الإمارات</h3>
-          <p>تعرّف على أحدث تقنيات الكشف بدون تكسير وكيفية اكتشاف التسرب مبكراً.</p>
-          <a class="read" href="#blog">اقرأ المقال <i class="fas fa-arrow-left"></i></a>
-        </div>
-      </article>
-      <article class="post rv">
-        <div class="post-img" style="background:linear-gradient(135deg,var(--turq),var(--aqua))"><i class="fas fa-layer-group"></i></div>
-        <div class="post-body">
-          <span class="post-cat">عزل</span><span class="post-date">10 يونيو 2026</span>
-          <h3>أفضل أنواع عزل الأسطح لمناخ الإمارات الحار</h3>
-          <p>مقارنة بين الفوم والأغشية البيتومينية لاختيار الأنسب لمنزلك.</p>
-          <a class="read" href="#blog">اقرأ المقال <i class="fas fa-arrow-left"></i></a>
-        </div>
-      </article>
-      <article class="post rv">
-        <div class="post-img" style="background:linear-gradient(135deg,var(--gold),#ffce6b);color:#3a2600"><i class="fas fa-snowflake"></i></div>
-        <div class="post-body">
-          <span class="post-cat">تكييف</span><span class="post-date">2 يونيو 2026</span>
-          <h3>كيف تحافظ على تكييفك طوال فصل الصيف</h3>
-          <p>نصائح عملية للصيانة الدورية تطيل عمر مكيفك وتوفر فاتورة الكهرباء.</p>
-          <a class="read" href="#blog">اقرأ المقال <i class="fas fa-arrow-left"></i></a>
-        </div>
-      </article>
+      {{blog_posts_html}}
     </div>
   </div>
 </section>
@@ -758,9 +732,9 @@
     <h2 class="rv">جاهزون لخدمتك في أي وقت — 24/7</h2>
     <p class="rv">تواصل معنا الآن واحصل على معاينة مجانية وعرض سعر شفاف.</p>
     <div class="fcta-btns rv">
-      <a href="https://wa.me/971586634710" class="btn btn-wa"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
-      <a href="tel:+971586634710" class="btn btn-call"><i class="fas fa-phone"></i> اتصل الآن</a>
-      <a href="https://wa.me/971586634710" class="btn btn-quote"><i class="fas fa-file-invoice-dollar"></i> طلب عرض سعر</a>
+      <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
+      <a href="{{tel_url}}" class="btn btn-call"><i class="fas fa-phone"></i> اتصل الآن</a>
+      <a href="{{whatsapp_url}}" class="btn btn-quote"><i class="fas fa-file-invoice-dollar"></i> طلب عرض سعر</a>
     </div>
     <div class="fcta-trust rv">
       <span><i class="fas fa-shield-halved"></i> ضمان 10 سنوات</span>
@@ -775,22 +749,15 @@
   <div class="wrap">
     <div class="fgrid">
       <div class="fcol">
-        <div class="flogo"><span class="mark"><i class="fas fa-shield-halved"></i></span>ركن <b>التطور</b></div>
-        <p>منصة الخدمات المنزلية المتكاملة الأولى في الإمارات — جودة احترافية وضمان مكتوب وثقة 15,000+ عميل.</p>
+        <div class="flogo"><span class="mark"><i class="fas fa-shield-halved"></i></span>{{brand_first}} <b>{{brand_second}}</b></div>
+        <p>{{footer_tagline}}</p>
         <div class="fcontact">
-          <a href="tel:+971586634710"><i class="fas fa-phone"></i> +971 58 663 4710</a>
-          <a href="https://wa.me/971586634710"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
-          <a href="#"><i class="fas fa-location-dot"></i> دبي، الإمارات العربية المتحدة</a>
+          <a href="{{tel_url}}"><i class="fas fa-phone"></i> {{phone_display}}</a>
+          <a href="{{whatsapp_url}}"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
+          <a href="#"><i class="fas fa-location-dot"></i> {{address}}</a>
         </div>
         <div class="fsocial">
-          <a href="https://www.instagram.com/elsa3d1/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.facebook.com/melsaadgroup" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-          <a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>
-          <a href="https://wa.me/971586634710" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+          {{social_links_html}}
         </div>
       </div>
       <div class="fcol">
@@ -828,14 +795,14 @@
         <a href="#contact" class="btn btn-quote" style="margin-top:6px"><i class="fas fa-headset"></i> تحدث مع خبير</a>
       </div>
     </div>
-    <div class="fbottom">© 2026 ركن التطور للخدمات المنزلية. جميع الحقوق محفوظة.</div>
+    <div class="fbottom">{{copyright}}</div>
   </div>
 </footer>
 
 <!-- ═══════════════ Mobile sticky bar + FAB ═══════════════ -->
 <nav class="mbar">
-  <a href="https://wa.me/971586634710" class="m-wa"><i class="fab fa-whatsapp"></i> واتساب</a>
-  <a href="tel:+971586634710" class="m-call"><i class="fas fa-phone"></i> اتصال</a>
+  <a href="{{whatsapp_url}}" class="m-wa"><i class="fab fa-whatsapp"></i> واتساب</a>
+  <a href="{{tel_url}}" class="m-call"><i class="fas fa-phone"></i> اتصال</a>
   <a href="#contact" class="m-quote"><i class="fas fa-file-invoice-dollar"></i> طلب خدمة</a>
 </nav>
-<a href="https://wa.me/971586634710" class="fab" id="fab" aria-label="واتساب"><i class="fab fa-whatsapp"></i></a>
+<a href="{{whatsapp_url}}" class="fab" id="fab" aria-label="واتساب"><i class="fab fa-whatsapp"></i></a>
