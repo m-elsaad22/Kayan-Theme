@@ -9,14 +9,15 @@
   <div class="wrap nav">
     <a href="#home" class="logo"><span class="mark"><i class="fas fa-shield-halved"></i></span>{{brand_first}} <b>{{brand_second}}</b></a>
     <nav class="menu">
-      <a href="#services">الخدمات</a>
-      <a href="#areas">المدن</a>
-      <a href="#projects">المشاريع</a>
-      <a href="#blog">المدونة</a>
-      <a href="#why">من نحن</a>
+      <a href="#services">{{ui_nav_services}}</a>
+      <a href="#areas">{{ui_nav_cities}}</a>
+      <a href="#projects">{{ui_nav_projects}}</a>
+      <a href="#blog">{{ui_nav_blog}}</a>
+      <a href="#why">{{ui_nav_about}}</a>
     </nav>
     <div class="nav-cta">
-      <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> واتساب</a>
+      {{locale_switcher_html}}
+      <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> {{ui_btn_whatsapp}}</a>
       <button class="ham" onclick="toggleMob(true)" aria-label="القائمة"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -25,14 +26,14 @@
 <!-- Mobile menu -->
 <div class="mob" id="mob">
   <button class="mob-close" onclick="toggleMob(false)" aria-label="إغلاق"><i class="fas fa-xmark"></i></button>
-  <a href="#services" onclick="toggleMob(false)">الخدمات</a>
-  <a href="#areas" onclick="toggleMob(false)">المدن</a>
-  <a href="#projects" onclick="toggleMob(false)">المشاريع</a>
-  <a href="#blog" onclick="toggleMob(false)">المدونة</a>
-  <a href="#why" onclick="toggleMob(false)">من نحن</a>
-  <a href="#faq" onclick="toggleMob(false)">الأسئلة الشائعة</a>
-  <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
-  <a href="{{tel_url}}" class="btn btn-call"><i class="fas fa-phone"></i> اتصل الآن</a>
+  <a href="#services" onclick="toggleMob(false)">{{ui_nav_services}}</a>
+  <a href="#areas" onclick="toggleMob(false)">{{ui_nav_cities}}</a>
+  <a href="#projects" onclick="toggleMob(false)">{{ui_nav_projects}}</a>
+  <a href="#blog" onclick="toggleMob(false)">{{ui_nav_blog}}</a>
+  <a href="#why" onclick="toggleMob(false)">{{ui_nav_about}}</a>
+  <a href="#faq" onclick="toggleMob(false)">{{ui_nav_faq}}</a>
+  <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> {{ui_btn_whatsapp_full}}</a>
+  <a href="{{tel_url}}" class="btn btn-call"><i class="fas fa-phone"></i> {{ui_btn_call}}</a>
 </div>
 
 <!-- ═══════════════ Hero ═══════════════ -->
@@ -44,9 +45,9 @@
       <h1>{{hero_title_html}}</h1>
       <p class="sub">{{hero_subtitle}}</p>
       <div class="hero-ctas">
-        <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
-        <a href="{{tel_url}}" class="btn btn-call"><i class="fas fa-phone"></i> اتصل الآن</a>
-        <a href="#contact" class="btn btn-quote"><i class="fas fa-file-invoice-dollar"></i> طلب عرض سعر</a>
+        <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> {{ui_btn_whatsapp_full}}</a>
+        <a href="{{tel_url}}" class="btn btn-call"><i class="fas fa-phone"></i> {{ui_btn_call}}</a>
+        <a href="#contact" class="btn btn-quote"><i class="fas fa-file-invoice-dollar"></i> {{ui_btn_quote}}</a>
       </div>
       <div class="hero-proof">
         <span class="chip"><i class="fas fa-star star"></i> 4.9/5 (1,247+ تقييم Google)</span>
@@ -54,7 +55,7 @@
         <span class="chip"><i class="fas fa-award"></i> 12+ سنة خبرة</span>
         <span class="chip"><i class="fas fa-shield-halved"></i> ضمان 10 سنوات مكتوب</span>
         <span class="chip"><i class="fas fa-headset"></i> طوارئ 24/7</span>
-        <span class="chip"><i class="fas fa-map-location-dot"></i> جميع الإمارات</span>
+        <span class="chip"><i class="fas fa-map-location-dot"></i> {{all_regions}}</span>
       </div>
     </div>
 
@@ -94,7 +95,7 @@
   <div class="inner rv">
     <div class="tb"><i class="fas fa-shield-halved"></i> ضمان مكتوب حتى 10 سنوات</div>
     <div class="tb"><i class="fas fa-clock"></i> خدمة طوارئ 24 ساعة</div>
-    <div class="tb"><i class="fas fa-map-location-dot"></i> تغطية جميع الإمارات</div>
+    <div class="tb"><i class="fas fa-map-location-dot"></i> {{all_regions}}</div>
     <div class="tb"><i class="fas fa-user-shield"></i> فنيون معتمدون ومرخصون</div>
     <div class="tb"><i class="fas fa-microchip"></i> أحدث الأجهزة والتقنيات</div>
     <div class="tb"><i class="fas fa-bolt"></i> استجابة خلال ساعة واحدة</div>
@@ -165,7 +166,7 @@
       <div class="fr-stat"><i class="fas fa-headset"></i><b class="fr-ok">مفعّل 24/7</b><small>دعم الطوارئ</small></div>
     </div>
     <div style="text-align:center;margin-top:18px" class="rv">
-      <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> أكمل الطلب عبر واتساب</a>
+      <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> {{ui_btn_whatsapp_full}}</a>
     </div>
   </div>
 </section>
@@ -732,9 +733,9 @@
     <h2 class="rv">جاهزون لخدمتك في أي وقت — 24/7</h2>
     <p class="rv">تواصل معنا الآن واحصل على معاينة مجانية وعرض سعر شفاف.</p>
     <div class="fcta-btns rv">
-      <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
-      <a href="{{tel_url}}" class="btn btn-call"><i class="fas fa-phone"></i> اتصل الآن</a>
-      <a href="{{whatsapp_url}}" class="btn btn-quote"><i class="fas fa-file-invoice-dollar"></i> طلب عرض سعر</a>
+      <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> {{ui_btn_whatsapp_full}}</a>
+      <a href="{{tel_url}}" class="btn btn-call"><i class="fas fa-phone"></i> {{ui_btn_call}}</a>
+      <a href="{{whatsapp_url}}" class="btn btn-quote"><i class="fas fa-file-invoice-dollar"></i> {{ui_btn_quote}}</a>
     </div>
     <div class="fcta-trust rv">
       <span><i class="fas fa-shield-halved"></i> ضمان 10 سنوات</span>
@@ -753,7 +754,7 @@
         <p>{{footer_tagline}}</p>
         <div class="fcontact">
           <a href="{{tel_url}}"><i class="fas fa-phone"></i> {{phone_display}}</a>
-          <a href="{{whatsapp_url}}"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
+          <a href="{{whatsapp_url}}"><i class="fab fa-whatsapp"></i> {{ui_btn_whatsapp_full}}</a>
           <a href="#"><i class="fas fa-location-dot"></i> {{address}}</a>
         </div>
         <div class="fsocial">
@@ -801,8 +802,8 @@
 
 <!-- ═══════════════ Mobile sticky bar + FAB ═══════════════ -->
 <nav class="mbar">
-  <a href="{{whatsapp_url}}" class="m-wa"><i class="fab fa-whatsapp"></i> واتساب</a>
-  <a href="{{tel_url}}" class="m-call"><i class="fas fa-phone"></i> اتصال</a>
-  <a href="#contact" class="m-quote"><i class="fas fa-file-invoice-dollar"></i> طلب خدمة</a>
+  <a href="{{whatsapp_url}}" class="m-wa"><i class="fab fa-whatsapp"></i> {{ui_btn_whatsapp}}</a>
+  <a href="{{tel_url}}" class="m-call"><i class="fas fa-phone"></i> {{ui_btn_call_short}}</a>
+  <a href="#contact" class="m-quote"><i class="fas fa-file-invoice-dollar"></i> {{ui_btn_service}}</a>
 </nav>
-<a href="{{whatsapp_url}}" class="fab" id="fab" aria-label="واتساب"><i class="fab fa-whatsapp"></i></a>
+<a href="{{whatsapp_url}}" class="fab" id="fab" aria-label="{{ui_btn_whatsapp}}"><i class="fab fa-whatsapp"></i></a>

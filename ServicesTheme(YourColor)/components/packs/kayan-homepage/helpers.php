@@ -121,9 +121,44 @@ if ( ! function_exists( 'kayan_homepage_get_whatsapp_url' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_homepage_expand_inline_tokens' ) ) {
+	function kayan_homepage_expand_inline_tokens( $text ) {
+		$company = kayan_homepage_get_company_name();
+		$text    = str_replace( '{{company_name}}', $company, $text );
+		$text    = str_replace( '{{year}}', gmdate( 'Y' ), $text );
+
+		if ( function_exists( 'kayan_i18n_get_lang' ) ) {
+			$lang = kayan_i18n_get_lang();
+			$text = str_replace( '{{country_name}}', kayan_i18n_country_label( null, $lang ), $text );
+			$text = str_replace( '{{in_country}}', kayan_i18n_country_in_phrase( null, $lang ), $text );
+			$text = str_replace( '{{all_regions}}', kayan_i18n_country_regions( null, $lang ), $text );
+		}
+
+		return $text;
+	}
+}
+
+if ( ! function_exists( 'kayan_homepage_is_english' ) ) {
+	function kayan_homepage_is_english() {
+		return function_exists( 'kayan_i18n_is_english' ) && kayan_i18n_is_english();
+	}
+}
+
+if ( ! function_exists( 'kayan_homepage_pick_locale_text' ) ) {
+	function kayan_homepage_pick_locale_text( $key_ar, $default_ar, $key_en, $default_en ) {
+		if ( kayan_homepage_is_english() ) {
+			return kayan_homepage_get_option_text( $key_en, $default_en );
+		}
+		return kayan_homepage_get_option_text( $key_ar, $default_ar );
+	}
+}
+
 if ( ! function_exists( 'kayan_homepage_get_address' ) ) {
 	function kayan_homepage_get_address() {
 		$address = yc_get_option( 'company__adress' );
+		if ( empty( $address ) && function_exists( 'kayan_i18n_country_address' ) ) {
+			$address = kayan_i18n_country_address();
+		}
 		if ( empty( $address ) ) {
 			$address = 'دبي، الإمارات العربية المتحدة';
 		}
@@ -146,15 +181,6 @@ if ( ! function_exists( 'kayan_homepage_get_option_html' ) ) {
 		$value = kayan_homepage_get_option_text( $key, $default );
 		$value = kayan_homepage_expand_inline_tokens( $value );
 		return wp_kses_post( $value );
-	}
-}
-
-if ( ! function_exists( 'kayan_homepage_expand_inline_tokens' ) ) {
-	function kayan_homepage_expand_inline_tokens( $text ) {
-		$company = kayan_homepage_get_company_name();
-		$text    = str_replace( '{{company_name}}', $company, $text );
-		$text    = str_replace( '{{year}}', gmdate( 'Y' ), $text );
-		return $text;
 	}
 }
 
@@ -276,7 +302,7 @@ if ( ! function_exists( 'kayan_homepage_build_blog_posts_html' ) ) {
 			$html .= '<span class="post-date">' . esc_html( get_the_date( 'j F Y', $post ) ) . '</span>';
 			$html .= '<h3>' . esc_html( get_the_title( $post ) ) . '</h3>';
 			$html .= '<p>' . esc_html( wp_trim_words( get_the_excerpt( $post ), 18, '…' ) ) . '</p>';
-			$html .= '<a class="read" href="' . esc_url( get_permalink( $post ) ) . '">اقرأ المقال <i class="fas fa-arrow-left"></i></a>';
+			$html .= '<a class="read" href="' . esc_url( function_exists( 'kayan_i18n_get_localized_url' ) ? kayan_i18n_get_localized_url( kayan_i18n_get_lang(), $post->ID ) : get_permalink( $post ) ) . '">' . esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'read_article' ) : 'اقرأ المقال' ) . ' <i class="fas fa-arrow-left"></i></a>';
 			$html .= '</div></article>';
 			$i++;
 		}
@@ -293,33 +319,67 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 		$phone_display                      = kayan_homepage_format_phone_display( $phone_raw );
 		$year                               = gmdate( 'Y' );
 
-		$hero_title_default        = '{{company_name}} — منصة <em>الخدمات المنزلية المتكاملة</em> الأولى في الإمارات';
-		$hero_subtitle_default     = 'من عزل الأسطح وكشف التسربات إلى صيانة التكييف والتنظيف الاحترافي — فريق معتمد، أجهزة حديثة، وضمان مكتوب يصل إلى 10 سنوات.';
-		$dashboard_title_default   = 'لوحة خدمات {{company_name}}';
-		$why_heading_default       = 'لماذا يختار الآلاف <span>{{company_name}}؟</span>';
-		$compare_heading_default   = 'لماذا يختار العملاء <span>{{company_name}}؟</span>';
-		$areas_intro_default       = 'أينما كنت في الإمارات، فريق {{company_name}} قريب منك وجاهز للخدمة.';
-		$footer_tagline_default    = 'منصة الخدمات المنزلية المتكاملة الأولى في الإمارات — جودة احترافية وضمان مكتوب وثقة 15,000+ عميل.';
-		$copyright_default         = '© {{year}} {{company_name}} للخدمات المنزلية. جميع الحقوق محفوظة.';
+		$hero_title_default_ar     = '{{company_name}} — منصة <em>الخدمات المنزلية المتكاملة</em> الأولى في {{country_name}}';
+		$hero_title_default_en     = '{{company_name}} — The Leading <em>Integrated Home Services</em> Platform in {{country_name}}';
+		$hero_subtitle_default_ar  = 'من عزل الأسطح وكشف التسربات إلى صيانة التكييف والتنظيف الاحترافي — فريق معتمد، أجهزة حديثة، وضمان مكتوب يصل إلى 10 سنوات.';
+		$hero_subtitle_default_en  = 'From roof insulation and leak detection to AC maintenance and deep cleaning — certified teams, modern equipment, and a written warranty up to 10 years.';
+		$dashboard_title_default_ar = 'لوحة خدمات {{company_name}}';
+		$dashboard_title_default_en = '{{company_name}} Services Dashboard';
+		$why_heading_default_ar    = 'لماذا يختار الآلاف <span>{{company_name}}؟</span>';
+		$why_heading_default_en    = 'Why do thousands choose <span>{{company_name}}?</span>';
+		$compare_heading_default_ar = 'لماذا يختار العملاء <span>{{company_name}}؟</span>';
+		$compare_heading_default_en = 'Why customers choose <span>{{company_name}}?</span>';
+		$areas_intro_default_ar    = 'أينما كنت في {{in_country}}، فريق {{company_name}} قريب منك وجاهز للخدمة.';
+		$areas_intro_default_en    = 'Wherever you are in {{in_country}}, the {{company_name}} team is nearby and ready to help.';
+		$footer_tagline_default_ar = 'منصة الخدمات المنزلية المتكاملة الأولى في {{country_name}} — جودة احترافية وضمان مكتوب وثقة 15,000+ عميل.';
+		$footer_tagline_default_en = 'A leading integrated home services platform in {{country_name}} — professional quality, written warranty, and 15,000+ happy clients.';
+		$copyright_default_ar      = '© {{year}} {{company_name}} للخدمات المنزلية. جميع الحقوق محفوظة.';
+		$copyright_default_en      = '© {{year}} {{company_name}} Home Services. All rights reserved.';
+
+		$hero_title     = kayan_homepage_pick_locale_text( 'kayan_homepage_hero_title', $hero_title_default_ar, 'kayan_homepage_hero_title_en', $hero_title_default_en );
+		$hero_subtitle  = kayan_homepage_pick_locale_text( 'kayan_homepage_hero_subtitle', $hero_subtitle_default_ar, 'kayan_homepage_hero_subtitle_en', $hero_subtitle_default_en );
+		$dashboard_title = kayan_homepage_pick_locale_text( 'kayan_homepage_dashboard_title', $dashboard_title_default_ar, 'kayan_homepage_dashboard_title_en', $dashboard_title_default_en );
+		$why_heading    = kayan_homepage_pick_locale_text( 'kayan_homepage_why_heading', $why_heading_default_ar, 'kayan_homepage_why_heading_en', $why_heading_default_en );
+		$compare_heading = kayan_homepage_pick_locale_text( 'kayan_homepage_compare_heading', $compare_heading_default_ar, 'kayan_homepage_compare_heading_en', $compare_heading_default_en );
+		$areas_intro    = kayan_homepage_pick_locale_text( 'kayan_homepage_areas_intro', $areas_intro_default_ar, 'kayan_homepage_areas_intro_en', $areas_intro_default_en );
+		$footer_tagline = kayan_homepage_pick_locale_text( 'kayan_homepage_footer_tagline', $footer_tagline_default_ar, 'kayan_homepage_footer_tagline_en', $footer_tagline_default_en );
+		$copyright      = kayan_homepage_pick_locale_text( 'kayan_homepage_copyright', $copyright_default_ar, 'kayan_homepage_copyright_en', $copyright_default_en );
+
+		$switcher_html = function_exists( 'kayan_i18n_get_switcher_html' ) ? kayan_i18n_get_switcher_html( array( 'instance_suffix' => 'Home' ) ) : '';
 
 		$tokens = array(
-			'brand_first'         => esc_html( $brand_first ),
-			'brand_second'        => esc_html( $brand_second ),
-			'company_name'        => esc_html( $company_name ),
-			'whatsapp_url'        => esc_url( kayan_homepage_get_whatsapp_url() ),
-			'tel_url'             => esc_url( kayan_homepage_get_tel_url() ),
-			'phone_display'       => esc_html( $phone_display ),
-			'address'             => esc_html( kayan_homepage_get_address() ),
-			'hero_title_html'     => kayan_homepage_get_option_html( 'kayan_homepage_hero_title', kayan_homepage_expand_inline_tokens( $hero_title_default ) ),
-			'hero_subtitle'       => esc_html( kayan_homepage_expand_inline_tokens( kayan_homepage_get_option_text( 'kayan_homepage_hero_subtitle', $hero_subtitle_default ) ) ),
-			'dashboard_title'     => esc_html( kayan_homepage_expand_inline_tokens( kayan_homepage_get_option_text( 'kayan_homepage_dashboard_title', $dashboard_title_default ) ) ),
-			'why_heading_html'    => kayan_homepage_get_option_html( 'kayan_homepage_why_heading', kayan_homepage_expand_inline_tokens( $why_heading_default ) ),
-			'compare_heading_html'=> kayan_homepage_get_option_html( 'kayan_homepage_compare_heading', kayan_homepage_expand_inline_tokens( $compare_heading_default ) ),
-			'areas_intro'         => esc_html( kayan_homepage_expand_inline_tokens( kayan_homepage_get_option_text( 'kayan_homepage_areas_intro', $areas_intro_default ) ) ),
-			'footer_tagline'      => esc_html( kayan_homepage_expand_inline_tokens( kayan_homepage_get_option_text( 'kayan_homepage_footer_tagline', $footer_tagline_default ) ) ),
-			'copyright'           => esc_html( kayan_homepage_expand_inline_tokens( kayan_homepage_get_option_text( 'kayan_homepage_copyright', $copyright_default ) ) ),
-			'social_links_html'   => kayan_homepage_build_social_links_html(),
-			'blog_posts_html'     => kayan_homepage_build_blog_posts_html(),
+			'brand_first'          => esc_html( $brand_first ),
+			'brand_second'         => esc_html( $brand_second ),
+			'company_name'         => esc_html( $company_name ),
+			'country_name'         => esc_html( function_exists( 'kayan_i18n_country_label' ) ? kayan_i18n_country_label() : 'الإمارات' ),
+			'all_regions'          => esc_html( function_exists( 'kayan_i18n_country_regions' ) ? kayan_i18n_country_regions() : 'جميع الإمارات' ),
+			'whatsapp_url'         => esc_url( kayan_homepage_get_whatsapp_url() ),
+			'tel_url'              => esc_url( kayan_homepage_get_tel_url() ),
+			'phone_display'        => esc_html( $phone_display ),
+			'address'              => esc_html( kayan_homepage_get_address() ),
+			'hero_title_html'      => wp_kses_post( kayan_homepage_expand_inline_tokens( $hero_title ) ),
+			'hero_subtitle'        => esc_html( kayan_homepage_expand_inline_tokens( $hero_subtitle ) ),
+			'dashboard_title'      => esc_html( kayan_homepage_expand_inline_tokens( $dashboard_title ) ),
+			'why_heading_html'     => wp_kses_post( kayan_homepage_expand_inline_tokens( $why_heading ) ),
+			'compare_heading_html' => wp_kses_post( kayan_homepage_expand_inline_tokens( $compare_heading ) ),
+			'areas_intro'          => esc_html( kayan_homepage_expand_inline_tokens( $areas_intro ) ),
+			'footer_tagline'       => esc_html( kayan_homepage_expand_inline_tokens( $footer_tagline ) ),
+			'copyright'            => esc_html( kayan_homepage_expand_inline_tokens( $copyright ) ),
+			'social_links_html'    => kayan_homepage_build_social_links_html(),
+			'blog_posts_html'      => kayan_homepage_build_blog_posts_html(),
+			'locale_switcher_html' => $switcher_html,
+			'ui_btn_whatsapp'      => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_whatsapp' ) : 'واتساب' ),
+			'ui_btn_whatsapp_full' => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_whatsapp_full' ) : 'تواصل عبر واتساب' ),
+			'ui_btn_call'          => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_call' ) : 'اتصل الآن' ),
+			'ui_btn_quote'         => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_quote' ) : 'طلب عرض سعر' ),
+			'ui_btn_service'       => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_service' ) : 'طلب خدمة' ),
+			'ui_btn_call_short'    => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_call_short' ) : 'اتصال' ),
+			'ui_nav_services'      => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_services' ) : 'الخدمات' ),
+			'ui_nav_cities'        => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_cities' ) : 'المدن' ),
+			'ui_nav_projects'      => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_projects' ) : 'المشاريع' ),
+			'ui_nav_blog'          => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_blog' ) : 'المدونة' ),
+			'ui_nav_about'         => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_about' ) : 'من نحن' ),
+			'ui_nav_faq'           => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_faq' ) : 'الأسئلة الشائعة' ),
 		);
 
 		return apply_filters( 'kayan_homepage_tokens', $tokens );
@@ -329,6 +389,9 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 if ( ! function_exists( 'kayan_home_body_classes' ) ) {
 	function kayan_home_body_classes() {
 		$classes = array( 'kayan-homepage-v3', 'kayan-homepage-dynamic' );
+		if ( kayan_homepage_is_english() ) {
+			$classes[] = 'kayan-homepage-en';
+		}
 		if ( function_exists( 'kayan_ui_show_call_button' ) && ! kayan_ui_show_call_button() ) {
 			$classes[] = 'kayan-no-content-call';
 		}
@@ -360,9 +423,10 @@ if ( ! function_exists( 'kayan_homepage_v3_render' ) ) {
 		$html = kayan_homepage_v3_filter_html( $html );
 
 		$theme_color = '#0A1F4E';
+		$html_attrs  = function_exists( 'kayan_i18n_get_html_attrs' ) ? kayan_i18n_get_html_attrs() : 'lang="ar" dir="rtl"';
 		?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> lang="ar" dir="rtl">
+<html <?php echo $html_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">

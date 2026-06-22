@@ -43,6 +43,51 @@ $metaboxes = array(
 			'id'      => 'kayan_homepage_hero_subtitle',
 		),
 		array(
+			'type'  => 'Title',
+			'title' => 'النسخة الإنجليزية (English)',
+			'disc'  => 'تُستخدم عند اختيار EN من مبدّل اللغة. يمكن استخدام {{company_name}} و {{country_name}}.',
+		),
+		array(
+			'title'   => 'Hero title (EN)',
+			'type'    => 'TextArea',
+			'id'      => 'kayan_homepage_hero_title_en',
+		),
+		array(
+			'title'   => 'Hero subtitle (EN)',
+			'type'    => 'TextArea',
+			'id'      => 'kayan_homepage_hero_subtitle_en',
+		),
+		array(
+			'title'   => 'Dashboard title (EN)',
+			'type'    => 'Text',
+			'id'      => 'kayan_homepage_dashboard_title_en',
+		),
+		array(
+			'title'   => 'Why us heading (EN)',
+			'type'    => 'TextArea',
+			'id'      => 'kayan_homepage_why_heading_en',
+		),
+		array(
+			'title'   => 'Compare heading (EN)',
+			'type'    => 'TextArea',
+			'id'      => 'kayan_homepage_compare_heading_en',
+		),
+		array(
+			'title'   => 'Areas intro (EN)',
+			'type'    => 'TextArea',
+			'id'      => 'kayan_homepage_areas_intro_en',
+		),
+		array(
+			'title'   => 'Footer tagline (EN)',
+			'type'    => 'TextArea',
+			'id'      => 'kayan_homepage_footer_tagline_en',
+		),
+		array(
+			'title'   => 'Copyright (EN)',
+			'type'    => 'Text',
+			'id'      => 'kayan_homepage_copyright_en',
+		),
+		array(
 			'title'   => 'عنوان لوحة الخدمات',
 			'en_title'=> 'Dashboard title',
 			'type'    => 'Text',
