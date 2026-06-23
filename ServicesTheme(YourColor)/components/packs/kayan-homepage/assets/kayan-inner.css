@@ -355,3 +355,8 @@ html[lang*='ar'] .kayan-inner-section__body ol {
 html[lang*='ar'] .kayan-contact-box__actions .btn i.fa-arrow-left {
   transform: scaleX(-1);
 }
+
+/* Legacy singular shell integration */
+.kayan-inner-singular-main{display:block}
+.kayan-inner-singular-main .kayan-inner-layout{width:100%}
+.kayan-inner-sidebar__widgets{margin-top:20px}

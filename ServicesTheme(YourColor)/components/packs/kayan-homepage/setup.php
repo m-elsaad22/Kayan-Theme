@@ -4,6 +4,7 @@ require_once __DIR__ . '/helpers.php';
 require_once __DIR__ . '/section-builders.php';
 require_once __DIR__ . '/content-builders.php';
 require_once __DIR__ . '/demo-content.php';
+require_once __DIR__ . '/inner-builders.php';
 
 if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 	function kayan_homepage_v3_active_request() {
@@ -24,7 +25,7 @@ if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '1.0.10';
+	return '1.0.11';
 }
 
 if ( ! function_exists( 'kayan_homepage_inner_page_request' ) ) {
@@ -76,6 +77,16 @@ function kayan_homepage_enqueue_inner_assets() {
 	wp_enqueue_style( 'kayan-inner', $assets['base'] . 'kayan-inner.css', array( 'kayan-home' ), $assets['ver'] );
 }
 add_action( 'wp_enqueue_scripts', 'kayan_homepage_enqueue_inner_assets', 6 );
+
+if ( ! function_exists( 'kayan_homepage_inner_body_class' ) ) {
+	function kayan_homepage_inner_body_class( $classes ) {
+		if ( function_exists( 'kayan_homepage_inner_page_request' ) && kayan_homepage_inner_page_request() ) {
+			$classes[] = 'kayan-inner-page';
+		}
+		return $classes;
+	}
+}
+add_filter( 'body_class', 'kayan_homepage_inner_body_class' );
 
 function kayan_homepage_v3_resource_hints() {
 	if ( ! kayan_homepage_v3_active_request() ) {

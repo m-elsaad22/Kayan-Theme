@@ -20,7 +20,9 @@ $UniqID = uniqid();
 			$StyleFields__Intro[] = $current_file_name;
 		}
 		$Styles['shortcodes'] = 'shortcodes.css';
-		$Styles[$post->post_type] = 'singular/single.css';
+		if ( ! function_exists( 'kayan_homepage_uses_inner_layout' ) || ! kayan_homepage_uses_inner_layout() ) {
+			$Styles[$post->post_type] = 'singular/single.css';
+		}
 
 #
 
@@ -178,6 +180,18 @@ $ShareHastags = array();
 	# HEADER .
 	$this->Part('header',array('Styles'=>$Styles));
 
+		$kayan_inner_layout = function_exists( 'kayan_homepage_uses_inner_layout' ) && kayan_homepage_uses_inner_layout();
+
+		if ( $kayan_inner_layout ) {
+			kayan_homepage_render_inner_header(
+				array(
+					'title'     => $post->post_title,
+					'subtitle'  => '',
+					'image_url' => ! empty( $post_thumb ) ? $post_thumb : '',
+					'image_alt' => $post->post_title,
+				)
+			);
+		} else {
 		echo '<div class="YC-single-title">';
 			echo '<div class="container">';
 				echo '<div class="--YC-title-breadcrhumb-">';
@@ -194,11 +208,16 @@ $ShareHastags = array();
 				echo '</div>';
 			echo '</div>';
 		echo '</div>';
+		}
 		# MAIN SINGLE CONTAINER .	
 		echo '<div class="-singular-pages-container"'.$PopOver__Attr.'>';
 			echo '<div class="container">';
 
-				echo '<div class="-Yc-single-main -YC-singleType-'.$post->post_type.'">';
+				echo '<div class="-Yc-single-main -YC-singleType-'.$post->post_type.( $kayan_inner_layout ? ' kayan-inner-singular-main' : '' ).'">';
+					if ( $kayan_inner_layout ) {
+						echo '<div class="kayan-inner-body"><div class="kayan-inner-layout">';
+						echo '<div class="kayan-inner-body__content kayan-inner-section">';
+					}
 					# SERVICE REQUST
 
 					global $post;
@@ -240,7 +259,7 @@ $ShareHastags = array();
 						$phonenumber = get_post_meta( $post->ID,'phonenumber',true );
 						if( empty( $phonenumber ) ) $phonenumber = get_option('phonenumber');
 					}
-					if( empty( $hide__sidebar__service_request_single ) ){
+					if( empty( $hide__sidebar__service_request_single ) && ! $kayan_inner_layout ){
 						if( empty( $hide__sidebar__service_request ) ){
 							echo '<div class="--YC-service-requset-widget--">';
 								echo '<div class="--YC-service-back-ground--" style="background-image:url('.$bg_shap.');"></div>';
@@ -375,7 +394,31 @@ $ShareHastags = array();
 						echo '</div>';
 
 					# SIDEBAR POSTS .
+						if ( $kayan_inner_layout ) {
+							echo '</div>';
+							echo '<aside class="kayan-inner-sidebar">';
+							kayan_homepage_render_contact_box( $post->ID );
+						}
 						if( empty( $hide__sidebar__single ) && !empty( $widgets_single__meta ) ) {
+							if ( $kayan_inner_layout ) {
+								echo '<div class="kayan-inner-sidebar__card kayan-inner-sidebar__widgets">';
+							}
+							$YC__WidgetsMachine->widgets___UI(
+								array(
+									'Widgets_data'=>$widgets_single__meta,
+									'WidgetID'=>'widgets_single__meta',
+									'Parent__section__class'=>'-first-single-post-bar',
+									'Single__section__class'=>'--Single--page--widget-item',
+									'section_InnerRow_class'=>'Single--page-widget-innerRow',
+								)
+							);
+							if ( $kayan_inner_layout ) {
+								echo '</div>';
+							}
+						}
+						if ( $kayan_inner_layout ) {
+							echo '</aside></div></div>';
+						} elseif( empty( $hide__sidebar__single ) && !empty( $widgets_single__meta ) ) {
 							$YC__WidgetsMachine->widgets___UI(
 								array(
 									'Widgets_data'=>$widgets_single__meta,

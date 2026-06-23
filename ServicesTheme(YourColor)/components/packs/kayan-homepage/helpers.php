@@ -51,6 +51,79 @@ if ( ! function_exists( 'kayan_homepage_get_brand_parts' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_homepage_get_context_post_id' ) ) {
+	/**
+	 * Post/page ID for homepage + contact/UI token context.
+	 */
+	function kayan_homepage_get_context_post_id() {
+		if ( is_front_page() && 'page' === get_option( 'show_on_front' ) ) {
+			return (int) get_option( 'page_on_front' );
+		}
+		$id = (int) get_queried_object_id();
+		return $id > 0 ? $id : 0;
+	}
+}
+
+if ( ! function_exists( 'kayan_homepage_ui_string' ) ) {
+	/**
+	 * Localized UI label with Arabic fallback when kayan-i18n is inactive.
+	 */
+	function kayan_homepage_ui_string( $key, $fallback_ar ) {
+		if ( function_exists( 'kayan_i18n_t' ) ) {
+			$value = kayan_i18n_t( $key, $fallback_ar );
+			if ( $value !== '' ) {
+				return $value;
+			}
+		}
+		return $fallback_ar;
+	}
+}
+
+if ( ! function_exists( 'kayan_homepage_resolve_ui_tokens' ) ) {
+	/**
+	 * UI + contact tokens for body.html.php (locale switcher, buttons, tel/wa URLs).
+	 *
+	 * @param int|null $post_id Null → get_queried_object_id() (or static front page on home).
+	 * @return array<string, string>
+	 */
+	function kayan_homepage_resolve_ui_tokens( $post_id = null ) {
+		if ( null === $post_id ) {
+			$post_id = kayan_homepage_get_context_post_id();
+			if ( $post_id <= 0 ) {
+				$post_id = (int) get_queried_object_id();
+			}
+		}
+		$post_id = (int) $post_id;
+
+		$switcher_html = '';
+		if ( function_exists( 'kayan_i18n_get_switcher_html' ) ) {
+			$switcher_html = kayan_i18n_get_switcher_html( array( 'instance_suffix' => 'Home' ) );
+		}
+
+		$whatsapp_url = '#';
+		if ( function_exists( 'kayan_hp_resolve_whatsapp_url' ) ) {
+			$whatsapp_url = kayan_hp_resolve_whatsapp_url( $post_id > 0 ? $post_id : null );
+		}
+
+		$tel_url = '#';
+		if ( function_exists( 'kayan_hp_resolve_tel_url' ) ) {
+			$tel_url = kayan_hp_resolve_tel_url( $post_id > 0 ? $post_id : null );
+		}
+
+		return array(
+			'locale_switcher_html' => $switcher_html,
+			'whatsapp_url'         => esc_url( $whatsapp_url ),
+			'tel_url'              => esc_url( $tel_url ),
+			'ui_btn_whatsapp'      => esc_html( kayan_homepage_ui_string( 'btn_whatsapp', 'واتساب' ) ),
+			'ui_btn_whatsapp_full' => esc_html( kayan_homepage_ui_string( 'btn_whatsapp_full', 'تواصل واتساب' ) ),
+			'ui_btn_call'          => esc_html( kayan_homepage_ui_string( 'btn_call', 'اتصل بنا' ) ),
+			'ui_btn_quote'         => esc_html( kayan_homepage_ui_string( 'btn_quote', 'احصل على عرض' ) ),
+			'ui_menu_label'        => esc_html( kayan_homepage_ui_string( 'menu_open', 'القائمة' ) ),
+			'ui_close_label'       => esc_html( kayan_homepage_ui_string( 'menu_close', 'إغلاق' ) ),
+		);
+	}
+}
+
 if ( ! function_exists( 'kayan_homepage_get_phone_raw' ) ) {
 	function kayan_homepage_get_phone_raw() {
 		$phone = yc_get_option( 'phonenumber' );
@@ -283,7 +356,8 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 	function kayan_homepage_get_tokens() {
 		list( $brand_first, $brand_second ) = kayan_homepage_get_brand_parts();
 		$company_name                       = kayan_homepage_get_company_name();
-		$phone_raw                          = kayan_hp_resolve_phone();
+		$context_post_id = kayan_homepage_get_context_post_id();
+		$phone_raw       = kayan_hp_resolve_phone( $context_post_id > 0 ? $context_post_id : null );
 		$phone_display                      = kayan_homepage_format_phone_display( $phone_raw );
 		$year                               = gmdate( 'Y' );
 
@@ -313,8 +387,8 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 		$footer_tagline = kayan_homepage_pick_locale_text( 'kayan_homepage_footer_tagline', $footer_tagline_default_ar, 'kayan_homepage_footer_tagline_en', $footer_tagline_default_en );
 		$copyright      = kayan_homepage_pick_locale_text( 'kayan_homepage_copyright', $copyright_default_ar, 'kayan_homepage_copyright_en', $copyright_default_en );
 
-		$switcher_html = function_exists( 'kayan_i18n_get_switcher_html' ) ? kayan_i18n_get_switcher_html( array( 'instance_suffix' => 'Home' ) ) : '';
-
+		$context_post_id  = kayan_homepage_get_context_post_id();
+		$ui_tokens        = kayan_homepage_resolve_ui_tokens( $context_post_id > 0 ? $context_post_id : null );
 		$header_logo_html = function_exists( 'kayan_homepage_build_logo_html' ) ? kayan_homepage_build_logo_html( 'header', 'logo' ) : '';
 		$header_nav_html  = function_exists( 'kayan_homepage_build_nav_links_html' ) ? kayan_homepage_build_nav_links_html() : '';
 		$footer_html      = function_exists( 'kayan_homepage_build_footer_html' ) ? kayan_homepage_build_footer_html() : '';
@@ -355,7 +429,8 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 		$pricing_html     = function_exists( 'kayan_homepage_build_pricing_html' ) ? kayan_homepage_build_pricing_html() : '';
 		$cta_html         = function_exists( 'kayan_homepage_build_cta_html' ) ? kayan_homepage_build_cta_html() : '';
 
-		$tokens = array(
+		$tokens = array_merge(
+			array(
 			'header_logo_html'       => $header_logo_html,
 			'header_nav_html'        => $header_nav_html,
 			'header_mobile_nav_html' => $mobile_nav,
@@ -389,8 +464,6 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 			'company_name'         => esc_html( $company_name ),
 			'country_name'         => esc_html( function_exists( 'kayan_i18n_country_label' ) ? kayan_i18n_country_label() : 'الإمارات' ),
 			'all_regions'          => esc_html( function_exists( 'kayan_i18n_country_regions' ) ? kayan_i18n_country_regions() : 'جميع الإمارات' ),
-			'whatsapp_url'         => esc_url( kayan_hp_resolve_whatsapp_url() ),
-			'tel_url'              => esc_url( kayan_hp_resolve_tel_url() ),
 			'phone_display'        => esc_html( $phone_display ),
 			'address'              => esc_html( kayan_homepage_get_address() ),
 			'hero_title_html'      => wp_kses_post( kayan_homepage_expand_inline_tokens( $hero_title ) ),
@@ -403,21 +476,16 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 			'copyright'            => esc_html( kayan_homepage_expand_inline_tokens( $copyright ) ),
 			'social_links_html'    => kayan_homepage_build_social_links_html(),
 			'blog_posts_html'      => kayan_homepage_build_blog_posts_html(),
-			'locale_switcher_html' => $switcher_html,
-			'ui_btn_whatsapp'      => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_whatsapp' ) : 'واتساب' ),
-			'ui_btn_whatsapp_full' => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_whatsapp_full' ) : 'تواصل عبر واتساب' ),
-			'ui_btn_call'          => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_call' ) : 'اتصل الآن' ),
-			'ui_btn_quote'         => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_quote' ) : 'طلب عرض سعر' ),
-			'ui_btn_service'       => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_service' ) : 'طلب خدمة' ),
-			'ui_btn_call_short'    => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_call_short' ) : 'اتصال' ),
-			'ui_nav_services'      => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_services' ) : 'الخدمات' ),
-			'ui_nav_cities'        => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_cities' ) : 'المدن' ),
-			'ui_nav_projects'      => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_projects' ) : 'المشاريع' ),
-			'ui_nav_blog'          => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_blog' ) : 'المدونة' ),
-			'ui_nav_about'         => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_about' ) : 'من نحن' ),
-			'ui_nav_faq'           => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_faq' ) : 'الأسئلة الشائعة' ),
-			'ui_menu_label'        => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'menu_open', 'القائمة' ) : 'القائمة' ),
-			'ui_close_label'       => esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'menu_close', 'إغلاق' ) : 'إغلاق' ),
+			'ui_btn_service'       => esc_html( kayan_homepage_ui_string( 'btn_service', 'طلب خدمة' ) ),
+			'ui_btn_call_short'    => esc_html( kayan_homepage_ui_string( 'btn_call_short', 'اتصال' ) ),
+			'ui_nav_services'      => esc_html( kayan_homepage_ui_string( 'nav_services', 'الخدمات' ) ),
+			'ui_nav_cities'        => esc_html( kayan_homepage_ui_string( 'nav_cities', 'المدن' ) ),
+			'ui_nav_projects'      => esc_html( kayan_homepage_ui_string( 'nav_projects', 'المشاريع' ) ),
+			'ui_nav_blog'          => esc_html( kayan_homepage_ui_string( 'nav_blog', 'المدونة' ) ),
+			'ui_nav_about'         => esc_html( kayan_homepage_ui_string( 'nav_about', 'من نحن' ) ),
+			'ui_nav_faq'           => esc_html( kayan_homepage_ui_string( 'nav_faq', 'الأسئلة الشائعة' ) ),
+			),
+			$ui_tokens
 		);
 
 		return apply_filters( 'kayan_homepage_tokens', $tokens );
