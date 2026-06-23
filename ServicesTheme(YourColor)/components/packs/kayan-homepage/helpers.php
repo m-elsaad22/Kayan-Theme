@@ -80,7 +80,7 @@ if ( ! function_exists( 'kayan_homepage_get_whatsapp_raw' ) ) {
 if ( ! function_exists( 'kayan_homepage_format_phone_display' ) ) {
 	function kayan_homepage_format_phone_display( $phone = null ) {
 		if ( null === $phone ) {
-			$phone = kayan_homepage_get_phone_raw();
+			$phone = kayan_hp_resolve_phone();
 		}
 		$digits = preg_replace( '/\D+/', '', (string) $phone );
 		if ( strlen( $digits ) >= 11 && strpos( $digits, '971' ) === 0 ) {
@@ -209,7 +209,7 @@ if ( ! function_exists( 'kayan_homepage_build_social_links_html' ) ) {
 			$html .= '<a href="' . esc_url( $url ) . '" aria-label="' . esc_attr( $data['label'] ) . '" rel="noopener noreferrer" target="_blank"><i class="' . esc_attr( $data['icon'] ) . '"></i></a>';
 		}
 
-		$wa_url = kayan_homepage_get_whatsapp_url();
+		$wa_url = kayan_hp_resolve_whatsapp_url();
 		if ( $wa_url !== '#' ) {
 			$html .= '<a href="' . esc_url( $wa_url ) . '" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>';
 		}
@@ -283,7 +283,7 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 	function kayan_homepage_get_tokens() {
 		list( $brand_first, $brand_second ) = kayan_homepage_get_brand_parts();
 		$company_name                       = kayan_homepage_get_company_name();
-		$phone_raw                          = kayan_homepage_get_phone_raw();
+		$phone_raw                          = kayan_hp_resolve_phone();
 		$phone_display                      = kayan_homepage_format_phone_display( $phone_raw );
 		$year                               = gmdate( 'Y' );
 
@@ -389,8 +389,8 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 			'company_name'         => esc_html( $company_name ),
 			'country_name'         => esc_html( function_exists( 'kayan_i18n_country_label' ) ? kayan_i18n_country_label() : 'الإمارات' ),
 			'all_regions'          => esc_html( function_exists( 'kayan_i18n_country_regions' ) ? kayan_i18n_country_regions() : 'جميع الإمارات' ),
-			'whatsapp_url'         => esc_url( kayan_homepage_get_whatsapp_url() ),
-			'tel_url'              => esc_url( kayan_homepage_get_tel_url() ),
+			'whatsapp_url'         => esc_url( kayan_hp_resolve_whatsapp_url() ),
+			'tel_url'              => esc_url( kayan_hp_resolve_tel_url() ),
 			'phone_display'        => esc_html( $phone_display ),
 			'address'              => esc_html( kayan_homepage_get_address() ),
 			'hero_title_html'      => wp_kses_post( kayan_homepage_expand_inline_tokens( $hero_title ) ),

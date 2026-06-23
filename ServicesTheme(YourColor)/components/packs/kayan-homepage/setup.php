@@ -1,4 +1,5 @@
 <?
+require_once __DIR__ . '/contact-resolver.php';
 require_once __DIR__ . '/helpers.php';
 require_once __DIR__ . '/section-builders.php';
 require_once __DIR__ . '/content-builders.php';

@@ -304,7 +304,7 @@ if ( ! function_exists( 'kayan_homepage_build_finder_html' ) ) {
       <div class="fr-stat"><i class="fas fa-circle-check"></i><b class="fr-ok"><?php echo esc_html( kayan_hp_get_section_text( 'finder', 'avail', 'متوفرة الآن', 'Available now' ) ); ?></b><small><?php echo esc_html( kayan_hp_get_section_text( 'finder', 'status', 'حالة الخدمة', 'Status' ) ); ?></small></div>
     </div>
     <div style="text-align:center;margin-top:18px" class="rv">
-      <a href="<?php echo esc_url( kayan_homepage_get_whatsapp_url() ); ?>" class="btn btn-wa"><i class="fab fa-whatsapp"></i> <?php echo esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_whatsapp_full' ) : 'واتساب' ); ?></a>
+      <a href="<?php echo esc_url( kayan_hp_resolve_whatsapp_url() ); ?>" class="btn btn-wa"><i class="fab fa-whatsapp"></i> <?php echo esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_whatsapp_full' ) : 'واتساب' ); ?></a>
     </div>
   </div>
 </section>
