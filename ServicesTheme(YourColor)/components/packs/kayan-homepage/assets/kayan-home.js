@@ -1,12 +1,11 @@
 /* ═══════════════ Loader ═══════════════ */
 window.addEventListener('load',()=>{const ld=document.getElementById('loader');if(ld)setTimeout(()=>ld.classList.add('out'),350)});
 
-/* ═══════════════ Sticky header + FAB ═══════════════ */
-const hdr=document.getElementById('hdr'),fab=document.getElementById('fab');
+/* ═══════════════ Sticky header ═══════════════ */
+const hdr=document.getElementById('hdr');
 const onScroll=()=>{
   const y=window.scrollY;
   if(hdr)hdr.classList.toggle('scrolled',y>40);
-  if(fab)fab.classList.toggle('show',y>500);
 };
 window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 

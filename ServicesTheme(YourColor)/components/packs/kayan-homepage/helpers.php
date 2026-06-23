@@ -78,7 +78,10 @@ if ( ! function_exists( 'kayan_homepage_get_whatsapp_raw' ) ) {
 }
 
 if ( ! function_exists( 'kayan_homepage_format_phone_display' ) ) {
-	function kayan_homepage_format_phone_display( $phone ) {
+	function kayan_homepage_format_phone_display( $phone = null ) {
+		if ( null === $phone ) {
+			$phone = kayan_homepage_get_phone_raw();
+		}
 		$digits = preg_replace( '/\D+/', '', (string) $phone );
 		if ( strlen( $digits ) >= 11 && strpos( $digits, '971' ) === 0 ) {
 			$local = substr( $digits, 3 );
@@ -315,6 +318,7 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 		$header_logo_html = function_exists( 'kayan_homepage_build_logo_html' ) ? kayan_homepage_build_logo_html( 'header', 'logo' ) : '';
 		$header_nav_html  = function_exists( 'kayan_homepage_build_nav_links_html' ) ? kayan_homepage_build_nav_links_html() : '';
 		$footer_html      = function_exists( 'kayan_homepage_build_footer_html' ) ? kayan_homepage_build_footer_html() : '';
+		$floating_buttons = function_exists( 'kayan_homepage_build_floating_buttons_html' ) ? kayan_homepage_build_floating_buttons_html() : '';
 		$services_grid    = function_exists( 'kayan_homepage_build_services_grid_html' ) ? kayan_homepage_build_services_grid_html() : '';
 		$cities_grid      = function_exists( 'kayan_homepage_build_cities_grid_html' ) ? kayan_homepage_build_cities_grid_html() : '';
 		$services_head    = function_exists( 'kayan_homepage_build_section_head_html' )
@@ -370,7 +374,8 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 			'faq_html'               => $faq_html,
 			'pricing_html'           => $pricing_html,
 			'cta_html'               => $cta_html,
-			'footer_html'          => $footer_html,
+			'footer_html'            => $footer_html,
+			'floating_buttons_html'  => $floating_buttons,
 			'services_grid_html'   => $services_grid,
 			'cities_grid_html'     => $cities_grid,
 			'services_head_html'   => $services_head,

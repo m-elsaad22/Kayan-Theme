@@ -23,7 +23,7 @@ if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '1.0.8';
+	return '1.0.9';
 }
 
 function kayan_homepage_v3_resource_hints() {
@@ -67,10 +67,8 @@ function kayan_homepage_v3_enqueue_assets() {
 .fa:not(.fa-brands):not(.fab),.fas,.fa-solid,.fa-regular,.far,i[class^="fa-"]:not(.fa-brands):not(.fab),i[class*=" fa-"]:not(.fa-brands):not(.fab){font-family:"Font Awesome 6 Free" !important;font-weight:900 !important;}
 .fa-brands,.fab,.fa-brands::before,.fab::before{font-family:"Font Awesome 6 Brands" !important;font-weight:400 !important;}
 .kayan-no-content-call .btn-call,
-.kayan-no-content-call .m-call,
-.kayan-no-content-call a[href^="tel:"] { display: none !important; }
-.kayan-no-floating-call .mbar .m-call,
-.kayan-no-floating-call .fab#fab { display: none !important; }
+.kayan-no-content-call .fcontact a[href^="tel:"] { display: none !important; }
+.kayan-no-floating-call .--YourColor--phone-button { display: none !important; }
 ';
 	wp_add_inline_style( 'kayan-home', $inline );
 }

@@ -379,7 +379,7 @@ if ( ! function_exists( 'kayan_homepage_build_footer_html' ) ) {
         <p><?php echo wp_kses_post( $tagline ); ?></p>
         <div class="fcontact">
           <?php if ( kayan_homepage_get_phone_raw() !== '' && ( ! function_exists( 'kayan_ui_show_call_button' ) || kayan_ui_show_call_button() ) ) : ?>
-          <a href="<?php echo esc_url( kayan_homepage_get_tel_url() ); ?>"><i class="fas fa-phone"></i> <?php echo esc_html( kayan_homepage_format_phone_display() ); ?></a>
+          <a href="<?php echo esc_url( kayan_homepage_get_tel_url() ); ?>"><i class="fas fa-phone"></i> <?php echo esc_html( kayan_homepage_format_phone_display( kayan_homepage_get_phone_raw() ) ); ?></a>
           <?php endif; ?>
           <a href="<?php echo esc_url( kayan_homepage_get_whatsapp_url() ); ?>"><i class="fab fa-whatsapp"></i> <?php echo esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'btn_whatsapp_full' ) : 'واتساب' ); ?></a>
           <a href="<?php echo esc_url( $address_url ); ?>"><i class="fas fa-location-dot"></i> <?php echo esc_html( kayan_homepage_get_address() ); ?></a>
@@ -656,6 +656,40 @@ if ( ! function_exists( 'kayan_homepage_build_projects_grid_html' ) ) {
 			$html .= '</div></a>';
 			$i++;
 		}
+
+		return $html;
+	}
+}
+
+if ( ! function_exists( 'kayan_homepage_build_floating_buttons_html' ) ) {
+	/**
+	 * الأزرار العائمة الصغيرة (نفس markup القالب القديم .btn-fixed-bh).
+	 */
+	function kayan_homepage_build_floating_buttons_html() {
+		$phonenumber        = kayan_homepage_get_phone_raw();
+		$whatsapp_number    = kayan_homepage_get_whatsapp_raw();
+		$show_floating_call = function_exists( 'kayan_ui_show_floating_call_button' )
+			? kayan_ui_show_floating_call_button( 0, false )
+			: empty( yc_get_option( 'hide__floating__call' ) );
+
+		$html = '<div class="btn-fixed-bh">';
+
+		if ( $show_floating_call && $phonenumber !== '' ) {
+			$html .= '<div class="--yourcolor--button--phones --YourColor--phone-button">';
+			$html .= '<a href="' . esc_url( kayan_homepage_get_tel_url( $phonenumber ) ) . '" aria-label="اتصل بنا" data-call="Phone" data-tooltip="اتصل بنا" data-position="top">';
+			$html .= '<div class="footer-header"><i class="fa-solid fa-phone"></i></div>';
+			$html .= '</a></div>';
+		}
+
+		if ( $whatsapp_number !== '' ) {
+			$wa_url = kayan_homepage_get_whatsapp_url( $whatsapp_number );
+			$html  .= '<div class="--yourcolor--button--phones --YourColor--whatsapp-button">';
+			$html  .= '<a href="' . esc_url( $wa_url ) . '" target="_blank" rel="noopener noreferrer" aria-label="الواتساب" data-call="whatsapp" data-tooltip="تواصل عبر واتساب" data-position="top">';
+			$html  .= '<div class="footer-header"><i class="fa-brands fa-whatsapp"></i></div>';
+			$html  .= '</a></div>';
+		}
+
+		$html .= '</div>';
 
 		return $html;
 	}

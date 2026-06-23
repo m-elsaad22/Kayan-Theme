@@ -176,9 +176,4 @@
 {{footer_html}}
 <!-- /kayan-section:footer -->
 
-<nav class="mbar">
-  <a href="{{whatsapp_url}}" class="m-wa"><i class="fab fa-whatsapp"></i> {{ui_btn_whatsapp}}</a>
-  <a href="{{tel_url}}" class="m-call"><i class="fas fa-phone"></i> {{ui_btn_call_short}}</a>
-  <a href="#contact" class="m-quote"><i class="fas fa-file-invoice-dollar"></i> {{ui_btn_service}}</a>
-</nav>
-<a href="{{whatsapp_url}}" class="fab" id="fab" aria-label="{{ui_btn_whatsapp}}"><i class="fab fa-whatsapp"></i></a>
+{{floating_buttons_html}}

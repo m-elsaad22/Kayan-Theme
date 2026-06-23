@@ -9,7 +9,7 @@
 ## التثبيت
 
 1. من لوحة ووردبريس: **المظهر → قوالب → أضف جديد → رفع قالب**
-2. اختر الملف: `kayan-theme-1.0.8.zip`
+2. اختر الملف: `kayan-theme-1.0.9.zip`
 
 ### إذا ظهر «الملف متكرر» أو «القالب موجود مسبقاً»
 
@@ -22,7 +22,7 @@
 
 **ب) عبر WP-CLI (استبدال مباشر)**
 ```bash
-wp theme install kayan-theme-1.0.8.zip --force --activate
+wp theme install kayan-theme-1.0.9.zip --force --activate
 ```
 
 ## الإعداد السريع (SEO)

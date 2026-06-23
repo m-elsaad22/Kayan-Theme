@@ -359,10 +359,33 @@ echo '<root>';
 													);
 													echo'<ul class="list-unstyled">';
 														foreach ( $social_header_list as $social__item ) {
-															$social_value = yc_get_option($social__item);
-															if( !empty($social_value) ) {
-																echo'<li class="'.$social__item.'"><a class="hoverable" target="_blank" title="'.$social__item.'" href="'.$social_value.'">'.$SocialIcon[ $social__item ].'</a></li>';
+															if ( $social__item === 'phonenumber' && ( ! function_exists( 'kayan_ui_show_call_button' ) || ! kayan_ui_show_call_button() ) ) {
+																continue;
 															}
+															$social_value = yc_get_option( $social__item );
+															if ( empty( $social_value ) ) {
+																continue;
+															}
+															$icon_html = '';
+															if ( isset( $SocialIcons[ $social__item ] ) ) {
+																$icon_html = $SocialIcons[ $social__item ];
+															} elseif ( isset( $SocialIcon[ $social__item ] ) ) {
+																$icon_html = $SocialIcon[ $social__item ];
+															}
+															if ( $icon_html === '' ) {
+																continue;
+															}
+															$url_value = $social_value;
+															if ( $social__item === 'whatsapp' || $social__item === 'whatsapp_number' ) {
+																$url_value = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $social_value ) : 'https://wa.me/' . preg_replace( '/\D+/', '', $social_value );
+															} elseif ( $social__item === 'phonenumber' ) {
+																$url_value = 'tel:' . $social_value;
+															} elseif ( $social__item === 'company__mail' ) {
+																$url_value = 'mailto:' . $social_value;
+															} elseif ( $social__item === 'company__adress' ) {
+																$url_value = '#';
+															}
+															echo '<li class="' . esc_attr( $social__item ) . '"><a class="hoverable" target="_blank" title="' . esc_attr( $social__item ) . '" href="' . esc_url( $url_value ) . '">' . $icon_html . '</a></li>';
 														}
 													echo'</ul>';
 												echo '</div>';
