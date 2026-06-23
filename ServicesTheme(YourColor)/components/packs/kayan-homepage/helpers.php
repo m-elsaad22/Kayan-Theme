@@ -450,36 +450,3 @@ if ( ! function_exists( 'kayan_homepage_v3_filter_html' ) ) {
 		return $html;
 	}
 }
-
-if ( ! function_exists( 'kayan_homepage_v3_render' ) ) {
-	function kayan_homepage_v3_render() {
-		$body_file = __DIR__ . '/template-parts/body.html.php';
-		if ( ! file_exists( $body_file ) ) {
-			return;
-		}
-
-		$html = file_get_contents( $body_file );
-		$html = kayan_homepage_v3_filter_html( $html );
-
-		$theme_color = '#0A1F4E';
-		$html_attrs  = function_exists( 'kayan_i18n_get_html_attrs' ) ? kayan_i18n_get_html_attrs() : 'lang="ar" dir="rtl"';
-		?>
-<!DOCTYPE html>
-<html <?php echo $html_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php language_attributes(); ?>>
-<head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="<?php echo esc_attr( $theme_color ); ?>">
-	<?php wp_head(); ?>
-</head>
-<body class="<?php echo esc_attr( kayan_home_body_classes() ); ?>">
-<?php
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- tokens escaped in kayan_homepage_get_tokens().
-		echo $html;
-		wp_footer();
-		?>
-</body>
-</html>
-		<?php
-	}
-}
