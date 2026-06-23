@@ -24,8 +24,58 @@ if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '1.0.9';
+	return '1.0.10';
 }
+
+if ( ! function_exists( 'kayan_homepage_inner_page_request' ) ) {
+	/**
+	 * Non-homepage front-end views that should use kayan-inner.css.
+	 */
+	function kayan_homepage_inner_page_request() {
+		if ( is_admin() || wp_doing_ajax() || wp_doing_cron() ) {
+			return false;
+		}
+		if ( function_exists( 'kayan_homepage_v3_active_request' ) && kayan_homepage_v3_active_request() ) {
+			return false;
+		}
+		return is_singular() || is_archive() || is_search() || is_404();
+	}
+}
+
+function kayan_homepage_enqueue_shared_design_assets() {
+	$base = get_template_directory_uri() . '/components/packs/kayan-homepage/assets/';
+	$ver  = kayan_homepage_v3_asset_version();
+
+	wp_enqueue_style(
+		'kayan-home-fonts',
+		'https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;700;800&display=swap',
+		array(),
+		null
+	);
+
+	wp_enqueue_style(
+		'kayan-home-fa',
+		'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+		array(),
+		'6.5.1'
+	);
+
+	$home_deps = array( 'kayan-home-fonts', 'kayan-home-fa', 'kayan-locale' );
+
+	wp_enqueue_style( 'kayan-home', $base . 'kayan-home.css', $home_deps, $ver );
+
+	return array( 'base' => $base, 'ver' => $ver );
+}
+
+function kayan_homepage_enqueue_inner_assets() {
+	if ( ! kayan_homepage_inner_page_request() ) {
+		return;
+	}
+
+	$assets = kayan_homepage_enqueue_shared_design_assets();
+	wp_enqueue_style( 'kayan-inner', $assets['base'] . 'kayan-inner.css', array( 'kayan-home' ), $assets['ver'] );
+}
+add_action( 'wp_enqueue_scripts', 'kayan_homepage_enqueue_inner_assets', 6 );
 
 function kayan_homepage_v3_resource_hints() {
 	if ( ! kayan_homepage_v3_active_request() ) {
