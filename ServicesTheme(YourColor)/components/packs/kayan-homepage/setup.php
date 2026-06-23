@@ -95,20 +95,19 @@ function kayan_homepage_v3_dequeue_legacy_assets() {
 add_action( 'wp_enqueue_scripts', 'kayan_homepage_v3_dequeue_legacy_assets', 100 );
 add_action( 'wp_footer', 'kayan_homepage_v3_dequeue_legacy_assets', 999 );
 
-function kayan_homepage_v3_takeover() {
-	if ( ! kayan_homepage_v3_active_request() ) {
-		return;
-	}
-	kayan_homepage_v3_render();
-	die();
-}
-add_action( 'BeforeBlade_index', 'kayan_homepage_v3_takeover', 0 );
-add_action( 'BeforeBlade_page', 'kayan_homepage_v3_takeover', 0 );
-
 if ( ! function_exists( 'kayan_homepage_v3_render' ) ) {
 	/**
-	 * Render full homepage v3 document (used by BeforeBlade_* and kayan-stabilization).
-	 * Outputs directly — lockdown wraps template_redirect output in its own buffer.
+	 * Render full homepage v3 document (BeforeBlade_* + kayan-stabilization template_redirect).
+	 *
+	 * Pipeline:
+	 * 1. Load template-parts/body.html.php
+	 * 2. kayan_homepage_v3_filter_html() — {{tokens}} via builders + kayan_hp_apply_section_visibility()
+	 * 3. BeforeWPHead → wp_head() → AfterWPHead (same hook order as #header/part.php)
+	 * 4. Body markup + wp_footer()
+	 *
+	 * Echoes directly — do not nest ob_start(); lockdown may buffer template_redirect.
+	 *
+	 * @return void
 	 */
 	function kayan_homepage_v3_render() {
 		$body_file = __DIR__ . '/template-parts/body.html.php';
@@ -164,3 +163,13 @@ if ( ! function_exists( 'kayan_homepage_v3_render' ) ) {
 		echo '</html>' . "\n";
 	}
 }
+
+function kayan_homepage_v3_takeover() {
+	if ( ! kayan_homepage_v3_active_request() ) {
+		return;
+	}
+	kayan_homepage_v3_render();
+	die();
+}
+add_action( 'BeforeBlade_index', 'kayan_homepage_v3_takeover', 0 );
+add_action( 'BeforeBlade_page', 'kayan_homepage_v3_takeover', 0 );
