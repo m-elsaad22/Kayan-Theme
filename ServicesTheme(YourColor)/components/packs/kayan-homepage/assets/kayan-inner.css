@@ -113,6 +113,57 @@
   margin-inline: auto;
 }
 
+.kayan-inner-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 16px;
+  margin-top: 18px;
+}
+
+.kayan-inner-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--badge-color, var(--turq)) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--badge-color, var(--turq)) 45%, transparent);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.kayan-inner-hero__badge:hover {
+  background: color-mix(in srgb, var(--badge-color, var(--turq)) 35%, transparent);
+  transform: translateY(-1px);
+}
+
+.kayan-inner-hero__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--gold);
+  font-size: 15px;
+}
+
+.kayan-inner-hero__rating .fa-star,
+.kayan-inner-hero__rating .fa-star-half-stroke {
+  font-size: 14px;
+}
+
+.kayan-inner-hero__rating-value {
+  color: var(--white);
+  font-weight: 800;
+  margin-inline-start: 4px;
+}
+
 /* ═══════════════ Breadcrumb ═══════════════ */
 .kayan-inner-breadcrumb {
   background: var(--bg-alt);
@@ -356,7 +407,125 @@ html[lang*='ar'] .kayan-contact-box__actions .btn i.fa-arrow-left {
   transform: scaleX(-1);
 }
 
+/* ═══════════════ Post singular blocks ═══════════════ */
+.kayan-inner-post-content {
+  background: var(--inner-card-bg);
+  border: var(--inner-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--sh-s);
+  padding: 32px 28px;
+}
+
+.kayan-inner-post-block {
+  margin-top: 32px;
+}
+
+.kayan-inner-post-block:first-child {
+  margin-top: 0;
+}
+
+.kayan-inner-related-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kayan-inner-related-list a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.kayan-inner-related-list a i {
+  color: var(--turq);
+  font-size: 12px;
+}
+
+.kayan-inner-related-list a:hover {
+  color: var(--turq);
+}
+
+.kayan-inner-sidebar__rating .-post-reviews-feedback--area {
+  margin: 0;
+}
+
+.kayan-inner-sidebar__rating .--widget--sidebar--title,
+.kayan-inner-sidebar__rating .--single-ratingbox-posts-title {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0 0 16px;
+}
+
+.kayan-inner-post-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.kayan-inner-post-nav .-Chevrons--NextPrev {
+  background: var(--inner-card-bg);
+  border: var(--inner-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--sh-s);
+  overflow: hidden;
+}
+
+.kayan-inner-post-nav .-Chevrons--NextPrev a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 16px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.kayan-inner-post-nav .-Chevrons--NextPrev span {
+  display: block;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.kayan-inner-post-nav .-Chevrons--NextPrev h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.4;
+}
+
+.kayan-inner-post-nav .-Chevrons--NextPrev-poster {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--turq) 14%, transparent);
+  color: var(--turq);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .kayan-inner-post-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .kayan-inner-post-content {
+    padding: 24px 18px;
+  }
+}
+
 /* Legacy singular shell integration */
 .kayan-inner-singular-main{display:block}
 .kayan-inner-singular-main .kayan-inner-layout{width:100%}
-.kayan-inner-sidebar__widgets{margin-top:20px}
+.kayan-inner-sidebar__widgets{margin-top:0}
