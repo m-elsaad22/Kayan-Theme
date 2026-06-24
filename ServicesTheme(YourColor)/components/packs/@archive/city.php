@@ -1,8 +1,9 @@
 <?
 $obj = get_queried_object();
 $Styles = array(
-	'city-archive' => 'singular/city-archive.css',
-	'city__widget' => 'YourColor__Widgets/city__widget.css',
+	'kayan-home'  => 'kayan-home.css',
+	'kayan-inner' => 'kayan-inner.css',
+	'shortcodes'  => 'shortcodes.css',
 );
 
 $city_name = esc_html( $obj->name );
@@ -40,134 +41,129 @@ if ( empty( $phone ) ) {
 $whatsapp = yc_get_option( 'whatsapp_number' );
 $site_name = function_exists( 'kayan_seo_get_site_name' ) ? kayan_seo_get_site_name() : get_bloginfo( 'name' );
 
+$intro_full_text = $obj->description;
+$intro_full_text = str_replace( '<br/>', PHP_EOL, $intro_full_text );
+$intro_full_text = str_replace( '&nbsp;', ' ', $intro_full_text );
+$intro_full_text = trim( strip_tags( $intro_full_text ) );
+if ( empty( $intro_full_text ) && ! empty( $seo_description ) ) {
+	$intro_full_text = $seo_description;
+}
+if ( empty( $intro_full_text ) ) {
+	$intro_full_text = 'نقدّم أفضل الخدمات المنزلية في ' . $city_name . ' بفريق محترف وأسعار منافسة.';
+}
+
+$intro_hero_text = $intro_full_text;
+if ( mb_strlen( $intro_full_text, 'UTF-8' ) > 200 ) {
+	$intro_hero_text = mb_substr( $intro_full_text, 0, 200, 'UTF-8' ) . '…';
+}
+
+$phone_cta = function_exists( 'kayan_hp_resolve_phone' ) ? kayan_hp_resolve_phone( null ) : $phone;
+$whatsapp_cta = function_exists( 'kayan_hp_resolve_whatsapp' ) ? kayan_hp_resolve_whatsapp( null ) : $whatsapp;
+
+if ( function_exists( 'kayan_hp_resolve_tel_url' ) ) {
+	$tel_url = kayan_hp_resolve_tel_url( null );
+} else {
+	$tel_url = 'tel:' . preg_replace( '/\s+/', '', (string) $phone_cta );
+}
+
+if ( function_exists( 'kayan_hp_resolve_whatsapp_url' ) ) {
+	$wa_url = kayan_hp_resolve_whatsapp_url( null );
+} else {
+	$wa_digits = preg_replace( '/\D+/', '', (string) $whatsapp_cta );
+	$wa_url    = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $wa_digits, null, $city_headline ) : 'https://wa.me/' . $wa_digits;
+}
+
+$show_call = function_exists( 'kayan_ui_show_call_button' ) ? kayan_ui_show_call_button() : ! empty( $phone_cta );
+
 $this->Part( 'header', array( 'Styles' => $Styles ) );
 
-echo '<div class="-primary-body kayan-city-archive">';
+echo '<div class="kayan-inner-archive-shell kayan-city-archive">';
 
-	echo '<div class="kayan-city-hero' . ( ! empty( $city_image ) ? ' has-image' : '' ) . '">';
-		if ( ! empty( $city_image ) ) {
-			echo '<div class="kayan-city-hero__media" aria-hidden="true">';
-				echo '<img src="' . esc_url( $city_image ) . '" alt="' . esc_attr( $city_headline ) . '" width="1200" height="480" loading="eager" fetchpriority="high" decoding="async" />';
-			echo '</div>';
-		}
-		echo '<div class="container">';
-			echo '<div class="kayan-city-hero__inner">';
-				echo '<div class="kayan-city-hero__content">';
-					if ( ! empty( $city_icon ) ) {
-						echo '<div class="kayan-city-hero__icon">' . $city_icon . '</div>';
-					}
-					echo '<p class="kayan-city-hero__eyebrow">' . esc_html( $site_name ) . '</p>';
-					echo '<h1 class="kayan-city-hero__title">' . esc_html( $city_headline ) . '</h1>';
-					echo '<div class="kayan-city-hero__desc --archive--be-content">' . $intro_content . '</div>';
-					if ( $post_count > 0 ) {
-						echo '<p class="kayan-city-hero__stat"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> ' . (int) $post_count . ' خدمة متاحة في ' . $city_name . '</p>';
-					}
-					if ( ! empty( $whatsapp ) || ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() && ! empty( $phone ) ) ) {
-						echo '<div class="kayan-city-hero__cta">';
-							if ( function_exists( 'kayan_ui_show_call_button' ) && kayan_ui_show_call_button() && ! empty( $phone ) ) {
-								echo '<a class="btn-ket_2 -BTN--hoverable" href="tel:' . esc_attr( preg_replace( '/\s+/', '', $phone ) ) . '"><i class="fa-solid fa-phone"></i> اتصل الآن</a>';
-							}
-							if ( ! empty( $whatsapp ) ) {
-								$wa_digits = preg_replace( '/\D+/', '', $whatsapp );
-								$wa_city_url = function_exists( 'kayan_wa_build_url' ) ? kayan_wa_build_url( $wa_digits, null, $city_headline ) : 'https://wa.me/' . $wa_digits;
-								echo '<a class="btn-ket_1 -BTN--hoverable button_url_2" href="' . esc_url( $wa_city_url ) . '" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> واتساب</a>';
-							}
-						echo '</div>';
-					}
-				echo '</div>';
-			echo '</div>';
-		echo '</div>';
+echo '<section class="kayan-inner-hero kayan-city-inner-hero">';
+if ( ! empty( $city_image ) ) {
+	echo '<div class="kayan-inner-hero__media" aria-hidden="true">';
+	echo '<img src="' . esc_url( $city_image ) . '" alt="' . esc_attr( $city_headline ) . '" width="1200" height="480" loading="eager" fetchpriority="high" decoding="async" />';
 	echo '</div>';
-
-	echo '<div class="-Yc-breadcrumb-">';
-		echo '<div class="container">';
-			echo '<div class="YC-BreadCrumb -BreadCrumb-PT-city">';
-				Breadcrumb();
-			echo '</div>';
-		echo '</div>';
-	echo '</div>';
-
-	echo '<div class="-YC-Widgets-Inner-Row">';
-		echo '<div class="container">';
-			echo '<div class="-archive--container">';
-				echo '<div class="kayan-city-section-head">';
-					echo '<h2 class="kayan-city-section-head__title">خدماتنا في ' . $city_name . '</h2>';
-					echo '<p class="kayan-city-section-head__desc">تصفّح جميع الخدمات المنزلية المتوفرة في ' . $city_name . '.</p>';
-				echo '</div>';
-				echo '<div class="-archivePage-Posts-Grid">';
-					$this->Part(
-						'Posts',
-						array(
-							'object__type' => 'posts',
-							'object__name' => 'post',
-							'part_object__name' => 'post',
-							'part__name' => 'Post-box',
-							'ObjectTerms' => array( $obj ),
-							'ScrollLoader' => true,
-							'per' => 8,
-							'show__empty_part' => 'object--empty',
-							'data__empty_part' => array(
-								'__empty_icon' => '<i class="fa-solid fa-ban"></i>',
-								'__empty_title' => 'لا توجد خدمات في ' . $city_name . ' حالياً',
-								'__empty_description' => '<a href="' . esc_url( home_url() ) . '">العودة للرئيسية</a>',
-								'__Ajax_empty_title' => 'لقد شاهدت جميع الخدمات',
-								'__Ajax_empty_description' => 'تم عرض جميع الخدمات في ' . $city_name . ' — <a href="' . esc_url( home_url() ) . '">الرئيسية</a>',
-							),
-						)
-					);
-				echo '</div>';
-			echo '</div>';
-		echo '</div>';
-	echo '</div>';
-
-	$other_cities = get_terms(
-		array(
-			'taxonomy' => 'city',
-			'hide_empty' => true,
-			'exclude' => array( $obj->term_id ),
-			'number' => 8,
-		)
-	);
-
-	if ( is_array( $other_cities ) && ! empty( $other_cities ) ) {
-		echo '<div class="-YC-Widgets-Inner-Row kayan-city-related">';
-			echo '<div class="container">';
-				echo '<div class="kayan-city-section-head">';
-					echo '<h2 class="kayan-city-section-head__title">مدن أخرى نخدمها</h2>';
-					echo '<p class="kayan-city-section-head__desc">استكشف خدماتنا المنزلية في مدن أخرى.</p>';
-				echo '</div>';
-				echo '<div class="-cityBox-widgets-items-s1 -page--cites--boxes">';
-					$uniq = uniqid();
-					foreach ( $other_cities as $city ) {
-						$city_url = get_term_link( $city );
-						$icon = get_term_meta( $city->term_id, 'icon', true );
-						$description = $city->description;
-						$words = explode( ' ', strip_tags( $description ) );
-						$snippet = implode( ' ', array_slice( $words, 0, 10 ) );
-						echo '<div class="--single--city--boxitem" data-trigger-action="' . esc_attr( $uniq ) . '">';
-							echo '<div class="--cites-single-box-">';
-								echo '<div class="-city-wrap-">';
-									echo '<div class="--city--logoIcon">';
-										if ( ! empty( $icon ) ) {
-											echo '<div class="--citeyes-icon-in">' . $icon . '</div>';
-										} else {
-											echo '<div class="--citeyes-icon-in"><i class="fa-solid fa-house"></i></div>';
-										}
-									echo '</div>';
-									echo '<div class="--city--info-boxitem">';
-										echo '<a href="' . esc_url( $city_url ) . '" title="' . esc_attr( $city->name ) . '" data-trigger-url="' . esc_attr( $uniq ) . '"><h4 class="--city-name--">' . esc_html( $city->name ) . '</h4></a>';
-										if ( ! empty( $snippet ) ) {
-											echo '<p class="--city-content--">' . esc_html( $snippet ) . '</p>';
-										}
-									echo '</div>';
-								echo '</div>';
-							echo '</div>';
-						echo '</div>';
-					}
-				echo '</div>';
-			echo '</div>';
-		echo '</div>';
+	echo '<div class="kayan-inner-hero__overlay" aria-hidden="true"></div>';
+}
+echo '<div class="kayan-inner-hero__content">';
+if ( ! empty( $city_icon ) ) {
+	echo '<div class="kayan-inner-hero__icon">' . $city_icon . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+echo '<h1 class="kayan-inner-hero__title">' . esc_html( $city_headline ) . '</h1>';
+echo '<p class="kayan-inner-hero__sub">' . esc_html( $intro_hero_text ) . '</p>';
+if ( $post_count > 0 ) {
+	echo '<p class="kayan-inner-hero__stat"><i class="fas fa-screwdriver-wrench" aria-hidden="true"></i> ' . (int) $post_count . ' خدمة متاحة في ' . $city_name . '</p>';
+}
+if ( ( $show_call && trim( (string) $phone_cta ) !== '' && $tel_url !== '#' ) || ( trim( (string) $whatsapp_cta ) !== '' && $wa_url !== '#' ) ) {
+	echo '<div class="kayan-inner-hero__cta">';
+	if ( $show_call && trim( (string) $phone_cta ) !== '' && $tel_url !== '#' ) {
+		echo '<a class="btn btn-call" href="' . esc_url( $tel_url ) . '"><i class="fas fa-phone"></i> اتصل الآن</a>';
 	}
+	if ( trim( (string) $whatsapp_cta ) !== '' && $wa_url !== '#' ) {
+		echo '<a class="btn btn-wa" href="' . esc_url( $wa_url ) . '" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> واتساب</a>';
+	}
+	echo '</div>';
+}
+echo '</div>';
+echo '</section>';
+
+if ( function_exists( 'kayan_homepage_render_inner_breadcrumb' ) ) {
+	kayan_homepage_render_inner_breadcrumb();
+} else {
+	echo '<div class="kayan-inner-breadcrumb"><div class="kayan-inner-breadcrumb__inner"><div class="YC-BreadCrumb -BreadCrumb-PT-city">';
+	Breadcrumb();
+	echo '</div></div></div>';
+}
+
+echo '<div class="kayan-inner-body">';
+echo '<div class="kayan-inner-layout kayan-inner-layout--no-sidebar">';
+
+echo '<section class="kayan-inner-section">';
+echo '<div class="kayan-inner-section__head">';
+echo '<span class="kayan-inner-section__tag">' . esc_html( $site_name ) . '</span>';
+echo '<h2 class="kayan-inner-section__title">خدماتنا في <span>' . $city_name . '</span></h2>';
+echo '<p class="kayan-inner-section__lead">تصفّح جميع الخدمات المنزلية المتوفرة في ' . $city_name . '.</p>';
+echo '</div>';
+echo '<div class="kayan-inner-archive-grid -archivePage-Posts-Grid">';
+$this->Part(
+	'Posts',
+	array(
+		'object__type'        => 'posts',
+		'object__name'        => 'post',
+		'part_object__name'   => 'post',
+		'part__name'          => 'Post-box',
+		'ObjectTerms'         => array( $obj ),
+		'ScrollLoader'        => true,
+		'per'                 => 8,
+		'show__empty_part'    => 'object--empty',
+		'data__empty_part'    => array(
+			'__empty_icon'             => '<i class="fa-solid fa-ban"></i>',
+			'__empty_title'            => 'لا توجد خدمات في ' . $city_name . ' حالياً',
+			'__empty_description'      => '<a href="' . esc_url( home_url() ) . '">العودة للرئيسية</a>',
+			'__Ajax_empty_title'       => 'لقد شاهدت جميع الخدمات',
+			'__Ajax_empty_description' => 'تم عرض جميع الخدمات في ' . $city_name . ' — <a href="' . esc_url( home_url() ) . '">الرئيسية</a>',
+		),
+	)
+);
+echo '</div>';
+echo '</section>';
+
+if ( mb_strlen( $intro_full_text, 'UTF-8' ) > 200 ) {
+	echo '<section class="kayan-inner-section">';
+	echo '<details class="kayan-inner-collapsible">';
+	echo '<summary>عن الخدمات في ' . $city_name . '</summary>';
+	echo '<div class="kayan-inner-collapsible__body kayan-inner-section__body">' . esc_html( $intro_full_text ) . '</div>';
+	echo '</details>';
+	echo '</section>';
+} elseif ( $intro_full_text !== $intro_hero_text ) {
+	echo '<section class="kayan-inner-section">';
+	echo '<div class="kayan-inner-section__body kayan-inner-post-content">' . esc_html( $intro_full_text ) . '</div>';
+	echo '</section>';
+}
+
+echo '</div>';
+echo '</div>';
 
 echo '</div>';
 
