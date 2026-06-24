@@ -150,6 +150,47 @@ if ( ! function_exists( 'kayan_homepage_get_whatsapp_raw' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_homepage_build_fab_html' ) ) {
+	/**
+	 * Fixed WhatsApp FAB (#fab) — revealed after scroll via kayan-home.js.
+	 *
+	 * @param int|null $post_id Post/page ID; null uses homepage context.
+	 * @return string
+	 */
+	function kayan_homepage_build_fab_html( $post_id = null ) {
+		if ( null === $post_id ) {
+			$post_id = kayan_homepage_get_context_post_id();
+			if ( $post_id <= 0 ) {
+				$post_id = (int) get_queried_object_id();
+			}
+		}
+		$post_id = (int) $post_id;
+
+		$show = true;
+		if ( function_exists( 'kayan_ui_show_whatsapp_button' ) ) {
+			$show = (bool) kayan_ui_show_whatsapp_button( $post_id );
+		}
+		if ( ! $show ) {
+			return '';
+		}
+
+		$wa_url = function_exists( 'kayan_hp_resolve_whatsapp_url' )
+			? kayan_hp_resolve_whatsapp_url( $post_id > 0 ? $post_id : null )
+			: '';
+		if ( $wa_url === '' || $wa_url === '#' ) {
+			return '';
+		}
+
+		$aria_ar = 'تواصل عبر واتساب';
+		$aria    = kayan_homepage_ui_string( 'fab_whatsapp_aria', $aria_ar );
+		if ( function_exists( 'kayan_homepage_is_english' ) && kayan_homepage_is_english() && $aria === $aria_ar ) {
+			$aria = 'Chat on WhatsApp';
+		}
+
+		return '<a href="' . esc_url( $wa_url ) . '" id="fab" class="fab" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr( $aria ) . '"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>';
+	}
+}
+
 if ( ! function_exists( 'kayan_homepage_format_phone_display' ) ) {
 	function kayan_homepage_format_phone_display( $phone = null ) {
 		if ( null === $phone ) {
@@ -451,6 +492,7 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 			'cta_html'               => $cta_html,
 			'footer_html'            => $footer_html,
 			'floating_buttons_html'  => $floating_buttons,
+			'fab_html'               => kayan_homepage_build_fab_html(),
 			'services_grid_html'   => $services_grid,
 			'cities_grid_html'     => $cities_grid,
 			'services_head_html'   => $services_head,

@@ -3,9 +3,11 @@ window.addEventListener('load',()=>{const ld=document.getElementById('loader');i
 
 /* ═══════════════ Sticky header ═══════════════ */
 const hdr=document.getElementById('hdr');
+const fab=document.getElementById('fab');
 const onScroll=()=>{
   const y=window.scrollY;
   if(hdr)hdr.classList.toggle('scrolled',y>40);
+  if(fab)fab.classList.toggle('show',y>500);
 };
 window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 

@@ -26,7 +26,7 @@ if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '1.0.11';
+	return '1.0.12';
 }
 
 if ( ! function_exists( 'kayan_homepage_inner_page_request' ) ) {

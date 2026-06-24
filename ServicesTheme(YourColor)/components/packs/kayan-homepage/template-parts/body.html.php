@@ -177,3 +177,4 @@
 <!-- /kayan-section:footer -->
 
 {{floating_buttons_html}}
+{{fab_html}}
