@@ -183,9 +183,6 @@ if ( ! function_exists( 'kayan_homepage_build_fab_html' ) ) {
 
 		$aria_ar = 'تواصل عبر واتساب';
 		$aria    = kayan_homepage_ui_string( 'fab_whatsapp_aria', $aria_ar );
-		if ( function_exists( 'kayan_homepage_is_english' ) && kayan_homepage_is_english() && $aria === $aria_ar ) {
-			$aria = 'Chat on WhatsApp';
-		}
 
 		return '<a href="' . esc_url( $wa_url ) . '" id="fab" class="fab" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr( $aria ) . '"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>';
 	}
@@ -287,6 +284,20 @@ if ( ! function_exists( 'kayan_homepage_get_address' ) ) {
 if ( ! function_exists( 'kayan_homepage_get_option_text' ) ) {
 	function kayan_homepage_get_option_text( $key, $default ) {
 		$value = yc_get_option( $key );
+		if ( $value === '' || $value === null ) {
+			$alt_key = null;
+			if ( strpos( $key, 'kayan_homepage_' ) === 0 ) {
+				$alt_key = 'kayan_hp_' . substr( $key, 15 );
+			} elseif ( strpos( $key, 'kayan_hp_' ) === 0 ) {
+				$alt_key = 'kayan_homepage_' . substr( $key, 9 );
+			}
+			if ( $alt_key !== null ) {
+				$alt = yc_get_option( $alt_key );
+				if ( $alt !== '' && $alt !== null ) {
+					$value = $alt;
+				}
+			}
+		}
 		if ( $value === '' || $value === null ) {
 			$value = $default;
 		}
@@ -419,8 +430,17 @@ if ( ! function_exists( 'kayan_homepage_get_tokens' ) ) {
 		$copyright_default_ar      = '© {{year}} {{company_name}} للخدمات المنزلية. جميع الحقوق محفوظة.';
 		$copyright_default_en      = '© {{year}} {{company_name}} Home Services. All rights reserved.';
 
-		$hero_title     = kayan_homepage_pick_locale_text( 'kayan_homepage_hero_title', $hero_title_default_ar, 'kayan_homepage_hero_title_en', $hero_title_default_en );
-		$hero_subtitle  = kayan_homepage_pick_locale_text( 'kayan_homepage_hero_subtitle', $hero_subtitle_default_ar, 'kayan_homepage_hero_subtitle_en', $hero_subtitle_default_en );
+		$hero_title     = kayan_homepage_pick_locale_text( 'kayan_hp_hero_title', $hero_title_default_ar, 'kayan_hp_hero_title_en', $hero_title_default_en );
+		$hero_subtitle  = kayan_homepage_pick_locale_text( 'kayan_hp_hero_subtitle', $hero_subtitle_default_ar, 'kayan_hp_hero_subtitle_en', $hero_subtitle_default_en );
+		$hero_highlight = trim( (string) yc_get_option( 'kayan_hp_hero_title_highlight' ) );
+		if ( $hero_highlight !== '' && strpos( $hero_title, '<em>' ) === false ) {
+			$hero_title = preg_replace(
+				'/' . preg_quote( $hero_highlight, '/' ) . '/u',
+				'<em>' . $hero_highlight . '</em>',
+				$hero_title,
+				1
+			);
+		}
 		$dashboard_title = kayan_homepage_pick_locale_text( 'kayan_homepage_dashboard_title', $dashboard_title_default_ar, 'kayan_homepage_dashboard_title_en', $dashboard_title_default_en );
 		$why_heading    = kayan_homepage_pick_locale_text( 'kayan_homepage_why_heading', $why_heading_default_ar, 'kayan_homepage_why_heading_en', $why_heading_default_en );
 		$compare_heading = kayan_homepage_pick_locale_text( 'kayan_homepage_compare_heading', $compare_heading_default_ar, 'kayan_homepage_compare_heading_en', $compare_heading_default_en );

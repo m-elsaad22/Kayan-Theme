@@ -36,6 +36,27 @@ if ( ! function_exists( 'kayan_i18n_get_current_country_code' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_i18n_resolve_country_contact_code' ) ) {
+	/**
+	 * Country code for per-country contact options (URL segment or configured country).
+	 *
+	 * @return string|null
+	 */
+	function kayan_i18n_resolve_country_contact_code() {
+		$code = kayan_i18n_get_current_country_code();
+		if ( $code !== null ) {
+			return $code;
+		}
+		if ( function_exists( 'kayan_i18n_get_country' ) ) {
+			$from_config = kayan_i18n_get_country();
+			if ( in_array( $from_config, kayan_i18n_get_supported_country_codes(), true ) ) {
+				return $from_config;
+			}
+		}
+		return null;
+	}
+}
+
 if ( ! function_exists( 'kayan_i18n_resolve_phone' ) ) {
 	/**
 	 * Post meta → per-country option → global theme phone.
@@ -56,7 +77,7 @@ if ( ! function_exists( 'kayan_i18n_resolve_phone' ) ) {
 			}
 		}
 
-		$code = kayan_i18n_get_current_country_code();
+		$code = kayan_i18n_resolve_country_contact_code();
 		if ( $code !== null ) {
 			$country_phone = trim( (string) yc_get_option( 'kayan_country_' . $code . '_phone' ) );
 			if ( $country_phone !== '' ) {
@@ -96,7 +117,7 @@ if ( ! function_exists( 'kayan_i18n_resolve_whatsapp' ) ) {
 			}
 		}
 
-		$code = kayan_i18n_get_current_country_code();
+		$code = kayan_i18n_resolve_country_contact_code();
 		if ( $code !== null ) {
 			$country_whatsapp = trim( (string) yc_get_option( 'kayan_country_' . $code . '_whatsapp' ) );
 			if ( $country_whatsapp !== '' ) {
@@ -159,7 +180,7 @@ if ( ! function_exists( 'kayan_i18n_register_country_contact_options' ) ) {
 			'icon'     => '<i class="fa-solid fa-phone-volume"></i>',
 			'number'   => 49,
 			'id'       => 'kayan_i18n_country_contact',
-			'disc'     => 'أرقام هاتف وواتساب لكل دولة في مسارات kayan-i18n (/sa/, /kw/, /qa/, /bh/, /om/). الإمارات تستخدم الإعدادات العامة ما لم يُعرّف مسار /ae/.',
+			'disc'     => 'أرقام هاتف وواتساب لكل دولة في مسارات kayan-i18n. الإمارات على الجذر / تستخدم خيارات ae عند ضبطها.',
 			'fields'   => $fields,
 		);
 	}
