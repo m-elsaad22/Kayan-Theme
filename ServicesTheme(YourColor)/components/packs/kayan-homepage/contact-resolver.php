@@ -23,6 +23,10 @@ if ( ! function_exists( 'kayan_hp_resolve_phone' ) ) {
 	 * @return string
 	 */
 	function kayan_hp_resolve_phone( $post_id = null ) {
+		if ( function_exists( 'kayan_i18n_resolve_phone' ) ) {
+			return kayan_i18n_resolve_phone( $post_id );
+		}
+
 		$post_id = kayan_hp_resolve_post_id( $post_id );
 		if ( $post_id > 0 ) {
 			$meta = trim( (string) get_post_meta( $post_id, 'phone_number', true ) );
@@ -40,6 +44,10 @@ if ( ! function_exists( 'kayan_hp_resolve_whatsapp' ) ) {
 	 * @return string
 	 */
 	function kayan_hp_resolve_whatsapp( $post_id = null ) {
+		if ( function_exists( 'kayan_i18n_resolve_whatsapp' ) ) {
+			return kayan_i18n_resolve_whatsapp( $post_id );
+		}
+
 		$post_id = kayan_hp_resolve_post_id( $post_id );
 		if ( $post_id > 0 ) {
 			$meta = trim( (string) get_post_meta( $post_id, 'whatsapp_number', true ) );
