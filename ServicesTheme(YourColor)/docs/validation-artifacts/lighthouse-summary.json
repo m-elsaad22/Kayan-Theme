@@ -1,0 +1,176 @@
+{
+    "lighthouse-home-mobile": {
+        "url": "https://www.rukn-eltatawer.com/",
+        "fetchTime": "2026-06-18T20:01:31.797Z",
+        "performance": 0.79,
+        "seo": 0.92,
+        "best_practices": 1,
+        "accessibility": 0.9,
+        "lcp": {
+            "display": "4.4\u00a0s",
+            "numeric": 4441,
+            "score": 0.38
+        },
+        "cls": {
+            "display": "0",
+            "numeric": 0,
+            "score": 1
+        },
+        "inp": {
+            "display": null,
+            "numeric": null,
+            "score": null
+        },
+        "tbt": {
+            "display": "0\u00a0ms",
+            "numeric": 0,
+            "score": 1
+        },
+        "ttfb": {
+            "display": "Root document took 660\u00a0ms",
+            "numeric": 655.244,
+            "score": 0
+        },
+        "dom_size": {
+            "display": "1,149 elements",
+            "numeric": 1149,
+            "score": 0.5
+        },
+        "unused_css": {
+            "display": "Est savings of 121\u00a0KiB",
+            "numeric": 0,
+            "score": 0.5
+        },
+        "unused_js": {
+            "display": "Est savings of 118\u00a0KiB",
+            "numeric": 450,
+            "score": 0
+        },
+        "fcp": {
+            "display": "2.7\u00a0s",
+            "numeric": 2666,
+            "score": 0.61
+        },
+        "speed_index": {
+            "display": "4.0\u00a0s",
+            "numeric": 3971.441927702692,
+            "score": 0.81
+        }
+    },
+    "lighthouse-post-mobile": {
+        "url": "https://www.rukn-eltatawer.com/pest-control-khor-fakkan/",
+        "fetchTime": "2026-06-18T20:11:19.403Z",
+        "performance": 0.78,
+        "seo": 1,
+        "best_practices": null,
+        "accessibility": null,
+        "lcp": {
+            "display": "3.9\u00a0s",
+            "numeric": 3936.121,
+            "score": 0.51
+        },
+        "cls": {
+            "display": "0",
+            "numeric": 0,
+            "score": 1
+        },
+        "inp": {
+            "display": null,
+            "numeric": null,
+            "score": null
+        },
+        "tbt": {
+            "display": "40\u00a0ms",
+            "numeric": 36,
+            "score": 1
+        },
+        "ttfb": {
+            "display": "Root document took 720\u00a0ms",
+            "numeric": 724.45,
+            "score": 0
+        },
+        "dom_size": {
+            "display": "1,030 elements",
+            "numeric": 1030,
+            "score": 0
+        },
+        "unused_css": {
+            "display": "Est savings of 171\u00a0KiB",
+            "numeric": 0,
+            "score": 0.5
+        },
+        "unused_js": {
+            "display": "Est savings of 117\u00a0KiB",
+            "numeric": 0,
+            "score": 0.5
+        },
+        "fcp": {
+            "display": "3.9\u00a0s",
+            "numeric": 3882.121,
+            "score": 0.25
+        },
+        "speed_index": {
+            "display": "3.9\u00a0s",
+            "numeric": 3904.408431731193,
+            "score": 0.82
+        }
+    },
+    "lighthouse-services-mobile": {
+        "url": "https://www.rukn-eltatawer.com/services/",
+        "fetchTime": "2026-06-18T20:02:31.956Z",
+        "performance": 0.82,
+        "seo": 1,
+        "best_practices": null,
+        "accessibility": null,
+        "lcp": {
+            "display": "3.5\u00a0s",
+            "numeric": 3525.4930000000004,
+            "score": 0.63
+        },
+        "cls": {
+            "display": "0",
+            "numeric": 0,
+            "score": 1
+        },
+        "inp": {
+            "display": null,
+            "numeric": null,
+            "score": null
+        },
+        "tbt": {
+            "display": "0\u00a0ms",
+            "numeric": 2.5,
+            "score": 1
+        },
+        "ttfb": {
+            "display": "Root document took 740\u00a0ms",
+            "numeric": 743.7280000000001,
+            "score": 0
+        },
+        "dom_size": {
+            "display": "552 elements",
+            "numeric": 552,
+            "score": 1
+        },
+        "unused_css": {
+            "display": "Est savings of 183\u00a0KiB",
+            "numeric": 0,
+            "score": 0.5
+        },
+        "unused_js": {
+            "display": "Est savings of 118\u00a0KiB",
+            "numeric": 0,
+            "score": 0.5
+        },
+        "fcp": {
+            "display": "3.5\u00a0s",
+            "numeric": 3525.4930000000004,
+            "score": 0.34
+        },
+        "speed_index": {
+            "display": "3.9\u00a0s",
+            "numeric": 3905.83230135544,
+            "score": 0.82
+        }
+    }
+}

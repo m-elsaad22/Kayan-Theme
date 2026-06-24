@@ -1,0 +1,55 @@
+{
+    "file": "/workspace/ServicesTheme(YourColor)/docs/validation-artifacts/html-www.rukn-eltatawer.com.html",
+    "counts": {
+        "title": 1,
+        "meta_description": 2,
+        "canonical": 2,
+        "og_title": 2,
+        "og_description": 2,
+        "og_url": 2,
+        "twitter_card": 2,
+        "hreflang": 0,
+        "json_ld": 3,
+        "breadcrumb_micro": 0,
+        "rank_math": 1
+    },
+    "schema_types": [
+        {
+            "@type": "Place",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "HomeAndConstructionBusiness",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "WebSite",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "CollectionPage",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Organization",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "WebSite",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Organization",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "HomeAndConstructionBusiness",
+            "@context": "https://schema.org"
+        }
+    ],
+    "issues": [
+        "Expected exactly 1 meta_description, found 2",
+        "Expected exactly 1 canonical, found 2",
+        "Duplicate Open Graph tags detected"
+    ]
+}

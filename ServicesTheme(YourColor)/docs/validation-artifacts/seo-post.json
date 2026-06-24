@@ -1,0 +1,108 @@
+{
+    "file": "/workspace/ServicesTheme(YourColor)/docs/validation-artifacts/html-post-pest-control.html",
+    "counts": {
+        "title": 1,
+        "meta_description": 3,
+        "canonical": 2,
+        "og_title": 3,
+        "og_description": 3,
+        "og_url": 2,
+        "twitter_card": 2,
+        "hreflang": 0,
+        "json_ld": 10,
+        "breadcrumb_micro": 1,
+        "rank_math": 1
+    },
+    "schema_types": [
+        {
+            "@type": "FAQPage",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Place",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "HomeAndConstructionBusiness,Organization",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "WebSite",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "ImageObject",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "WebPage",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Person",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "BlogPosting",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Article",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "FAQPage",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Article",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Service",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Article",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Service",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "LocalBusiness",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "Article",
+            "@context": "https://schema.org"
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@context": "https://schema.org"
+        }
+    ],
+    "issues": [
+        "Expected exactly 1 meta_description, found 3",
+        "Expected exactly 1 canonical, found 2",
+        "Duplicate Open Graph tags detected",
+        "Breadcrumb may be duplicated (microdata + JSON-LD)"
+    ]
+}
