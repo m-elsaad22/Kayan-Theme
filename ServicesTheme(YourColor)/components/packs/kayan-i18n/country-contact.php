@@ -47,12 +47,22 @@ if ( ! function_exists( 'kayan_i18n_resolve_country_contact_code' ) ) {
 		if ( $code !== null ) {
 			return $code;
 		}
+
+		$path = function_exists( 'kayan_i18n_get_request_path' )
+			? kayan_i18n_get_request_path()
+			: wp_parse_url( $_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH );
+		$path = is_string( $path ) ? trim( $path, '/' ) : '';
+		if ( $path === '' ) {
+			return 'ae';
+		}
+
 		if ( function_exists( 'kayan_i18n_get_country' ) ) {
 			$from_config = kayan_i18n_get_country();
 			if ( in_array( $from_config, kayan_i18n_get_supported_country_codes(), true ) ) {
 				return $from_config;
 			}
 		}
+
 		return null;
 	}
 }

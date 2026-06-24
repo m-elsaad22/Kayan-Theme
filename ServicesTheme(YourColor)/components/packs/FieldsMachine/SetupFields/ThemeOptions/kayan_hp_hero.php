@@ -14,13 +14,13 @@ $metaboxes = array(
 		array(
 			'title' => 'عنوان البطل (عربي)',
 			'type'  => 'TextArea',
-			'id'    => 'kayan_homepage_hero_title',
+			'id'    => 'kayan_hp_hero_title',
 			'desc'  => 'افتراضي: {{company_name}} — منصة الخدمات المنزلية…',
 		),
 		array(
 			'title' => 'وصف البطل (عربي)',
 			'type'  => 'TextArea',
-			'id'    => 'kayan_homepage_hero_subtitle',
+			'id'    => 'kayan_hp_hero_subtitle',
 		),
 		array(
 			'title' => 'عنوان لوحة الخدمات (عربي)',
@@ -34,12 +34,12 @@ $metaboxes = array(
 		array(
 			'title' => 'Hero title (EN)',
 			'type'  => 'TextArea',
-			'id'    => 'kayan_homepage_hero_title_en',
+			'id'    => 'kayan_hp_hero_title_en',
 		),
 		array(
 			'title' => 'Hero subtitle (EN)',
 			'type'  => 'TextArea',
-			'id'    => 'kayan_homepage_hero_subtitle_en',
+			'id'    => 'kayan_hp_hero_subtitle_en',
 		),
 		array(
 			'title' => 'Dashboard title (EN)',
