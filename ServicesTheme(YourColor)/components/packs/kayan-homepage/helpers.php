@@ -523,3 +523,57 @@ if ( ! function_exists( 'kayan_homepage_v3_filter_html' ) ) {
 		return $html;
 	}
 }
+
+if ( ! function_exists( 'kayan_homepage_inner_hero' ) ) {
+	/**
+	 * Shared inner-page hero (.kayan-inner-hero).
+	 *
+	 * @param string   $title    Hero heading.
+	 * @param string   $subtitle Optional subtext (tags stripped).
+	 * @param string   $bg_image Attachment ID, URL, or file array.
+	 * @param int|null $post_id  Reserved for context (alt text / future use).
+	 */
+	function kayan_homepage_inner_hero( $title, $subtitle = '', $bg_image = '', $post_id = null ) {
+		unset( $post_id );
+
+		$title     = trim( (string) $title );
+		$subtitle  = trim( wp_strip_all_tags( (string) $subtitle ) );
+		$image_url = '';
+
+		if ( ! empty( $bg_image ) ) {
+			if ( is_numeric( $bg_image ) ) {
+				$image_url = wp_get_attachment_image_url( (int) $bg_image, 'full' );
+			} elseif ( is_array( $bg_image ) ) {
+				if ( ! empty( $bg_image['url'] ) ) {
+					$image_url = (string) $bg_image['url'];
+				} elseif ( ! empty( $bg_image['id'] ) ) {
+					$image_url = wp_get_attachment_image_url( (int) $bg_image['id'], 'full' );
+				}
+			} else {
+				$image_url = trim( (string) $bg_image );
+			}
+		}
+
+		$hero_class = 'kayan-inner-hero';
+		if ( $image_url === '' ) {
+			$hero_class .= ' kayan-inner-hero--gradient';
+		}
+
+		echo '<section class="' . esc_attr( $hero_class ) . '">';
+		if ( $image_url !== '' ) {
+			echo '<div class="kayan-inner-hero__media" aria-hidden="true">';
+			echo '<img src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $title ) . '" loading="eager" decoding="async" />';
+			echo '</div>';
+			echo '<div class="kayan-inner-hero__overlay" aria-hidden="true"></div>';
+		}
+		echo '<div class="kayan-inner-hero__content">';
+		if ( $title !== '' ) {
+			echo '<h1 class="kayan-inner-hero__title">' . esc_html( $title ) . '</h1>';
+		}
+		if ( $subtitle !== '' ) {
+			echo '<p class="kayan-inner-hero__sub">' . esc_html( $subtitle ) . '</p>';
+		}
+		echo '</div>';
+		echo '</section>';
+	}
+}

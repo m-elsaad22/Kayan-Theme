@@ -55,6 +55,10 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
+.kayan-inner-layout--wide-main {
+  grid-template-columns: minmax(0, 3fr) minmax(260px, 1fr);
+}
+
 /* ═══════════════ Hero ═══════════════ */
 .kayan-inner-hero {
   position: relative;
@@ -67,6 +71,10 @@
   color: var(--white);
   background: var(--grad);
   overflow: hidden;
+}
+
+.kayan-inner-hero--gradient {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 45%, var(--turq) 100%);
 }
 
 .kayan-inner-hero__media {
@@ -376,6 +384,10 @@
   .kayan-inner-layout {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+
+  .kayan-inner-layout--wide-main {
+    grid-template-columns: 1fr;
   }
 
   .kayan-inner-sidebar {
