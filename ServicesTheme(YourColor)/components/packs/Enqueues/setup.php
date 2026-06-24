@@ -63,6 +63,7 @@ function kayan_theme_script_whitelist() {
 		'kayan-home',
 		'kayan-home-fonts',
 		'kayan-home-fa',
+		'kayan-inner',
 		'kayan-ui-fixes',
 	);
 }
@@ -84,7 +85,7 @@ function disable_all_scripts() {
 	}
 
 	global $wp_styles;
-	$style_whitelist = array( 'kayan-home', 'kayan-home-fonts', 'kayan-home-fa' );
+	$style_whitelist = array( 'kayan-home', 'kayan-home-fonts', 'kayan-home-fa', 'kayan-inner', 'kayan-locale' );
 	foreach ( (array) $wp_styles->queue as $handle ) {
 		if ( in_array( $handle, $style_whitelist, true ) ) {
 			continue;

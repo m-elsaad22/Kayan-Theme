@@ -23,6 +23,8 @@ rsync -a \
 	--exclude 'node_modules' \
 	--exclude '.DS_Store' \
 	--exclude 'wordpress-dev' \
+	--exclude 'dist/' \
+	--exclude 'docs/' \
 	"$SOURCE_DIR/" "$BUILD_DIR/kayan-theme/"
 
 (

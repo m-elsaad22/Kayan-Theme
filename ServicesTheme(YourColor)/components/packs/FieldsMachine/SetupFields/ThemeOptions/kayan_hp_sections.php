@@ -108,6 +108,31 @@ $metaboxes = array(
 			'id'    => 'kayan_homepage_blog_count',
 		),
 		array(
+			'title' => 'إخفاء مُكتشف الخدمات',
+			'type'  => 'SwitchBox',
+			'id'    => 'kayan_hp_finder_disable',
+		),
+		array(
+			'title' => 'إخفاء الأسعار',
+			'type'  => 'SwitchBox',
+			'id'    => 'kayan_hp_pricing_disable',
+		),
+		array(
+			'title' => 'عدد خطط الأسعار',
+			'type'  => 'Number',
+			'id'    => 'kayan_hp_pricing_count',
+		),
+		array(
+			'title' => 'عدد أسئلة FAQ',
+			'type'  => 'Number',
+			'id'    => 'kayan_hp_faq_count',
+		),
+		array(
+			'title' => 'إخفاء شريط الإحصائيات المتحرك',
+			'type'  => 'SwitchBox',
+			'id'    => 'kayan_hp_atb_disable',
+		),
+		array(
 			'title' => 'إخفاء الأسئلة الشائعة',
 			'type'  => 'SwitchBox',
 			'id'    => 'kayan_hp_faq_disable',

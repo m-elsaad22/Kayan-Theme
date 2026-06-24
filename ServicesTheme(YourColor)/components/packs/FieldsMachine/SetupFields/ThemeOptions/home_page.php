@@ -8,6 +8,16 @@ $metaboxes = array(
 	'fields'   => array(
 		array(
 			'type'  => 'Title',
+			'title' => 'محتوى العرض التوضيحي',
+			'disc'  => 'يُثبّت تلقائياً عند تفعيل القالب: مدن، خدمات، FAQ، مشاريع، مدونة، أسعار، قائمة، وإعدادات الأقسام. لإعادة التثبيت:',
+		),
+		array(
+			'title'    => 'رابط إعادة تثبيت المحتوى',
+			'type'     => 'Title',
+			'disc'     => '<a href="' . esc_url( wp_nonce_url( add_query_arg( 'kayan_install_home_demo', '1', admin_url( 'admin.php?page=ThemeOptions&tab=4' ) ), 'kayan_install_home_demo' ) ) . '">اضغط هنا لإعادة تثبيت محتوى الصفحة الرئيسية</a>',
+		),
+		array(
+			'type'  => 'Title',
 			'title' => 'وضع العرض',
 		),
 		array(

@@ -23,6 +23,8 @@ if( strlen($post_content) > 350 ) {
 	$post_content = $post_content;
 }
 $Styles['contact__form'] = 'YourColor__Widgets/contact__form.css';
+$Styles['kayan-home']    = 'kayan-home.css';
+$Styles['kayan-inner']   = 'kayan-inner.css';
 
 $contactus_page__data = get_option('contactus_page__data');
 $contactus_page__data = ( ( is_array( $contactus_page__data ) ) ) ? $contactus_page__data : array();
@@ -31,42 +33,59 @@ $page_background = get_post_meta($post->ID, 'page_back_image', true);
 if (empty($page_background)) {
     $page_background = get_option('background_image');
 }
+
+$whatsapp_number = get_post_meta( $post->ID,'whatsapp_number',true );
+if( empty( $whatsapp_number ) ) $whatsapp_number = get_option('whatsapp_number');
+
+$phonenumber = get_post_meta( $post->ID,'phone_number',true );
+if( empty( $phonenumber ) ) $phonenumber = get_option('phonenumber');
+
 $this->Part('header',array('Styles'=>$Styles));
 
-echo '<div class="-primary-body">';
+echo '<div class="kayan-inner-archive-shell kayan-contact-page">';
 
-	echo '<div class="--primary--intro--pages">';
-		echo '<div class="container">';
+if ( function_exists( 'kayan_homepage_inner_hero' ) ) {
+	kayan_homepage_inner_hero( $post->post_title, $post_content, $page_background, $post->ID );
+} elseif ( function_exists( 'kayan_homepage_render_inner_hero' ) ) {
+	kayan_homepage_render_inner_hero(
+		array(
+			'title'     => $post->post_title,
+			'subtitle'  => wp_strip_all_tags( $post_content ),
+			'image_url' => is_numeric( $page_background ) ? (string) wp_get_attachment_image_url( (int) $page_background, 'full' ) : (string) $page_background,
+		)
+	);
+}
 
-			echo '<div class="container-pages-head">';
+if ( function_exists( 'kayan_homepage_render_inner_breadcrumb' ) ) {
+	kayan_homepage_render_inner_breadcrumb();
+} else {
+	echo '<div class="kayan-inner-breadcrumb"><div class="kayan-inner-breadcrumb__inner"><div class="YC-BreadCrumb -BreadCrumb-PT-' . esc_attr( $post->post_type ) . '">';
+	Breadcrumb();
+	echo '</div></div></div>';
+}
 
-				echo '<div class="--container--category--info">';
+echo '<div class="kayan-inner-body">';
+echo '<div class="kayan-inner-layout kayan-inner-layout--wide-main">';
 
-					echo '<h1>'.$post->post_title.'</h1>';
-					echo '<div class="--archive--be-content">'.$post_content.'</div>';
+echo '<main class="kayan-inner-body__content kayan-inner-section kayan-contact-page__widgets">';
+if( empty( $hide__sidebar__single ) && !empty( $widgets_contactus__meta ) ) {
+	$YC__WidgetsMachine->widgets___UI(
+		array(
+			'Widgets_data'=>$widgets_contactus__meta,
+			'WidgetID'=>'widgets_contactus__meta',
+		)
+	);
+}
+echo '</main>';
 
-				echo '</div>';
-			echo '</div>';
-		echo '</div>';
-	echo '</div>';
-	echo '<div class="-Yc-breadcrumb-">';
-		echo '<div class="container">';
-			echo '<div class="YC-BreadCrumb -BreadCrumb-PT-'.$post->post_type.'">';
-				Breadcrumb();
-			echo '</div>';
-		echo '</div>';
-	echo '</div>';
-	echo '<div class="-page--container-sidebars">';
-		# WIDGETS UI
-		if( empty( $hide__sidebar__single ) && !empty( $widgets_contactus__meta ) ) {
-			$YC__WidgetsMachine->widgets___UI(
-				array(
-					'Widgets_data'=>$widgets_contactus__meta,
-					'WidgetID'=>'widgets_contactus__meta',
-				)
-			);
-		}
-	echo '</div>';
-	
+echo '<aside class="kayan-inner-sidebar">';
+if ( function_exists( 'kayan_homepage_render_contact_box' ) ) {
+	kayan_homepage_render_contact_box( $post->ID, $phonenumber, $whatsapp_number );
+}
+echo '</aside>';
+
 echo '</div>';
+echo '</div>';
+echo '</div>';
+
 $this->Part('footer',array('Styles'=>$Styles));

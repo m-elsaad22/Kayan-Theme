@@ -49,7 +49,7 @@ body{
   color:var(--text);
   line-height:1.7;
   overflow-x:hidden;
-  font-size:18px;
+  font-size:16px;
 }
 a{text-decoration:none;color:inherit}
 ul{list-style:none}
@@ -57,14 +57,14 @@ img{max-width:100%;display:block}
 section{position:relative}
 
 h1,h2,h3,h4{font-family:'Cairo','Tajawal',sans-serif;line-height:1.25;color:var(--navy)}
-h1{font-size:clamp(36px,5vw,56px);font-weight:900}
-h2{font-size:clamp(28px,3.6vw,42px);font-weight:800}
-h3{font-size:clamp(22px,2.4vw,28px);font-weight:700}
+h1{font-size:clamp(32px,4.5vw,48px);font-weight:900}
+h2{font-size:clamp(24px,3.2vw,36px);font-weight:800}
+h3{font-size:clamp(20px,2.2vw,24px);font-weight:700}
 
 .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
 .sec{padding:var(--pad) 0}
 @media(max-width:1024px){:root{--pad:80px}}
-@media(max-width:640px){:root{--pad:60px};body{font-size:16px}}
+@media(max-width:640px){:root{--pad:60px};body{font-size:15px}}
 
 /* Section headers */
 .shead{text-align:center;max-width:760px;margin:0 auto 60px}
@@ -74,13 +74,13 @@ h3{font-size:clamp(22px,2.4vw,28px);font-weight:700}
   padding:8px 18px;border-radius:999px;margin-bottom:18px;
 }
 .shead h2 span{background:var(--grad-cta);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.shead p{color:var(--text2);font-size:18px;margin-top:14px}
+.shead p{color:var(--text2);font-size:16px;margin-top:14px}
 
 /* Buttons */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  font-family:'Cairo',sans-serif;font-weight:700;font-size:16px;
-  padding:15px 28px;border-radius:14px;border:none;cursor:pointer;
+  font-family:'Cairo',sans-serif;font-weight:700;font-size:15px;
+  padding:13px 24px;border-radius:13px;border:none;cursor:pointer;
   transition:transform .25s ease,box-shadow .25s ease,filter .25s ease;
   white-space:nowrap;
 }
@@ -111,13 +111,13 @@ h3{font-size:clamp(22px,2.4vw,28px);font-weight:700}
 header{position:fixed;top:0;inset-inline:0;z-index:1000;height:80px;display:flex;align-items:center;transition:all .35s ease}
 header.scrolled{height:70px;background:rgba(255,255,255,.78);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(10,31,78,.10);border-bottom:1px solid rgba(226,234,245,.7)}
 .nav{display:flex;align-items:center;justify-content:space-between;width:100%}
-.logo{display:flex;align-items:center;gap:12px;font-family:'Cairo';font-weight:900;font-size:24px;color:#fff;transition:color .3s}
+.logo{display:flex;align-items:center;gap:12px;font-family:'Cairo';font-weight:900;font-size:22px;color:#fff;transition:color .3s}
 header.scrolled .logo{color:var(--navy)}
 .logo .mark{width:46px;height:46px;border-radius:13px;background:var(--grad-cta);display:grid;place-items:center;color:#fff;font-size:22px;box-shadow:var(--sh-glow)}
 .logo b{color:var(--aqua)}
 header.scrolled .logo b{color:var(--turq)}
 .menu{display:flex;align-items:center;gap:8px}
-.menu a{font-family:'Cairo';font-weight:600;font-size:16px;color:rgba(255,255,255,.9);padding:9px 16px;border-radius:10px;transition:all .25s}
+.menu a{font-family:'Cairo';font-weight:600;font-size:15px;color:rgba(255,255,255,.9);padding:8px 14px;border-radius:10px;transition:all .25s}
 header.scrolled .menu a{color:var(--text2)}
 .menu a:hover{color:#fff;background:rgba(255,255,255,.14)}
 header.scrolled .menu a:hover{color:var(--turq);background:rgba(26,184,184,.10)}
@@ -147,7 +147,7 @@ header.scrolled .ham span{background:var(--navy)}
 .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
 .hero-copy h1{color:#fff}
 .hero-copy h1 em{font-style:normal;background:linear-gradient(120deg,var(--aqua),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.hero-copy .sub{color:rgba(255,255,255,.86);font-size:clamp(16px,1.4vw,20px);margin:22px 0 28px;max-width:620px}
+.hero-copy .sub{color:rgba(255,255,255,.86);font-size:clamp(15px,1.3vw,18px);margin:20px 0 26px;max-width:620px}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:30px}
 .hero-proof{display:flex;flex-wrap:wrap;gap:10px}
 .chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);color:#fff;font-size:14px;font-weight:600;padding:9px 14px;border-radius:999px;backdrop-filter:blur(6px)}
@@ -375,17 +375,50 @@ footer{background:#071226;color:rgba(255,255,255,.74);padding:70px 0 0}
 .fmap,.fmap-inner{width:100%;height:100%;min-height:220px}
 .fmap-inner iframe{width:100%;height:100%;min-height:220px;border:0;border-radius:14px;display:block}
 
-/* ═══════════════ Mobile sticky bar + float ═══════════════ */
-.mbar{position:fixed;bottom:0;inset-inline:0;z-index:900;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:none;padding:10px 12px;gap:10px;box-shadow:0 -8px 30px rgba(10,31,78,.12)}
-.mbar a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-family:'Cairo';font-weight:700;font-size:12px;padding:8px 4px;border-radius:12px;color:#fff}
-.mbar a i{font-size:18px}
-.mbar .m-wa{background:var(--wa)}
-.mbar .m-call{background:var(--turq)}
-.mbar .m-quote{background:var(--gold);color:#3a2600}
-.fab{position:fixed;bottom:26px;inset-inline-start:26px;z-index:850;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;font-size:28px;box-shadow:0 12px 30px rgba(37,211,102,.4);opacity:0;visibility:hidden;transform:scale(.6);transition:.3s}
-.fab.show{opacity:1;visibility:visible;transform:scale(1)}
-.fab::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--wa);animation:ring 2s infinite;z-index:-1}
-@keyframes ring{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.7);opacity:0}}
+/* ═══════════════ Floating call buttons (legacy .btn-fixed-bh) ═══════════════ */
+.btn-fixed-bh{position:fixed;display:flex;flex-direction:column;bottom:40px;inset-inline-end:40px;z-index:900}
+.--yourcolor--button--phones{display:flex;align-items:center;--el--w:52px;width:var(--el--w);height:var(--el--w);border-radius:50%;z-index:55;margin-bottom:12px;justify-content:center;color:#fff;background:var(--turq);box-shadow:0 8px 22px rgba(26,184,184,.35)}
+.--yourcolor--button--phones:last-child{margin-bottom:0}
+.--yourcolor--button--phones>a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:inherit;font-size:24px;position:relative}
+.--yourcolor--button--phones>a>.footer-header{display:flex;align-items:center}
+.--YourColor--whatsapp-button{background:var(--wa);box-shadow:0 8px 22px rgba(37,211,102,.35)}
+.--YourColor--phone-button{background:var(--turq)}
+@media(max-width:768px){
+  .btn-fixed-bh{bottom:21px;inset-inline-end:14px}
+  .--yourcolor--button--phones{--el--w:48px;margin-bottom:10px}
+  .--yourcolor--button--phones>a{font-size:22px}
+}
+
+/* ═══════════════ WhatsApp FAB (scroll reveal) ═══════════════ */
+.fab#fab{
+  position:fixed;
+  bottom:24px;
+  left:24px;
+  z-index:901;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:var(--wa);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  box-shadow:var(--sh-m);
+  font-size:26px;
+  opacity:0;
+  transform:scale(0.8);
+  transition:opacity .3s ease,transform .3s ease;
+  pointer-events:none;
+}
+.fab#fab.show{
+  opacity:1;
+  transform:scale(1);
+  pointer-events:auto;
+}
+.fab#fab:hover{color:#fff}
+.fab#fab.show:hover{transform:scale(1.05)}
+@media(max-width:768px){
+  .fab#fab{bottom:20px;left:14px;width:52px;height:52px;font-size:24px}
+}
 
 /* ═══════════════ Responsive ═══════════════ */
 @media(max-width:1024px){
@@ -401,9 +434,6 @@ footer{background:#071226;color:rgba(255,255,255,.74);padding:70px 0 0}
 @media(max-width:768px){
   .menu,.nav-cta .btn{display:none}
   .ham{display:flex}
-  .mbar{display:flex}
-  body{padding-bottom:78px}
-  .fab{bottom:90px}
 }
 @media(max-width:640px){
   .services-grid,.proj-grid,.blog-grid,.why-cards,.area-cards,.fgrid,.fgrid-has-map{grid-template-columns:1fr}

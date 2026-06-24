@@ -230,10 +230,28 @@ $metaboxes = array(
 			'id'    => 'hide__floating__call',
 		),
 		array(
+			'title'  => 'إخفاء زر واتساب العائم من كل الصفحات',
+			'disc'   => 'يُخفي زر واتساب العائم وزر FAB من جميع صفحات الموقع',
+			'type'  => 'SwitchBox',
+			'id'    => 'hide__floating__whatsapp',
+		),
+		array(
 			'title'  => 'إخفاء الزر العائم حسب التصنيف',
 			'disc'   => 'اختر تصنيفاً أو أكثر — يُخفى زر الاتصال العائم فقط من مقالات هذه التصنيفات. بطاقة المقال والودجات لا تتأثر',
 			'type'   => 'CheckBox',
 			'id'     => 'hide__floating__call__categories',
+			'options'=> ( function(){
+				$cats = get_categories( array('hide_empty'=>false) );
+				$opts = array();
+				foreach( $cats as $cat ) $opts[ $cat->term_id ] = $cat->name;
+				return $opts;
+			} )(),
+		),
+		array(
+			'title'  => 'إخفاء واتساب العائم حسب التصنيف',
+			'disc'   => 'اختر تصنيفاً أو أكثر — يُخفى زر واتساب العائم من مقالات هذه التصنيفات',
+			'type'   => 'CheckBox',
+			'id'     => 'hide__floating__whatsapp__categories',
 			'options'=> ( function(){
 				$cats = get_categories( array('hide_empty'=>false) );
 				$opts = array();

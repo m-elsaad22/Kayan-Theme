@@ -91,3 +91,5 @@ add_action( 'wp_enqueue_scripts', 'kayan_i18n_enqueue_assets', 6 );
 add_filter( 'kayan_seo_resolved_title', 'kayan_i18n_filter_seo_title', 10, 1 );
 add_filter( 'kayan_seo_resolved_description', 'kayan_i18n_filter_seo_description', 10, 1 );
 add_filter( 'language_attributes', 'kayan_i18n_filter_language_attributes', 20 );
+
+require_once __DIR__ . '/country-contact.php';

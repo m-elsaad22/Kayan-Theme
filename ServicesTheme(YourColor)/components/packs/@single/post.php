@@ -20,7 +20,12 @@ $UniqID = uniqid();
 			$StyleFields__Intro[] = $current_file_name;
 		}
 		$Styles['shortcodes'] = 'shortcodes.css';
-		$Styles[$post->post_type] = 'singular/single.css';
+		if ( ! function_exists( 'kayan_homepage_uses_inner_layout' ) || ! kayan_homepage_uses_inner_layout() ) {
+			$Styles[$post->post_type] = 'singular/single.css';
+		} else {
+			$Styles['kayan-home']  = 'kayan-home.css';
+			$Styles['kayan-inner']   = 'kayan-inner.css';
+		}
 
 #
 
@@ -178,6 +183,91 @@ $ShareHastags = array();
 	# HEADER .
 	$this->Part('header',array('Styles'=>$Styles));
 
+		$kayan_inner_layout = function_exists( 'kayan_homepage_uses_inner_layout' ) && kayan_homepage_uses_inner_layout();
+		$hero_category      = isset( $category__sorted['parent'][0] ) ? $category__sorted['parent'][0] : null;
+
+		if ( $kayan_inner_layout ) {
+			kayan_homepage_render_inner_hero(
+				array(
+					'title'         => $post->post_title,
+					'image_url'     => ! empty( $post_thumb ) ? $post_thumb : '',
+					'image_alt'     => $post->post_title,
+					'category_term' => $hero_category,
+					'total_rate'    => (float) $TotalRate_v1,
+				)
+			);
+			kayan_homepage_render_inner_breadcrumb();
+
+			echo '<div class="-singular-pages-container kayan-inner-singular-shell"'.$PopOver__Attr.'>';
+			kayan_homepage_render_inner_layout_open( true );
+
+			echo '<article class="kayan-inner-section__body kayan-inner-post-content">';
+			do_action( 'yc_hook_ad_location_content_above' );
+			echo $post_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			do_action( 'yc_hook_ad_location_content_below' );
+			echo '</article>';
+
+			if ( empty( $hide__post__faqs ) ) {
+				echo '<div class="kayan-inner-post-block kayan-inner-section__body">';
+				$this->Blade( 'content-single-models', array( 'post' => $post ), 'post__faqs' );
+				echo '</div>';
+			}
+
+			if ( empty( $hide__post__tags ) && ! empty( $post_tag ) ) {
+				echo '<div class="kayan-inner-post-block kayan-inner-section__body">';
+				$this->Blade( 'content-single-models', array( 'post_tag' => $post_tag ), 'post__tags' );
+				echo '</div>';
+			}
+
+			if ( empty( $hide__next_prev_post__single ) ) {
+				echo '<div class="kayan-inner-post-block kayan-inner-post-nav">';
+				$this->Blade( 'content-single-models', array( 'post' => $post ), 'next_prev_post' );
+				echo '</div>';
+			}
+
+			kayan_homepage_render_inner_sidebar_open();
+			kayan_homepage_render_contact_box( $post->ID, $phonenumber, $whatsapp_number );
+			kayan_homepage_render_sidebar_related_services( $post->ID, $category__ids );
+
+			if ( empty( $hide__feedback__rating ) ) {
+				echo '<div class="kayan-inner-sidebar__card kayan-inner-sidebar__rating">';
+				$this->Blade(
+					'content-single-models',
+					array(
+						'post'           => $post,
+						'RatingCounter'  => $RatingCounter,
+						'RateValues'     => $RateValues,
+						'TotalRate_v1'   => $TotalRate_v1,
+					),
+					'feedback__rating'
+				);
+				echo '</div>';
+			}
+
+			if ( empty( $hide__sidebar__single ) && ! empty( $widgets_single__meta ) ) {
+				echo '<div class="kayan-inner-sidebar__card kayan-inner-sidebar__widgets">';
+				$YC__WidgetsMachine->widgets___UI(
+					array(
+						'Widgets_data'             => $widgets_single__meta,
+						'WidgetID'                 => 'widgets_single__meta',
+						'Parent__section__class'   => '-first-single-post-bar',
+						'Single__section__class'   => '--Single--page--widget-item',
+						'section_InnerRow_class'   => 'Single--page-widget-innerRow',
+					)
+				);
+				echo '</div>';
+			}
+
+			kayan_homepage_render_inner_layout_close( true );
+			echo '</div>';
+
+			if ( empty( $show_comments ) ) {
+				echo '<div class="kayan-inner-body"><div class="kayan-inner-layout kayan-inner-layout--no-sidebar">';
+				echo '<div class="kayan-inner-section__body">';
+				$this->Part( 'comments', array( 'post' => $post ) );
+				echo '</div></div></div>';
+			}
+		} else {
 		echo '<div class="YC-single-title">';
 			echo '<div class="container">';
 				echo '<div class="--YC-title-breadcrhumb-">';
@@ -395,6 +485,7 @@ $ShareHastags = array();
 						}
 			echo '</div>';
 		echo '</div>';
+		}
 
 
 	# SINGLE RELATED PAGE .

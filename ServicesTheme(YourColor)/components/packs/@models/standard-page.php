@@ -20,7 +20,12 @@ $UniqID = uniqid();
 			$StyleFields__Intro[] = $current_file_name;
 		}
 		$Styles['shortcodes'] = 'shortcodes.css';
-		$Styles[$post->post_type] = 'singular/single.css';
+		if ( ! function_exists( 'kayan_homepage_uses_inner_layout' ) || ! kayan_homepage_uses_inner_layout() ) {
+			$Styles[$post->post_type] = 'singular/single.css';
+		} else {
+			$Styles['kayan-home']  = 'kayan-home.css';
+			$Styles['kayan-inner'] = 'kayan-inner.css';
+		}
 
 #
 
@@ -90,7 +95,71 @@ $ShareHastags = array();
 
 	# HEADER .
 	$this->Part('header',array('Styles'=>$Styles));	
-	
+
+	$kayan_inner_layout = function_exists( 'kayan_homepage_uses_inner_layout' ) && kayan_homepage_uses_inner_layout();
+
+	if ( $kayan_inner_layout ) {
+		$page_plain_intro = wp_strip_all_tags( $post_content );
+		$hero_subtitle    = $page_plain_intro;
+		if ( mb_strlen( $hero_subtitle, 'UTF-8' ) > 160 ) {
+			$hero_subtitle = mb_substr( $hero_subtitle, 0, 160, 'UTF-8' ) . '…';
+		}
+
+		if ( function_exists( 'kayan_homepage_inner_hero' ) ) {
+			kayan_homepage_inner_hero( $post->post_title, $hero_subtitle, $post_thumb, $post->ID );
+		} elseif ( function_exists( 'kayan_homepage_render_inner_hero' ) ) {
+			kayan_homepage_render_inner_hero(
+				array(
+					'title'     => $post->post_title,
+					'subtitle'  => $hero_subtitle,
+					'image_url' => ! empty( $post_thumb ) ? $post_thumb : '',
+					'image_alt' => $post->post_title,
+				)
+			);
+		}
+
+		if ( function_exists( 'kayan_homepage_render_inner_breadcrumb' ) ) {
+			kayan_homepage_render_inner_breadcrumb();
+		}
+
+		echo '<div class="-singular-pages-container kayan-inner-singular-shell"' . $PopOver__Attr . '>';
+		echo '<div class="kayan-inner-body">';
+		echo '<div class="kayan-inner-layout kayan-inner-layout--wide-main">';
+
+		echo '<main class="kayan-inner-body__content kayan-inner-section">';
+		echo '<article class="kayan-inner-section__body kayan-inner-post-content standard-page single-' . esc_attr( $post->post_type ) . '-post-content">';
+		do_action( 'yc_hook_ad_location_content_above' );
+		echo $post_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		do_action( 'yc_hook_ad_location_content_below' );
+		echo '</article>';
+		echo '</main>';
+
+		echo '<aside class="kayan-inner-sidebar">';
+		if ( function_exists( 'kayan_homepage_render_contact_box' ) ) {
+			kayan_homepage_render_contact_box( $post->ID, $phonenumber, $whatsapp_number );
+		}
+		if ( ! isset( $widgets_pages__meta ) ) {
+			$widgets_pages__meta = array();
+		}
+		if ( empty( $hide__sidebar__single ) && ! empty( $widgets_pages__meta ) ) {
+			echo '<div class="kayan-inner-sidebar__card kayan-inner-sidebar__widgets">';
+			$YC__WidgetsMachine->widgets___UI(
+				array(
+					'Widgets_data'             => $widgets_pages__meta,
+					'WidgetID'                 => 'widgets_pages__meta',
+					'Parent__section__class'   => '-first-single-post-bar',
+					'Single__section__class'   => '--Single--page--widget-item',
+					'section_InnerRow_class'   => 'Single--page-widget-innerRow',
+				)
+			);
+			echo '</div>';
+		}
+		echo '</aside>';
+
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
+	} else {
 	echo '<div class="YC-single-title">';
 		echo '<div class="container">';
 			echo '<div class="--YC-title-breadcrhumb-">';
@@ -107,7 +176,9 @@ $ShareHastags = array();
 			echo '</div>';
 		echo '</div>';
 	echo '</div>';
+	}
 	# MAIN SINGLE CONTAINER .	
+		if ( ! $kayan_inner_layout ) {
 		echo '<div class="-singular-pages-container"'.$PopOver__Attr.'>';
 			echo '<div class="container">';
 
@@ -186,9 +257,11 @@ $ShareHastags = array();
 								)
 							);
 						}
+
 				echo '</div>';
 			echo '</div>';
 		echo '</div>';
+		}
 
 	# FOOTER .
 		$this->Part('footer',array('Styles'=>$Styles));
