@@ -4,26 +4,6 @@
   <div class="ld-bar"><i></i></div>
 </div>
 
-<!-- ═══════════════ Header ═══════════════ -->
-<!-- kayan-section:header -->
-<header id="hdr">
-  <div class="wrap nav">
-    {{header_logo_html}}
-    <nav class="menu">{{header_nav_html}}</nav>
-    <div class="nav-cta">
-      {{locale_switcher_html}}
-      <a href="{{whatsapp_url}}" class="btn btn-wa"><i class="fab fa-whatsapp"></i> {{ui_btn_whatsapp}}</a>
-      <button class="ham" onclick="toggleMob(true)" aria-label="{{ui_menu_label}}"><span></span><span></span><span></span></button>
-    </div>
-  </div>
-</header>
-<!-- /kayan-section:header -->
-
-<div class="mob" id="mob">
-  <button class="mob-close" onclick="toggleMob(false)" aria-label="{{ui_close_label}}"><i class="fas fa-xmark"></i></button>
-  {{header_mobile_nav_html}}
-</div>
-
 <!-- ═══════════════ Hero ═══════════════ -->
 <!-- kayan-section:hero -->
 <section class="hero" id="home">
@@ -171,10 +151,3 @@
 </section>
 <!-- /kayan-section:cta -->
 
-<!-- ═══════════════ Footer ═══════════════ -->
-<!-- kayan-section:footer -->
-{{footer_html}}
-<!-- /kayan-section:footer -->
-
-{{floating_buttons_html}}
-{{fab_html}}

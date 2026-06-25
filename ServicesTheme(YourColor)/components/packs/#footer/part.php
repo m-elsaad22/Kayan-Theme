@@ -1,6 +1,9 @@
 <?
 # LOGO EDITS .
 	$whatsapp = yc_get_option('whatsapp_number');
+	if ( function_exists( 'kayan_homepage_build_footer_html' ) ) {
+		echo kayan_homepage_build_footer_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	} else {
 	echo '<footer>';
 		echo '<div class="--YC-footer--">';
 			echo '<div class="container">';
@@ -238,6 +241,7 @@
 			echo '</div>';		
 		echo '</div>';
 	echo '</footer>';
+	}
 
 	// btn contact — floating buttons
 	if( is_single() || is_page() ){

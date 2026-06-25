@@ -26,7 +26,7 @@ if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '1.0.12';
+	return '1.0.13';
 }
 
 if ( ! function_exists( 'kayan_homepage_inner_page_request' ) ) {
@@ -40,7 +40,7 @@ if ( ! function_exists( 'kayan_homepage_inner_page_request' ) ) {
 		if ( function_exists( 'kayan_homepage_v3_active_request' ) && kayan_homepage_v3_active_request() ) {
 			return false;
 		}
-		return is_singular() || is_archive() || is_search() || is_404();
+		return true;
 	}
 }
 
@@ -76,6 +76,7 @@ function kayan_homepage_enqueue_inner_assets() {
 
 	$assets = kayan_homepage_enqueue_shared_design_assets();
 	wp_enqueue_style( 'kayan-inner', $assets['base'] . 'kayan-inner.css', array( 'kayan-home' ), $assets['ver'] );
+	wp_enqueue_script( 'kayan-home', $assets['base'] . 'kayan-home.js', array(), $assets['ver'], true );
 }
 add_action( 'wp_enqueue_scripts', 'kayan_homepage_enqueue_inner_assets', 6 );
 
@@ -182,48 +183,14 @@ if ( ! function_exists( 'kayan_homepage_v3_render' ) ) {
 			return;
 		}
 
-		$body_html   = kayan_homepage_v3_filter_html( file_get_contents( $body_file ) );
-		$theme_color = '#0A1F4E';
-		$html_attrs  = function_exists( 'kayan_i18n_get_html_attrs' ) ? kayan_i18n_get_html_attrs() : 'lang="ar" dir="rtl"';
+		$body_html = kayan_homepage_v3_filter_html( file_get_contents( $body_file ) );
 
-		echo '<!DOCTYPE html>' . "\n";
-		echo '<html ' . $html_attrs . ' '; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		language_attributes();
-		echo '>' . "\n";
-		echo '<head>' . "\n";
-		echo '<meta charset="' . esc_attr( get_bloginfo( 'charset' ) ) . '">' . "\n";
-		echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">' . "\n";
-		echo '<meta name="theme-color" content="' . esc_attr( $theme_color ) . '">' . "\n";
+		global $ThemeStatic;
+		$theme = ( isset( $ThemeStatic ) && $ThemeStatic instanceof ThemeStatic ) ? $ThemeStatic : new ThemeStatic();
 
-		do_action( 'BeforeWPHead' );
-
-		if ( function_exists( 'kayan_perf_render_resource_hints' ) ) {
-			kayan_perf_render_resource_hints();
-		}
-
-		$head_injection = yc_get_option( 'header___codes' );
-		if ( function_exists( 'kayan_lockdown_filter_header_injection' ) ) {
-			$head_injection = kayan_lockdown_filter_header_injection( $head_injection );
-		}
-		if ( ! empty( $head_injection ) ) {
-			echo $head_injection; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		}
-
-		wp_head();
-
-		do_action( 'AfterWPHead' );
-
-		$favicon = yc_get_option( 'favicon' );
-		if ( ! empty( $favicon ) ) {
-			echo '<link rel="shortcut icon" type="image/png" href="' . esc_url( $favicon ) . '">' . "\n";
-		}
-
-		echo '</head>' . "\n";
-		echo '<body class="' . esc_attr( kayan_home_body_classes() ) . '">' . "\n";
+		$theme->Part( 'header', array( 'bodyClass' => kayan_home_body_classes() ) );
 		echo $body_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in kayan_homepage_get_tokens().
-		wp_footer();
-		echo '</body>' . "\n";
-		echo '</html>' . "\n";
+		$theme->Part( 'footer' );
 	}
 }
 
