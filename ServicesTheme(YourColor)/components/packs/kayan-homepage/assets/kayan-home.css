@@ -114,6 +114,7 @@ header.scrolled{height:70px;background:rgba(255,255,255,.78);backdrop-filter:blu
 .logo{display:flex;align-items:center;gap:12px;font-family:'Cairo';font-weight:900;font-size:22px;color:#fff;transition:color .3s}
 header.scrolled .logo{color:var(--navy)}
 .logo .mark{width:46px;height:46px;border-radius:13px;background:var(--grad-cta);display:grid;place-items:center;color:#fff;font-size:22px;box-shadow:var(--sh-glow)}
+.logo img{max-height:54px;width:auto;object-fit:contain}
 .logo b{color:var(--aqua)}
 header.scrolled .logo b{color:var(--turq)}
 .menu{display:flex;align-items:center;gap:8px}
@@ -126,6 +127,13 @@ header.scrolled .menu a:hover{color:var(--turq);background:rgba(26,184,184,.10)}
 header.scrolled .ham{background:rgba(10,31,78,.07)}
 .ham span{width:22px;height:2.4px;background:#fff;border-radius:3px;transition:.3s}
 header.scrolled .ham span{background:var(--navy)}
+body.kayan-inner-page header#hdr{height:70px;background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(10,31,78,.10);border-bottom:1px solid rgba(226,234,245,.7)}
+body.kayan-inner-page header#hdr .logo{color:var(--navy)}
+body.kayan-inner-page header#hdr .logo b{color:var(--turq)}
+body.kayan-inner-page header#hdr .menu a{color:var(--text2)}
+body.kayan-inner-page header#hdr .menu a:hover{color:var(--turq);background:rgba(26,184,184,.10)}
+body.kayan-inner-page header#hdr .ham{background:rgba(10,31,78,.07)}
+body.kayan-inner-page header#hdr .ham span{background:var(--navy)}
 
 /* Mobile menu */
 .mob{position:fixed;inset:0;z-index:1100;background:var(--navy);transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);padding:90px 28px 28px;display:flex;flex-direction:column;gap:6px}
@@ -381,6 +389,7 @@ footer{background:#071226;color:rgba(255,255,255,.74);padding:70px 0 0}
 .--yourcolor--button--phones:last-child{margin-bottom:0}
 .--yourcolor--button--phones>a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:inherit;font-size:24px;position:relative}
 .--yourcolor--button--phones>a>.footer-header{display:flex;align-items:center}
+.--yourcolor--button--phones i{line-height:1}
 .--YourColor--whatsapp-button{background:var(--wa);box-shadow:0 8px 22px rgba(37,211,102,.35)}
 .--YourColor--phone-button{background:var(--turq)}
 @media(max-width:768px){

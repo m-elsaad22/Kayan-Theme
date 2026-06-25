@@ -236,6 +236,55 @@ if ( ! function_exists( 'kayan_homepage_get_whatsapp_url' ) ) {
 	}
 }
 
+if ( ! function_exists( 'kayan_homepage_get_post_url' ) ) {
+	function kayan_homepage_get_post_url( $post ) {
+		$post = get_post( $post );
+		if ( ! $post ) {
+			return '#';
+		}
+
+		if (
+			function_exists( 'kayan_i18n_build_url' )
+			&& function_exists( 'kayan_i18n_get_country' )
+			&& function_exists( 'kayan_i18n_get_lang' )
+			&& $post->post_name !== ''
+		) {
+			return kayan_i18n_build_url( kayan_i18n_get_country(), kayan_i18n_get_lang(), $post->post_name );
+		}
+
+		$url = get_permalink( $post );
+		return $url ? $url : '#';
+	}
+}
+
+if ( ! function_exists( 'kayan_homepage_resolve_url_token' ) ) {
+	function kayan_homepage_resolve_url_token( $url, $fallback = '#' ) {
+		$url = trim( (string) $url );
+		if ( $url === '' ) {
+			$url = $fallback;
+		}
+
+		$home = function_exists( 'kayan_i18n_home_url' ) ? kayan_i18n_home_url() : home_url( '/' );
+		$tokens = array(
+			'{{home_url}}'     => $home,
+			'{{contact_url}}'  => trailingslashit( $home ) . '#contact',
+			'{{whatsapp_url}}' => function_exists( 'kayan_hp_resolve_whatsapp_url' ) ? kayan_hp_resolve_whatsapp_url() : kayan_homepage_get_whatsapp_url(),
+			'{{tel_url}}'      => function_exists( 'kayan_hp_resolve_tel_url' ) ? kayan_hp_resolve_tel_url() : kayan_homepage_get_tel_url(),
+		);
+
+		$url = str_replace( array_keys( $tokens ), array_values( $tokens ), $url );
+		$url = preg_replace_callback(
+			'/\{\{(?:post|page)_url:(\d+)\}\}/',
+			function ( $matches ) {
+				return kayan_homepage_get_post_url( (int) $matches[1] );
+			},
+			$url
+		);
+
+		return kayan_homepage_expand_inline_tokens( $url );
+	}
+}
+
 if ( ! function_exists( 'kayan_homepage_expand_inline_tokens' ) ) {
 	function kayan_homepage_expand_inline_tokens( $text ) {
 		$company = kayan_homepage_get_company_name();
@@ -395,7 +444,7 @@ if ( ! function_exists( 'kayan_homepage_build_blog_posts_html' ) ) {
 			$html .= '<span class="post-date">' . esc_html( get_the_date( 'j F Y', $post ) ) . '</span>';
 			$html .= '<h3>' . esc_html( get_the_title( $post ) ) . '</h3>';
 			$html .= '<p>' . esc_html( wp_trim_words( get_the_excerpt( $post ), 18, '…' ) ) . '</p>';
-			$html .= '<a class="read" href="' . esc_url( function_exists( 'kayan_i18n_get_localized_url' ) ? kayan_i18n_get_localized_url( kayan_i18n_get_lang(), $post->ID ) : get_permalink( $post ) ) . '">' . esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'read_article' ) : 'اقرأ المقال' ) . ' <i class="fas fa-arrow-left"></i></a>';
+			$html .= '<a class="read" href="' . esc_url( kayan_homepage_get_post_url( $post ) ) . '">' . esc_html( function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'read_article' ) : 'اقرأ المقال' ) . ' <i class="fas fa-arrow-left"></i></a>';
 			$html .= '</div></article>';
 			$i++;
 		}

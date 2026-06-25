@@ -135,10 +135,51 @@ if( !isset($_GET['ajax']) ) {
 			echo '}';
 		echo '</style>';
 	echo '</head>';
-	echo '<body mode="light" class="before-start '.$bodyClass.'">';
+	$kayan_body_classes = trim( 'before-start ' . $bodyClass );
+	if ( function_exists( 'get_body_class' ) ) {
+		$kayan_body_classes = implode(
+			' ',
+			array_unique(
+				array_filter(
+					array_merge(
+						array( 'before-start' ),
+						get_body_class( $bodyClass )
+					)
+				)
+			)
+		);
+	}
+	echo '<body mode="light" class="' . esc_attr( $kayan_body_classes ) . '">';
 	do_action('yc_hook_body_start');
 }
 
+if ( function_exists( 'kayan_homepage_build_logo_html' ) && function_exists( 'kayan_homepage_build_nav_links_html' ) ) {
+	$kayan_header_logo = kayan_homepage_build_logo_html( 'header', 'logo' );
+	$kayan_header_nav  = kayan_homepage_build_nav_links_html();
+	$kayan_mobile_nav  = function_exists( 'kayan_homepage_build_mobile_nav_html' ) ? kayan_homepage_build_mobile_nav_html() : $kayan_header_nav;
+	$kayan_wa_url      = function_exists( 'kayan_hp_resolve_whatsapp_url' ) ? kayan_hp_resolve_whatsapp_url() : '#';
+	$kayan_wa_label    = function_exists( 'kayan_homepage_ui_string' ) ? kayan_homepage_ui_string( 'btn_whatsapp', 'واتساب' ) : 'واتساب';
+	$kayan_menu_label  = function_exists( 'kayan_homepage_ui_string' ) ? kayan_homepage_ui_string( 'menu_open', 'القائمة' ) : 'القائمة';
+	$kayan_close_label = function_exists( 'kayan_homepage_ui_string' ) ? kayan_homepage_ui_string( 'menu_close', 'إغلاق' ) : 'إغلاق';
+	$kayan_switcher    = function_exists( 'kayan_i18n_get_switcher_html' ) ? kayan_i18n_get_switcher_html( array( 'instance_suffix' => 'Header' ) ) : '';
+
+	echo '<root>';
+		echo '<header id="hdr" class="fixedintro kayan-site-header">';
+			echo '<div class="wrap nav">';
+				echo $kayan_header_logo; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<nav class="menu" aria-label="القائمة الرئيسية">' . $kayan_header_nav . '</nav>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<div class="nav-cta">';
+					echo $kayan_switcher; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<a href="' . esc_url( $kayan_wa_url ) . '" class="btn btn-wa kayan-header-wa" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i> <span>' . esc_html( $kayan_wa_label ) . '</span></a>';
+					echo '<button class="ham" onclick="toggleMob(true)" aria-label="' . esc_attr( $kayan_menu_label ) . '"><span></span><span></span><span></span></button>';
+				echo '</div>';
+			echo '</div>';
+		echo '</header>';
+		echo '<div class="mob" id="mob">';
+			echo '<button class="mob-close" onclick="toggleMob(false)" aria-label="' . esc_attr( $kayan_close_label ) . '"><i class="fas fa-xmark" aria-hidden="true"></i></button>';
+			echo $kayan_mobile_nav; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '</div>';
+} else {
 # LOGO EDITS .
 	$logo__data = yc_get_option( 'logo__data' );
 	$logo__data = ( ( is_array( $logo__data ) ) ) ? $logo__data : array();
@@ -401,3 +442,4 @@ echo '<root>';
 			echo '</div>';
 		echo '</div>';
 	echo '</header>';
+}

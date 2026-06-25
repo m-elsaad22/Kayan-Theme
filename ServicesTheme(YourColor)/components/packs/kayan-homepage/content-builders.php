@@ -622,7 +622,7 @@ if ( ! function_exists( 'kayan_homepage_build_pricing_html' ) ) {
 		foreach ( $posts as $post ) {
 			$icon  = $icons[ $i % count( $icons ) ];
 			$price = get_post_meta( $post->ID, 'price_text', true );
-			$url   = function_exists( 'kayan_i18n_get_localized_url' ) ? kayan_i18n_get_localized_url( kayan_i18n_get_lang(), $post->ID ) : get_permalink( $post );
+			$url   = kayan_homepage_get_post_url( $post );
 			$grid .= '<div class="pcard rv"><div class="pic"><i class="' . esc_attr( $icon ) . '"></i></div>';
 			$grid .= '<h3>' . esc_html( get_the_title( $post ) ) . '</h3>';
 			$grid .= '<p>' . esc_html( wp_trim_words( get_the_excerpt( $post ), 14, '…' ) ) . '</p>';
@@ -724,7 +724,7 @@ if ( ! function_exists( 'kayan_homepage_build_ba_html' ) ) {
 			if ( $before === '' ) {
 				continue;
 			}
-			$url = function_exists( 'kayan_i18n_get_localized_url' ) ? kayan_i18n_get_localized_url( kayan_i18n_get_lang(), $post->ID ) : get_permalink( $post );
+			$url = kayan_homepage_get_post_url( $post );
 			$blocks .= '<div class="ba rv"><div class="ba-stage" data-ba>';
 			$blocks .= '<div class="ba-img ba-after" style="background-image:url(' . esc_url( $after ) . ');background-size:cover;background-position:center"><span><i class="fas fa-circle-check"></i> بعد</span></div>';
 			$blocks .= '<div class="ba-img ba-before" style="background-image:url(' . esc_url( $before ) . ');background-size:cover;background-position:center"><span><i class="fas fa-triangle-exclamation"></i> قبل</span></div>';
