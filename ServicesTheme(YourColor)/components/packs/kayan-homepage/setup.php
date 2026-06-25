@@ -26,7 +26,7 @@ if ( ! function_exists( 'kayan_homepage_v3_active_request' ) ) {
 }
 
 function kayan_homepage_v3_asset_version() {
-	return '1.0.13';
+	return '1.0.14';
 }
 
 if ( ! function_exists( 'kayan_homepage_inner_page_request' ) ) {
@@ -62,7 +62,10 @@ function kayan_homepage_enqueue_shared_design_assets() {
 		'6.5.1'
 	);
 
-	$home_deps = array( 'kayan-home-fonts', 'kayan-home-fa', 'kayan-locale' );
+	$home_deps = array( 'kayan-home-fonts', 'kayan-home-fa' );
+	if ( wp_style_is( 'kayan-locale', 'registered' ) || wp_style_is( 'kayan-locale', 'enqueued' ) ) {
+		$home_deps[] = 'kayan-locale';
+	}
 
 	wp_enqueue_style( 'kayan-home', $base . 'kayan-home.css', $home_deps, $ver );
 
@@ -124,7 +127,11 @@ function kayan_homepage_v3_enqueue_assets() {
 		'6.5.1'
 	);
 
-	wp_enqueue_style( 'kayan-home', $base . 'kayan-home.css', array( 'kayan-home-fonts', 'kayan-home-fa', 'kayan-locale' ), $ver );
+	$home_deps = array( 'kayan-home-fonts', 'kayan-home-fa' );
+	if ( wp_style_is( 'kayan-locale', 'registered' ) || wp_style_is( 'kayan-locale', 'enqueued' ) ) {
+		$home_deps[] = 'kayan-locale';
+	}
+	wp_enqueue_style( 'kayan-home', $base . 'kayan-home.css', $home_deps, $ver );
 	wp_enqueue_script( 'kayan-home', $base . 'kayan-home.js', array(), $ver, true );
 
 	$inline = '

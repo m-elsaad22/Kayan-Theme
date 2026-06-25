@@ -360,7 +360,7 @@ body.kayan-inner-page header#hdr .ham span{background:var(--navy)}
 .fcta-trust i{color:var(--aqua)}
 
 /* ═══════════════ Footer ═══════════════ */
-footer{background:#071226;color:rgba(255,255,255,.74);padding:70px 0 0}
+footer{background:#071226;color:rgba(255,255,255,.74);padding:70px 0 112px}
 .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px}
 .fcol h4{color:#fff;font-size:18px;margin-bottom:20px}
 .fcol p{font-size:14.5px;margin-bottom:18px}
@@ -376,6 +376,7 @@ footer{background:#071226;color:rgba(255,255,255,.74);padding:70px 0 0}
 .fcol ul a i{font-size:11px;color:var(--turq)}
 .fsocial{display:flex;flex-wrap:wrap;gap:10px}
 .fsocial a{width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,.07);display:grid;place-items:center;color:#fff;font-size:16px;transition:.25s}
+.fsocial i,.fcontact i{line-height:1}
 .fsocial a:hover{background:var(--grad-cta);transform:translateY(-3px)}
 .fbottom{border-top:1px solid rgba(255,255,255,.08);padding:22px 0;text-align:center;font-size:13.5px}
 .fgrid-has-map{grid-template-columns:1.2fr 1fr 1fr 1fr 1.3fr}
@@ -396,6 +397,7 @@ footer{background:#071226;color:rgba(255,255,255,.74);padding:70px 0 0}
   .btn-fixed-bh{bottom:21px;inset-inline-end:14px}
   .--yourcolor--button--phones{--el--w:48px;margin-bottom:10px}
   .--yourcolor--button--phones>a{font-size:22px}
+  footer{padding-bottom:96px}
 }
 
 /* ═══════════════ WhatsApp FAB (scroll reveal) ═══════════════ */

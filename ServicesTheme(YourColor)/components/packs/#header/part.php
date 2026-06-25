@@ -162,6 +162,20 @@ if ( function_exists( 'kayan_homepage_build_logo_html' ) && function_exists( 'ka
 	$kayan_menu_label  = function_exists( 'kayan_homepage_ui_string' ) ? kayan_homepage_ui_string( 'menu_open', 'القائمة' ) : 'القائمة';
 	$kayan_close_label = function_exists( 'kayan_homepage_ui_string' ) ? kayan_homepage_ui_string( 'menu_close', 'إغلاق' ) : 'إغلاق';
 	$kayan_switcher    = function_exists( 'kayan_i18n_get_switcher_html' ) ? kayan_i18n_get_switcher_html( array( 'instance_suffix' => 'Header' ) ) : '';
+	if ( trim( $kayan_header_logo ) === '' ) {
+		$kayan_brand = function_exists( 'kayan_homepage_get_company_name' ) ? kayan_homepage_get_company_name() : get_bloginfo( 'name' );
+		$kayan_header_logo = '<a href="' . esc_url( home_url( '/' ) ) . '" class="logo"><span class="mark"><i class="fas fa-shield-halved" aria-hidden="true"></i></span>' . esc_html( $kayan_brand ) . '</a>';
+	}
+	if ( trim( $kayan_header_nav ) === '' ) {
+		$kayan_home = function_exists( 'kayan_i18n_home_url' ) ? kayan_i18n_home_url() : home_url( '/' );
+		$kayan_header_nav = '<a href="' . esc_url( trailingslashit( $kayan_home ) ) . '#services">الخدمات</a>';
+		$kayan_header_nav .= '<a href="' . esc_url( trailingslashit( $kayan_home ) ) . '#areas">المدن</a>';
+		$kayan_header_nav .= '<a href="' . esc_url( trailingslashit( $kayan_home ) ) . '#projects">المشاريع</a>';
+		$kayan_header_nav .= '<a href="' . esc_url( trailingslashit( $kayan_home ) ) . '#blog">المدونة</a>';
+	}
+	if ( trim( $kayan_mobile_nav ) === '' ) {
+		$kayan_mobile_nav = $kayan_header_nav;
+	}
 
 	echo '<root>';
 		echo '<header id="hdr" class="fixedintro kayan-site-header">';

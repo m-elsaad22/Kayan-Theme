@@ -65,17 +65,28 @@ if ( ! function_exists( 'kayan_homepage_build_logo_html' ) ) {
 		$logo     = kayan_homepage_get_logo_data( $context );
 		$home_url = function_exists( 'kayan_i18n_home_url' ) ? kayan_i18n_home_url() : home_url( '/' );
 		$alt      = kayan_homepage_get_company_name();
+		$mode     = isset( $logo['logo__mode'] ) ? (string) $logo['logo__mode'] : '';
+		$mode_data = ( $mode !== '' && isset( $logo[ $mode ] ) && is_array( $logo[ $mode ] ) ) ? $logo[ $mode ] : array();
 
-		if ( isset( $logo['logo__mode'] ) && $logo['logo__mode'] === 'Image' && isset( $logo['Image']['image_logo_id'] ) ) {
-			$alt = ! empty( $logo['Image']['header__alt'] ) ? $logo['Image']['header__alt'] : $alt;
+		if ( $mode === 'Image' && ! empty( $mode_data['image_logo_id'] ) ) {
+			$alt = ! empty( $mode_data['header__alt'] ) ? $mode_data['header__alt'] : $alt;
 			$img = '';
 			if ( function_exists( 'YC_get_attachment' ) ) {
 				$img = (string) YC_get_attachment(
 					array(
-						'alt'  => $alt,
-						'id'   => $logo['Image']['image_logo_id'],
-						'size' => $context === 'footer' ? 'footer_sizelogo' : 'logo__size',
+						'alt'      => $alt,
+						'id'       => $mode_data['image_logo_id'],
+						'size'     => $context === 'footer' ? 'footer_sizelogo' : 'logo__size',
+						'LazyLoad' => false,
 					)
+				);
+			}
+			if ( $img === '' && function_exists( 'wp_get_attachment_image' ) ) {
+				$img = (string) wp_get_attachment_image(
+					(int) $mode_data['image_logo_id'],
+					$context === 'footer' ? 'footer_sizelogo' : 'logo__size',
+					false,
+					array( 'alt' => $alt )
 				);
 			}
 			if ( $img !== '' ) {
@@ -83,17 +94,17 @@ if ( ! function_exists( 'kayan_homepage_build_logo_html' ) ) {
 			}
 		}
 
-		if ( isset( $logo['logo__mode'] ) && $logo['logo__mode'] === 'Text' && ! empty( $logo['Text']['logo_Text'] ) ) {
-			$text = $logo['Text']['logo_Text'];
-			$alt  = ! empty( $logo['Text']['header__alt'] ) ? $logo['Text']['header__alt'] : $alt;
+		if ( $mode === 'Text' && ! empty( $mode_data['logo_Text'] ) ) {
+			$text = $mode_data['logo_Text'];
+			$alt  = ! empty( $mode_data['header__alt'] ) ? $mode_data['header__alt'] : $alt;
 			if ( strpos( $text, '{%' ) !== false && strpos( $text, '%}' ) !== false ) {
-				$color = ! empty( $logo['Text']['secondary_color'] ) ? $logo['Text']['secondary_color'] : 'var(--turq)';
+				$color = ! empty( $mode_data['secondary_color'] ) ? $mode_data['secondary_color'] : 'var(--turq)';
 				$text  = '<span class="first-logo-word">' . esc_html( preg_replace( '/\{%.*?\%\}/', '', $text ) ) . '</span>';
-				preg_match( '/\{%(.+?)%\}/', $logo['Text']['logo_Text'], $m );
+				preg_match( '/\{%(.+?)%\}/', $mode_data['logo_Text'], $m );
 				$highlight = isset( $m[1] ) ? $m[1] : '';
 				if ( $highlight !== '' ) {
-					$text = preg_replace( '/\{%.*?\%\}/', '', $logo['Text']['logo_Text'] );
-					$parts = preg_split( '/\{%|\%\}/', $logo['Text']['logo_Text'] );
+					$text = preg_replace( '/\{%.*?\%\}/', '', $mode_data['logo_Text'] );
+					$parts = preg_split( '/\{%|\%\}/', $mode_data['logo_Text'] );
 					if ( count( $parts ) >= 3 ) {
 						$text = esc_html( trim( $parts[0] ) ) . ' <b style="color:' . esc_attr( $color ) . '">' . esc_html( trim( $parts[1] ) ) . '</b>' . esc_html( trim( $parts[2] ) );
 					}
@@ -127,7 +138,9 @@ if ( ! function_exists( 'kayan_homepage_build_nav_links_html' ) ) {
 				}
 				$html .= '<a href="' . esc_url( kayan_homepage_resolve_url_token( $item->url ) ) . '">' . esc_html( $item->title ) . '</a>';
 			}
-			return $html;
+			if ( $html !== '' ) {
+				return $html;
+			}
 		}
 
 		$home = function_exists( 'kayan_i18n_home_url' ) ? kayan_i18n_home_url() : home_url( '/' );
@@ -162,7 +175,8 @@ if ( ! function_exists( 'kayan_homepage_build_mobile_nav_html' ) ) {
 				}
 				$html .= '<a href="' . esc_url( kayan_homepage_resolve_url_token( $item->url ) ) . '" onclick="toggleMob(false)">' . esc_html( $item->title ) . '</a>';
 			}
-		} else {
+		}
+		if ( $html === '' ) {
 			$home = function_exists( 'kayan_i18n_home_url' ) ? kayan_i18n_home_url() : home_url( '/' );
 			$fallback = array(
 				array( trailingslashit( $home ) . '#services', function_exists( 'kayan_i18n_t' ) ? kayan_i18n_t( 'nav_services' ) : 'الخدمات' ),
